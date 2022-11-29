@@ -5,4 +5,4 @@
 * typescript
 * styled-components
 * babel
-* ESLint + prettier
+* ESLint + prettier(air-bnb style)
