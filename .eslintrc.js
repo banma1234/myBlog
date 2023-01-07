@@ -6,6 +6,7 @@ module.exports = {
     project: "./tsconfig.json",
     // 사용자지정 옵션
     createDefaultProgram: true,
+    sourceType: 'module'
   },
   env: {
     node: true,
@@ -15,6 +16,7 @@ module.exports = {
     "airbnb",
     "airbnb-typescript",
     "plugin:prettier/recommended",
+    "@typescript-eslint/parser",
   ],
   rules: {
     // 'React' must be in scope when using JSX 에러 지우기(Next.js)
