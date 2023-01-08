@@ -1,7 +1,7 @@
-import useColor from './useColor/useColor';
+import useColor from "./useColor/useColor";
 
 const Hooks = {
-    useColor
+  useColor,
 };
 
 export default Hooks;
