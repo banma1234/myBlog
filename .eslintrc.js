@@ -6,12 +6,13 @@ module.exports = {
     project: "./tsconfig.json",
     // 사용자지정 옵션
     createDefaultProgram: true,
-    sourceType: 'module'
+    sourceType: "module",
   },
   env: {
     node: true,
   },
   extends: [
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     "airbnb-typescript",
