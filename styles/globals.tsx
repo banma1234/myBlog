@@ -1,11 +1,3 @@
-import { type } from "os";
-import styled, {
-  createGlobalStyle,
-  ThemeProvider,
-  css,
-} from "styled-components";
-import { isWhiteSpaceLike, Type } from "typescript";
-
 const Globals = {
   palette: {
     // 키 컬러
@@ -24,4 +16,5 @@ const Globals = {
     $color_og_black: "#000000",
   },
 };
+
 export default Globals;
