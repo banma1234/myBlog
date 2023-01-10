@@ -1,8 +1,8 @@
 import StyledButton from "./buttonStyle";
 
-const ButtonComponent: React.FC<any> = (props, color: string) => {
+const ButtonComponent: React.FC<any> = props => {
   return (
-    <StyledButton color={props.color} {...props}>
+    <StyledButton {...props} color={props.color} type={props.type}>
       {props.children}
     </StyledButton>
   );
