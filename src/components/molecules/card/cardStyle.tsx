@@ -1,19 +1,20 @@
 import styled, { css } from "styled-components";
 import useColor from "../../../../util/hooks/useColor/useColor";
-import { CardType } from "./cardType";
+import { CardType, ObjType } from "./cardType";
 
-const StyledCard = styled.button.attrs(props => ({}))<CardType>`
+const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
-    const width = { default: "400px" };
+    const width: ObjType = { default: "400px", login: "100%" };
+    const height: ObjType = { default: "250px", login: "700px" };
 
+    const temp = props.type;
     return css`
       background-color: ${useColor(props.color)};
       color: ${props.color == "gray" || props.color == "og_white"
         ? "black"
         : "white"};
-      background-repeat: no-repeat;
-      width: 80px;
-      height: 45px;
+      width: ${width[temp]};
+      height: ${height[temp]};
       border: none;
       padding: 5px 10px;
       font-size: 1em;
