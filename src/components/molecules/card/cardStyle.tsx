@@ -4,7 +4,7 @@ import { CardType, ObjType } from "./cardType";
 
 const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
-    const width: ObjType = { default: "400px", login: "100%" };
+    const width: ObjType = { default: "400px", login: "400px" };
     const height: ObjType = { default: "250px", login: "700px" };
 
     const temp = props.type;
@@ -15,12 +15,13 @@ const StyledCard = styled.div.attrs(props => ({}))<CardType>`
         : "white"};
       width: ${width[temp]};
       height: ${height[temp]};
-      border: none;
+      cursor: ${temp === "login" ? "Default" : "pointer"};
+      position: relative;
+      margin: 0 auto;
       padding: 5px 10px;
       font-size: 1em;
       font-weight: 500;
       outline: none;
-      cursor: pointer;
       transition: all 0.3s;
       border-radius: 10px;
     `;
