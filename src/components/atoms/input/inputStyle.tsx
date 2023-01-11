@@ -6,7 +6,7 @@ const StyledInput = styled.input.attrs(props => ({}))<inputType>`
     const height = { default: "40px", small: "25px" };
 
     return css`
-      background-color: #8492a7;
+      background-color: white;
       color: black;
       width: 100%;
       height: ${height[props.size]};
