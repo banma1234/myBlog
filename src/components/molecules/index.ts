@@ -1,9 +1,10 @@
 import Card from "./card/index";
+import Header from './header/index';
 
 const Molecules = {
-  Card,
+  Card, Header
 };
 
 export default Molecules;
 
-export { Card };
+export { Card, Header };
