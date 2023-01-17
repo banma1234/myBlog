@@ -1,3 +1,3 @@
 export interface HeaderType {
-    children: any;
+  children: any;
 }

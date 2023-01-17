@@ -1,8 +1,9 @@
 import Card from "./card/index";
-import Header from './header/index';
+import Header from "./header/index";
 
 const Molecules = {
-  Card, Header
+  Card,
+  Header,
 };
 
 export default Molecules;
