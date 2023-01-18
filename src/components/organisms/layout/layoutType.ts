@@ -1,3 +1,3 @@
 export interface LayoutType {
-    article: any;
+  article: any;
 }
