@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const StyledHeader = styled.div`
   width: 100%;
-  height: 50px;
+  height: 5%;
   position: fixed;
   background-color: white;
 `;
