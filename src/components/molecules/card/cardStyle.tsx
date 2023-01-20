@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import useColor from "../../../../util/hooks/useColor/useColor";
+import { useColor } from "util/hooks";
 import { CardType, ObjType } from "./cardType";
 
 const StyledCard = styled.div.attrs(props => ({}))<CardType>`

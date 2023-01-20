@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import useColor from "../../../../util/hooks/useColor/useColor";
+import {useColor} from "util/hooks";
 import { ButtonType, ObjType } from "./buttonType";
 
 const StyledButton = styled.button.attrs(props => ({}))<ButtonType>`
