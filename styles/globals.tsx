@@ -1,4 +1,6 @@
-const Globals = {
+import styled from 'styled-components';
+
+export const Globals = {
   palette: {
     // 키 컬러
     $color_low: "#D3E3FC",
@@ -17,4 +19,7 @@ const Globals = {
   },
 };
 
-export default Globals;
+export const Board = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`;

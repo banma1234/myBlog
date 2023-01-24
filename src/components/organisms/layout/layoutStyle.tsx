@@ -23,5 +23,5 @@ export const Article = styled.div`
 
 export const Aside = styled.div`
   height: 100%;
-  background-color: white;
+  background-color: green;
 `;
