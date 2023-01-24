@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const Article = styled.div`
   height: 100%;
   padding: 2rem;
-  background-color: ${useColor('gray')};
+  background-color: ${useColor("gray")};
 `;
 
 export const Aside = styled.div`
