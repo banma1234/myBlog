@@ -13,9 +13,7 @@ const StyledInput = styled.input.attrs(props => ({}))<inputType>`
       border: none;
       padding: 10px;
       margin-top: 10px;
-      /* font-size: 1em;
-    font-weight: 500; */
-      border-radius: 5px;
+      border-radius: 10px;
     `;
   }};
 `;
