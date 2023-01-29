@@ -2,10 +2,10 @@ import styled, { css } from "styled-components";
 import { useColor } from "util/hooks";
 import { CardType, ObjType } from "./cardType";
 
-const StyledCard = styled.div.attrs(props => ({}))<CardType>`
+export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
-    const width: ObjType = { default: "300px", login: "400px" };
-    const height: ObjType = { default: "400px", login: "700px" };
+    const width: ObjType = { default: "250px", login: "400px" };
+    const height: ObjType = { default: "300px", login: "700px" };
 
     const temp = props.type;
     return css`
@@ -15,15 +15,25 @@ const StyledCard = styled.div.attrs(props => ({}))<CardType>`
         : "white"};
       width: ${width[temp]};
       height: ${height[temp]};
-      cursor: ${temp === "login" ? "Default" : "pointer"};
+      cursor: 'pointer';
       position: relative;
       margin: 10px;
-      padding: 10px;
-      outline: none;
       transition: all 0.3s;
       border-radius: 1rem;
+      overflow: hidden;
     `;
   }};
 `;
 
-export default StyledCard;
+export const ImageWrapper = styled.div`
+  width: 100%;  height: 200px;
+  overflow: hidden;
+
+`;
+
+export const Post = styled.div`
+  display: flex;
+  padding: 10px;
+  margin-top: -1.5rem;
+  justify-content: space-between;
+`;

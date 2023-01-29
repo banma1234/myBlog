@@ -1,4 +1,4 @@
-import StyledCard from "./cardStyle";
+import {StyledCard, ImageWrapper, Post} from "./cardStyle";
 import { CardType } from "./cardType";
 import Image from "next/image";
 import imgUrl from 'public/testImg.jpg';
@@ -6,9 +6,12 @@ import imgUrl from 'public/testImg.jpg';
 const CardComponent: React.FC<CardType> = (props: CardType) => {
   return (
     <StyledCard {...props} color={props.color} type={props.type}>
-      <Image src={imgUrl} alt='card Img' placeholder="blur"
-      width='300' height='300'/>
-      {props.children}
+      <ImageWrapper>
+        <Image src={imgUrl} alt='card Img' layout='responsive'/>
+      </ImageWrapper>
+      <Post>
+        {props.children}
+      </Post>
     </StyledCard>
   );
 };
