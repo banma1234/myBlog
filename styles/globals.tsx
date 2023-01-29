@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Globals = {
   palette: {
@@ -21,5 +21,14 @@ export const Globals = {
 
 export const Board = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media all and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media all and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media all and (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
 `;

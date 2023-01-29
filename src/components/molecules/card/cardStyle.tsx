@@ -10,12 +10,14 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
     const temp = props.type;
     return css`
       background-color: ${useColor(props.color)};
-      color: ${props.color == "gray" || props.color == "og_white" || props.color == "low"
+      color: ${props.color == "gray" ||
+      props.color == "og_white" ||
+      props.color == "low"
         ? "black"
         : "white"};
-      width: ${width[temp]};
+      width: 90%;
       height: ${height[temp]};
-      cursor: 'pointer';
+      cursor: "pointer";
       position: relative;
       margin: 10px;
       transition: all 0.3s;
@@ -26,9 +28,9 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
 `;
 
 export const ImageWrapper = styled.div`
-  width: 100%;  height: 200px;
+  width: 100%;
+  height: 200px;
   overflow: hidden;
-
 `;
 
 export const Post = styled.div`

@@ -11,8 +11,11 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 15% 70% 15%;
+  grid-template-columns: 10% 80% 10%;
   margin-top: 2.5rem;
+  @media all and (max-width: 1200px) {
+    grid-template-columns: 0% 100% 0%;
+  }
 `;
 
 export const Article = styled.div`
@@ -23,5 +26,4 @@ export const Article = styled.div`
 
 export const Aside = styled.div`
   height: 100%;
-  background-color: green;
 `;
