@@ -23,6 +23,7 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       transition: all 0.3s;
       border-radius: 1rem;
       overflow: hidden;
+      box-shadow: 0 7px 10px rgb(0 0 0 / 10%);
     `;
   }};
 `;

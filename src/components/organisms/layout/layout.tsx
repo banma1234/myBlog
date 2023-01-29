@@ -1,11 +1,14 @@
 import { Container, Section, Article, Aside } from "./layoutStyle";
 import { LayoutType } from "./layoutType";
-import { Footer } from "../../molecules";
+import { Header, Footer } from "../../molecules";
 
 const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
   return (
     <Section>
       <Container>
+        <header>
+          <Header>hello</Header>
+        </header>
         <nav>
           <Aside />
         </nav>
