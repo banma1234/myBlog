@@ -4,7 +4,7 @@ import { CardType, ObjType } from "./cardType";
 
 export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
-    const width: ObjType = { default: "250px", login: "400px" };
+    const width: ObjType = { default: "90%", login: "400px" };
     const height: ObjType = { default: "300px", login: "700px" };
 
     const temp = props.type;
@@ -15,7 +15,7 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       props.color == "low"
         ? "black"
         : "white"};
-      width: 90%;
+      width: ${width[temp]};
       height: ${height[temp]};
       cursor: "pointer";
       position: relative;
@@ -24,6 +24,21 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       border-radius: 1rem;
       overflow: hidden;
       box-shadow: 0 7px 10px rgb(0 0 0 / 10%);
+      @keyframes cardUp {
+        0% {
+          top: 0;
+        }
+        50% {
+          top: -0.5rem;
+        }
+        100% {
+          top: 0;
+        }
+      }
+      &:hover {
+        position: relative;
+        animation: cardUp 0.6s;
+      }
     `;
   }};
 `;

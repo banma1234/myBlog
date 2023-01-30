@@ -19,7 +19,7 @@ export const Container = styled.div`
 
 export const Article = styled.div`
   min-height: 50rem;
-  padding: 2rem;
+  padding-top: 2rem;
   background-color: ${useColor("gray")};
 `;
 

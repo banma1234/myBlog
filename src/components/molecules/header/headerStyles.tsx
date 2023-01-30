@@ -18,6 +18,13 @@ export const HeaderMenu = styled.ul`
   column-gap: 30px;
   list-style: none;
   color: ${useColor("base")};
+
+  li {
+    &:hover {
+      transition: all 0.3s;
+      color: ${useColor("green")};
+    }
+  }
 `;
 
 export const HeaderIcon = styled.div`
