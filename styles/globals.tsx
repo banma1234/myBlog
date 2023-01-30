@@ -21,8 +21,10 @@ export const Globals = {
 
 export const Board = styled.div`
   display: grid;
+  padding: 2rem;
+  margin-top: -2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  @media all and (max-width: 1200px) {
+  @media all and (max-width: 1100px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
   @media all and (max-width: 768px) {
@@ -30,5 +32,14 @@ export const Board = styled.div`
   }
   @media all and (max-width: 576px) {
     grid-template-columns: 1fr;
+  }
+`;
+
+export const ImgWrapper = styled.div`
+  width: 100%;
+  margin-top: -2rem;
+  margin-bottom: 5rem;
+  @media all and (max-width: 1100px) {
+    display: none;
   }
 `;
