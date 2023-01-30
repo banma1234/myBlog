@@ -1,13 +1,17 @@
 import { getSortedPostsData } from "util/posts";
 import Link from "next/link";
+import Image from "next/legacy/image";
+import imgUrl from "public/bannerImg.png";
 import { Layout } from "src/components/organisms";
 import { Card } from "src/components/molecules";
-import { Board } from "styles/globals";
+import { Board, ImgWrapper } from "styles/globals";
 
 export default function Home({ allPostsData }: any) {
   return (
     <Layout>
-      <h1>Home</h1>
+      <ImgWrapper>
+        <Image src={imgUrl} alt="card Img" priority />
+      </ImgWrapper>
       <section>
         <Board>
           {allPostsData &&
