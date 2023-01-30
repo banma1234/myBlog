@@ -5,20 +5,22 @@ import { Header, Footer } from "../../molecules";
 const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
   return (
     <Section>
-      <Container>
-        <header>
-          <Header>hello</Header>
-        </header>
-        <nav>
-          <Aside />
-        </nav>
-        <main>
-          <Article>{props.children}</Article>
-        </main>
-        <section>
-          <Aside />
-        </section>
-      </Container>
+      <header>
+        <Header>hello</Header>
+      </header>
+      <main>
+        <Container>
+          <nav>
+            <Aside />
+          </nav>
+          <article>
+            <Article>{props.children}</Article>
+          </article>
+          <section>
+            <Aside />
+          </section>
+        </Container>
+      </main>
       <footer>
         <Footer>I'm Footer</Footer>
       </footer>
