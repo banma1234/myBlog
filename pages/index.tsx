@@ -12,7 +12,7 @@ export default function Home({ allPostsData }: any) {
         <Board>
           {allPostsData &&
             allPostsData.map(({ id, title }: any) => (
-              <Link href={`/posts/${id}`}>
+              <Link href={`/posts/${id}`} key={title}>
                 <Card type="default" color="low">
                   <h3>{title}</h3>
                 </Card>
