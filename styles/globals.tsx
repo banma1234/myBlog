@@ -45,7 +45,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
       overflow: hidden;
       @media all and (max-width: 768px) {
         display: none;
-      };
+      } ;
     `;
   }};
 `;
