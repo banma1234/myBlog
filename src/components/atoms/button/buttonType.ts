@@ -1,6 +1,6 @@
 export interface ButtonType {
-  type: string;
-  children: string;
+  ButtonType: string;
+  children: any;
   color: string;
 }
 
