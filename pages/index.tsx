@@ -4,13 +4,19 @@ import Image from "next/legacy/image";
 import imgUrl from "public/bannerImg.png";
 import { Layout } from "src/components/organisms";
 import { Card } from "src/components/molecules";
-import { Board, ImgWrapper } from "styles/globals";
+import { Board, ImgWrapper, OverlapDiv } from "styles/globals";
+import { Button } from "src/components/atoms";
 
 export default function Home({ allPostsData }: any) {
   return (
     <Layout>
       <ImgWrapper type="banner">
         <Image src={imgUrl} alt="card Img" priority />
+        <OverlapDiv>
+          <Button color="high" ButtonType="default">
+            Go
+          </Button>
+        </OverlapDiv>
       </ImgWrapper>
       <section>
         <Board>

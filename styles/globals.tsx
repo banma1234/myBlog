@@ -38,6 +38,7 @@ export const Board = styled.div`
 export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
   ${props => {
     return css`
+      position: relative;
       width: ${props.type == "profile" ? "160px" : "100%"};
       margin-top: ${props.type == "profile" ? "0" : "-2rem"};
       margin-bottom: ${props.type == "profile" ? "0" : "5rem"};
@@ -48,4 +49,12 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
       } ;
     `;
   }};
+`;
+
+export const OverlapDiv = styled.div`
+  position: absolute;
+  top: 70%;
+  left: 450px;
+  transform: translate(50% 50%);
+  z-index: 9990;
 `;
