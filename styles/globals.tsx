@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Globals = {
   palette: {
@@ -35,11 +35,17 @@ export const Board = styled.div`
   }
 `;
 
-export const ImgWrapper = styled.div`
-  width: 100%;
-  margin-top: -2rem;
-  margin-bottom: 5rem;
-  @media all and (max-width: 1100px) {
-    display: none;
-  }
+export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
+  ${props => {
+    return css`
+      width: ${props.type == "profile" ? "160px" : "100%"};
+      margin-top: ${props.type == "profile" ? "0" : "-2rem"};
+      margin-bottom: ${props.type == "profile" ? "0" : "5rem"};
+      border-radius: ${props.type == "profile" ? "100%" : "0"};
+      overflow: hidden;
+      @media all and (max-width: 768px) {
+        display: none;
+      };
+    `;
+  }};
 `;

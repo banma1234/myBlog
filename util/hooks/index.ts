@@ -1,6 +1,6 @@
 import useColor from "./useColor/useColor";
 import useDate from "./useDate/useDate";
-import useIcons from './useIcons/useIcons';
+import useIcons from "./useIcons/useIcons";
 
 const Hooks = {
   useColor,
