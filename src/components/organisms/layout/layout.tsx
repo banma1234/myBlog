@@ -6,7 +6,7 @@ const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
   return (
     <Section>
       <header>
-        <Header>hello</Header>
+        <Header />
       </header>
       <main>
         <Container>
@@ -22,7 +22,7 @@ const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
         </Container>
       </main>
       <footer>
-        <Footer>I'm Footer</Footer>
+        <Footer />
       </footer>
     </Section>
   );

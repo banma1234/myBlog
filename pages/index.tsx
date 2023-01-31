@@ -9,7 +9,7 @@ import { Board, ImgWrapper } from "styles/globals";
 export default function Home({ allPostsData }: any) {
   return (
     <Layout>
-      <ImgWrapper>
+      <ImgWrapper type="banner">
         <Image src={imgUrl} alt="card Img" priority />
       </ImgWrapper>
       <section>
