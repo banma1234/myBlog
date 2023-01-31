@@ -4,12 +4,11 @@ import {
   HeaderIcon,
   HeaderMenu,
 } from "./headerStyles";
-import { HeaderType } from "./headerType";
 import Link from "next/link";
 
-const HeaderComponent: React.FC<HeaderType> = (props: HeaderType) => {
+const HeaderComponent: React.FC = () => {
   return (
-    <StyledHeader {...props}>
+    <StyledHeader>
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">Home</Link>
