@@ -1,9 +1,15 @@
-import { StyledFooter, FooterContainer, FooterMenu } from "./footerStyles";
+import {
+  StyledFooter,
+  FooterContainer,
+  FooterMenu,
+  FooterAsideMenu,
+} from "./footerStyles";
 import { useIcons } from "util/hooks";
 import { ImgWrapper } from "styles/globals";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import imgUrl from "public/testImg.jpg";
+import { Button } from "src/components/atoms";
 
 const FooterComponent: React.FC = () => {
   return (
@@ -21,6 +27,11 @@ const FooterComponent: React.FC = () => {
             </Link>
           </li>
         </FooterMenu>
+        <FooterAsideMenu>
+          <Button color="green" ButtonType="small">
+            {useIcons("enter", "16")} &nbsp; Go
+          </Button>
+        </FooterAsideMenu>
       </FooterContainer>
     </StyledFooter>
   );

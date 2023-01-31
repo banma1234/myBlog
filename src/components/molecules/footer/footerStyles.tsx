@@ -15,13 +15,14 @@ export const FooterContainer = styled.div`
   border-left: 2rem solid;
   border-color: ${useColor("green")};
   color: ${useColor("gray")};
-  grid-template-columns: 160px 1fr;
-  @media all and (max-width: 576px) {
-    grid-template-columns: 0 1fr;
+  grid-template-columns: 160px 1fr 8rem;
+  @media all and (max-width: 768px) {
+    grid-template-columns: 1fr 8rem;
   }
 `;
 
 export const FooterMenu = styled.ul`
+  max-width: 250px;
   list-style: none;
   margin-top: -0.2rem;
   margin-left: -1.5rem;
@@ -32,4 +33,8 @@ export const FooterMenu = styled.ul`
       color: ${useColor("green")};
     }
   }
+`;
+
+export const FooterAsideMenu = styled.div`
+  margin-top: 4.5rem;
 `;
