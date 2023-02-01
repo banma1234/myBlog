@@ -2,12 +2,16 @@ import { Layout } from "src/components/organisms";
 import { Editor } from "src/components/molecules";
 import { Button, Input } from "src/components/atoms";
 import { useCallback, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Write() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [series, setSeries] = useState("");
   const [error, setError] = useState("");
+
+  const router = useRouter();
+
   const handleChange = useCallback((content: any) => {
     setContent(content);
   }, []);
@@ -42,9 +46,12 @@ export default function Write() {
 
     if (data.success) {
       initData();
-      alert("성공임마");
-      console.log(data.message);
-    } else return setError(data.message);
+      alert("게시글 작성이 완료되었습니다.");
+      router.replace("/");
+    } else {
+      alert(data.message);
+      return setError(data.message);
+    }
   };
 
   return (
