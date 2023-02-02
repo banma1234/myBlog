@@ -13,7 +13,7 @@ export default function Home({ allPostsData }: any) {
       <ImgWrapper type="banner">
         <Image src={imgUrl} alt="card Img" priority />
         <OverlapDiv>
-          <Button color="high" ButtonType="default">
+          <Button color="high" ButtonType="default" onClick={console.log("wow")}>
             Go
           </Button>
         </OverlapDiv>

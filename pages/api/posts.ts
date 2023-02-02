@@ -37,3 +37,27 @@ async function addPost(req: any, res: any) {
     });
   }
 }
+
+async function getPosts(req: any, res: any){
+  try {
+      // connect to the database
+      let { db } = await connectToDatabase();
+      // fetch the posts
+      let posts = await db
+          .collection('posts')
+          .find({})
+          .sort({ published: -1 })
+          .toArray();
+      // return the posts
+      return res.json({
+          message: JSON.parse(JSON.stringify(posts)),
+          success: true,
+      });
+  } catch (error: any) {
+      // return the error
+      return res.json({
+          message: new Error(error).message,
+          success: false,
+      });
+  }
+}
