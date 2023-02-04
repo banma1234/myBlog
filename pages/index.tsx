@@ -1,31 +1,58 @@
 import { getSortedPostsData } from "util/posts";
 import Link from "next/link";
-import { Layout } from "../src/components/organisms";
-import { Card } from "../src/components/molecules";
+import Image from "next/legacy/image";
+import imgUrl from "public/bannerImg.png";
+import { Layout } from "src/components/organisms";
+import { Card } from "src/components/molecules";
+import { Board, ImgWrapper, OverlapDiv } from "styles/globals";
+import { Button } from "src/components/atoms";
 
-export default function Home({ allPostsData }: any) {
+export default function Home({ posts }: any) {
   return (
     <Layout>
-      <h1>Home</h1>
+      <ImgWrapper type="banner">
+        <Image src={imgUrl} alt="card Img" priority />
+        <OverlapDiv>
+          <Button
+            color="high"
+            ButtonType="default"
+            onClick={() => {
+              console.log("damn");
+            }}
+          >
+            Go
+          </Button>
+        </OverlapDiv>
+      </ImgWrapper>
       <section>
-        {allPostsData &&
-          allPostsData.map(({ id, title }: any) => (
-            <Card type="default" color="pink">
-              <Link href={`/posts/${id}`}>
-                <h2>{title}</h2>
-              </Link>
-            </Card>
-          ))}
+        <Board>
+          {posts &&
+            posts.map((item: any, i: any) => {
+              return (
+                <Link href={`/posts/${item.title}`} key={i}>
+                  <Card type="default" color="low">
+                    <h3>{item.title}</h3>
+                  </Card>
+                </Link>
+              );
+            })}
+        </Board>
       </section>
     </Layout>
   );
 }
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+export async function getServerSideProps() {
+  let DEV_URL = process.env.DEV_URL;
+
+  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
+    method: "GET",
+  });
+  let data = await response.json();
+
   return {
     props: {
-      allPostsData,
+      posts: data["message"],
     },
   };
 }

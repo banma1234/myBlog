@@ -1,4 +1,4 @@
-import Globals from "../../../styles/globals";
+import { Globals } from "styles/globals";
 import { useColorType } from "./useColorType";
 
 export default function useColor(color: string) {

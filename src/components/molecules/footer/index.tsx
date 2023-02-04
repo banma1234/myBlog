@@ -1,6 +1,5 @@
 import FooterComponent from "./footer";
-import { Footertype } from "./footerType";
 
-const Footer: React.FC<Footertype> = props => <FooterComponent {...props} />;
+const Footer: React.FC = () => <FooterComponent />;
 
 export default Footer;
