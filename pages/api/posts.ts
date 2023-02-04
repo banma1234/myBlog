@@ -3,10 +3,10 @@ const ObjectId = require("mongodb").ObjectId;
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
-    case 'GET': {
+    case "GET": {
       return getPosts(req, res);
     }
-    
+
     case "POST": {
       return addPost(req, res);
     }
@@ -39,27 +39,26 @@ async function addPost(req: any, res: any) {
   }
 }
 
-async function getPosts(req: any, res: any){
+async function getPosts(req: any, res: any) {
   try {
-      // connect to the database
-      let title = req.headers;
-      let { db } = await connectToDatabase();
-      // fetch the posts
-      let posts = await db
-          .collection('posts')
-          .find({"title":{title}})
-          .sort({ uploadDate: -1 })
-          .toArray();
-      // return the posts
-      return res.json({
-          message: JSON.parse(JSON.stringify(posts)),
-          success: true,
-      });
+    let postName = req.headers.postname;
+    // connect to the database
+    let { db } = await connectToDatabase();
+    // fetch the posts
+    let posts = await db
+      .collection("posts")
+      .find({ title: postName })
+      .toArray();
+    // return the posts
+    return res.json({
+      message: JSON.parse(JSON.stringify(posts)),
+      success: true,
+    });
   } catch (error: any) {
-      // return the error
-      return res.json({
-          message: new Error(error).message,
-          success: false,
-      });
+    // return the error
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    });
   }
 }
