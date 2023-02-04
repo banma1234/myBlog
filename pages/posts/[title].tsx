@@ -1,20 +1,28 @@
 import Head from "next/head";
-import { Layout } from "../../src/components/organisms";
+import dynamic from "next/dynamic";
+import { Layout } from "src/components/organisms";
 
 export default function Post({ post }: any) {
   return (
     <Layout>
       <Head>
-        <title>{post.title}</title>
+        <title>{post[0].title}</title>
       </Head>
       <article>
-        <h1>{post.title}</h1>
-        {/* <p>{useDate(postData.date)}</p> */}
-        <p>{post.content}</p>
+        <h1>{post[0].title}</h1>
+        <MarkdownReader source={post[0].content} />
       </article>
     </Layout>
   );
 }
+
+const MarkdownReader = dynamic(
+  () =>
+    import("@uiw/react-md-editor").then(mod => {
+      return mod.default.Markdown;
+    }),
+  { ssr: false },
+);
 
 // localhost:3000/post/할리스에서%20post하기
 // const path = getURLParams(location.search);
@@ -37,21 +45,22 @@ export default function Post({ post }: any) {
 //   };
 // }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(ctx: any) {
   const DEV_URL = process.env.DEV_URL;
-  let viewPost = context.params.title;
+  // let viewPost = context.params.title;
   // let path = window.location.search.replace(DEV_URL+"/post/", "");
-  console.log(viewPost);
-  debugger;
-  let response = await fetch("localhost:3000/api/post", {
+  let myHeaders = new Headers();
+  myHeaders.append("postName", ctx.params.title);
+
+  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
     method: "GET",
-    headers: {viewPost}
+    headers: myHeaders,
   });
   let data = await response.json();
 
   return {
     props: {
-        post: data['message'],
+      post: data["message"],
     },
   };
 }
