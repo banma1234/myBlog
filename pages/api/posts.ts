@@ -41,7 +41,7 @@ async function addPost(req: any, res: any) {
 
 async function getPosts(req: any, res: any) {
   try {
-    let postName = req.headers.postname;
+    let postName = decodeURI(req.headers.postname);
     // connect to the database
     let { db } = await connectToDatabase();
     // fetch the posts
