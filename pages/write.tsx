@@ -28,12 +28,12 @@ export default function Write() {
     setError("");
     if (!title || !content) return setError("제목 / 내용을 입력해주세요");
 
-    const writer = "chocoham";
+    const writter = "chocoham";
     let post = {
       title,
       content,
       series,
-      writer,
+      writter,
       uploadDate: new Date().toISOString(),
     };
 
