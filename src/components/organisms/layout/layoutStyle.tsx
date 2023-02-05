@@ -20,6 +20,12 @@ export const Container = styled.div`
 export const Article = styled.div`
   min-height: 50rem;
   padding-top: 2rem;
+  a {
+    &:hover {
+      transition: all 0.3s;
+      color: ${useColor("green")};
+    }
+  }
 `;
 
 export const Aside = styled.div`
