@@ -15,16 +15,19 @@ async function viewAll(req: any, res: any) {
   try {
     // connect to the database
     let { db } = await connectToDatabase();
+    const options = {
+      sort: { uploadDate: -1 },
+      projection: { _id: 0, title: 1, uploadDate: 1 }
+    };
     // fetch the posts
     let posts = await db
       .collection("posts")
-      .find({}, { title: 1 })
-      .sort({ uploadDate: -1 })
+      .find({}, options)
       .limit(4)
       .toArray();
     // return the posts
     return res.json({
-      message: JSON.parse(JSON.stringify(posts)),
+      message: posts,
       success: true,
     });
   } catch (error: any) {
@@ -40,39 +43,32 @@ async function viewSeries(req: any, res: any) {
   try {
     // connect to the database
     let { db } = await connectToDatabase();
+    const options = {
+      sort: { uploadDate: -1 },
+      projection: { _id: 0, series: 1 }
+    };
     // fetch the posts
-    let posts = await db
-      .collection("posts")
-      .find({}, { series: 1, uploadDate: 1 })
-      .sort({ uploadDate: -1 })
-      .toArray();
-    // .collection("posts").aggregate([
-    //   {
-    //     $sort: { uploadDate: -1 }
-    //   },
-    //   {
-    //     $group: {
-    //       _id: "$series",
-    //       items: { $push: "$$ROOT" },
-    //       count: { $sum: 1 }
-    //     }
-    //   },
-    //   {
-    //     $match: { count: { $gt: 1 } }
-    //   }
-    // ]).toArray().then((docs: any) => {
-    //   console.log(JSON.stringify(docs.pretty));
-    //   var procs = [];
-    //   for (var doc of docs) {
-    //     doc.targets.shift();
-    //     procs[procs.length] = db.collection("posts").deleteMany({
-    //       _id: { $in: doc.targets }
-    //     });
-    //   }
-    // })
+    let result: any = [];
+    await db.collection("posts").aggregate([
+      { $group: {
+        _id: "$series",
+        unique_id: { $addToSet: "$series" },
+        count: { $sum: 1 }
+      }}, 
+      { $match: {
+        count: { $gte: 2 }
+      }}
+    ]).toArray().then((docs: any) => {
+      docs.forEach((item: any) => {
+        result.push({ 
+          series: (item["_id"]),
+          count: (item["count"])
+         })
+      })
+    })
     // return the posts
     return res.json({
-      message: JSON.parse(JSON.stringify(posts)),
+      message: result,
       success: true,
     });
   } catch (error: any) {
