@@ -56,7 +56,7 @@ async function viewSeries(req: any, res: any) {
         count: { $sum: 1 }
       }}, 
       { $match: {
-        count: { $gte: 2 }
+        count: { $gte: 1 }
       }}
     ]).toArray().then((docs: any) => {
       docs.forEach((item: any) => {
@@ -66,6 +66,7 @@ async function viewSeries(req: any, res: any) {
          })
       })
     })
+    console.log(result)
     // return the posts
     return res.json({
       message: result,
