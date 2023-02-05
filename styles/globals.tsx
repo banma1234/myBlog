@@ -19,7 +19,7 @@ export const Globals = {
   },
 };
 
-export const Board = styled.div`
+export const CardLayout = styled.div`
   display: grid;
   padding: 2rem;
   margin-top: -2rem;
@@ -41,7 +41,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
       position: relative;
       width: ${props.type == "profile" ? "160px" : "100%"};
       margin-top: ${props.type == "profile" ? "0" : "-2rem"};
-      margin-bottom: ${props.type == "profile" ? "0" : "5rem"};
+      margin-bottom: ${props.type == "profile" ? "0" : "5.5rem"};
       border-radius: ${props.type == "profile" ? "100%" : "0"};
       overflow: hidden;
       @media all and (max-width: 768px) {
