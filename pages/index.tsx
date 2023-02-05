@@ -1,11 +1,11 @@
-import { getSortedPostsData } from "util/posts";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import imgUrl from "public/bannerImg.png";
-import { Layout } from "src/components/organisms";
-import { Card } from "src/components/molecules";
-import { Board, ImgWrapper, OverlapDiv } from "styles/globals";
+import { useIcons } from "util/hooks";
+import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
 import { Button } from "src/components/atoms";
+import { Card } from "src/components/molecules";
+import { Layout } from "src/components/organisms";
 
 export default function Home({ posts }: any) {
   return (
@@ -25,7 +25,10 @@ export default function Home({ posts }: any) {
         </OverlapDiv>
       </ImgWrapper>
       <section>
-        <Board>
+        <Link href="/view">
+          <h2>{useIcons("arrowRight", "18")} view more</h2>
+        </Link>
+        <CardLayout>
           {posts &&
             posts.map((item: any, i: any) => {
               return (
@@ -36,17 +39,22 @@ export default function Home({ posts }: any) {
                 </Link>
               );
             })}
-        </Board>
+        </CardLayout>
       </section>
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
-  let DEV_URL = process.env.DEV_URL;
+  const DEV_URL = process.env.DEV_URL;
+  let myHeaders = new Headers({
+    "Content-Type": "text/html; charset=utf-8",
+  });
+  myHeaders.append("viewType", "VIEW_TOTAL");
 
   let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
+    headers: myHeaders,
   });
   let data = await response.json();
 
