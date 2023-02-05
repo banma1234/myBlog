@@ -28,9 +28,9 @@ const FooterComponent: React.FC = () => {
           </li>
         </FooterMenu>
         <FooterAsideMenu>
-          <Button color="green" ButtonType="small">
+          {/* <Button color="green" ButtonType="small">
             {useIcons("enter", "16")} &nbsp; Go
-          </Button>
+          </Button> */}
         </FooterAsideMenu>
       </FooterContainer>
     </StyledFooter>
