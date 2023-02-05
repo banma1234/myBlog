@@ -15,8 +15,6 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       props.color == "low"
         ? "black"
         : "white"};
-      width: ${width[temp]};
-      height: ${height[temp]};
       cursor: "pointer";
       position: relative;
       margin: 10px;
@@ -24,6 +22,19 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       border-radius: 1rem;
       overflow: hidden;
       box-shadow: 0 7px 10px rgb(0 0 0 / 10%);
+      height: ${height[temp]};
+      width: 270px;
+      @media all and (max-width: 1300px) {
+        width: 270px;
+      }
+      @media all and (max-width: 935px) {
+        width: 285px;
+        margin: 5;
+      }
+      @media all and (max-width: 670px) {
+        width: 400px;
+        height: 350px;
+      }
       @keyframes cardUp {
         0% {
           top: 0;
@@ -47,11 +58,28 @@ export const ImageWrapper = styled.div`
   width: 100%;
   height: 200px;
   overflow: hidden;
+  @media all and (max-width: 670px) {
+    height: 280px;
+  }
 `;
 
 export const Post = styled.div`
-  display: flex;
+  display:flex;
+  flex-direction: column;
   padding: 10px;
-  margin-top: -1.5rem;
-  justify-content: space-between;
+`;
+
+export const TitleBox = styled.div`
+  height: 40px;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const InfoBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;

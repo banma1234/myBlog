@@ -16,7 +16,7 @@ export const FooterContainer = styled.div`
   border-color: ${useColor("green")};
   color: ${useColor("gray")};
   grid-template-columns: 160px 1fr 8rem;
-  @media all and (max-width: 768px) {
+  @media all and (max-width: 935px) {
     grid-template-columns: 1fr 8rem;
   }
 `;

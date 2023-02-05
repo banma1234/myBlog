@@ -12,7 +12,7 @@ export const Container = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1100px 1fr;
-  @media all and (max-width: 1100px) {
+  @media all and (max-width: 1300px) {
     grid-template-columns: 0% 100% 0%;
   }
 `;
@@ -20,6 +20,7 @@ export const Container = styled.div`
 export const Article = styled.div`
   min-height: 50rem;
   padding-top: 2rem;
+  padding: 1rem;
   a {
     &:hover {
       transition: all 0.3s;
