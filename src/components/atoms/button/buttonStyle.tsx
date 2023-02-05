@@ -4,7 +4,7 @@ import { ButtonType, ObjType } from "./buttonType";
 
 const StyledButton = styled.button.attrs(props => ({}))<ButtonType>`
   ${props => {
-    const width: ObjType = { default: "200px", small: "80px", login: "100%" };
+    const width: ObjType = { default: "200px", small: "100px", login: "100%" };
     const height: ObjType = { default: "50px", small: "45px", login: "50px" };
 
     const typeHandler = props.ButtonType;
