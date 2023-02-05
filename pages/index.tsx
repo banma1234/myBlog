@@ -11,7 +11,7 @@ export default function Home({ posts }: any) {
   return (
     <Layout>
       <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" priority />
+        <Image src={imgUrl} alt="card Img" width={"1200"}/>
         <OverlapDiv>
           <Button
             color="high"
@@ -34,7 +34,7 @@ export default function Home({ posts }: any) {
               return (
                 <Link href={`/posts/${item.title}`} key={i}>
                   <Card type="default" color="low">
-                    <h3>{item.title}</h3>
+                    {item.title}
                   </Card>
                 </Link>
               );
@@ -45,7 +45,7 @@ export default function Home({ posts }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
