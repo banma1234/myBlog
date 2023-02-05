@@ -21,16 +21,20 @@ export const Globals = {
 
 export const CardLayout = styled.div`
   display: grid;
-  padding: 2rem;
+  padding:1rem;
   margin-top: -2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  @media all and (max-width: 1100px) {
+  /* grid-row-gap: 40px;
+  row-gap: 40px;
+  grid-column-gap: 20px;
+  column-gap: 20px; */
+  @media all and (max-width: 1300px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
-  @media all and (max-width: 768px) {
+  @media all and (max-width: 935px) {
     grid-template-columns: 1fr 1fr;
   }
-  @media all and (max-width: 576px) {
+  @media all and (max-width: 670px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -39,14 +43,15 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
   ${props => {
     return css`
       position: relative;
-      width: ${props.type == "profile" ? "160px" : "100%"};
+      width: ${props.type == "profile" ? "160px" : "935px"};
+      margin: 0 auto;
       margin-top: ${props.type == "profile" ? "0" : "-2rem"};
       margin-bottom: ${props.type == "profile" ? "0" : "5.5rem"};
       border-radius: ${props.type == "profile" ? "100%" : "0"};
       overflow: hidden;
-      @media all and (max-width: 768px) {
+      @media all and (max-width: 935px) {
         display: none;
-      } ;
+      };
     `;
   }};
 `;
@@ -54,7 +59,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
 export const OverlapDiv = styled.div`
   position: absolute;
   top: 70%;
-  left: 450px;
+  left: 375px;
   transform: translate(50% 50%);
   z-index: 9990;
 `;
