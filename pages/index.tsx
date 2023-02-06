@@ -11,7 +11,7 @@ export default function Home({ posts }: any) {
   return (
     <Layout>
       <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" width={"1200"}/>
+        <Image src={imgUrl} alt="card Img" width={"1200"} />
         <OverlapDiv>
           <Button
             color="high"
@@ -24,23 +24,21 @@ export default function Home({ posts }: any) {
           </Button>
         </OverlapDiv>
       </ImgWrapper>
-      <section>
-        <Link href="/view">
-          <h2>{useIcons("arrowRight", "18")} view more</h2>
-        </Link>
-        <CardLayout>
-          {posts &&
-            posts.map((item: any, i: any) => {
-              return (
-                <Link href={`/posts/${item.title}`} key={i}>
-                  <Card type="default" color="low">
-                    {item.title}
-                  </Card>
-                </Link>
-              );
-            })}
-        </CardLayout>
-      </section>
+      <Link href="/view">
+        <h2>{useIcons("arrowRight", "18")} view more</h2>
+      </Link>
+      <CardLayout>
+        {posts &&
+          posts.map((item: any, i: any) => {
+            return (
+              <Link href={`/posts/${item.title}`} key={i}>
+                <Card type="default" color="low">
+                  {item.title}
+                </Card>
+              </Link>
+            );
+          })}
+      </CardLayout>
     </Layout>
   );
 }
