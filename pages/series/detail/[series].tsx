@@ -2,11 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { CardLayout } from "styles/globals";
 import { Card } from "src/components/molecules";
-import { Layout } from "src/components/organisms";
 
 export default function Series({ posts }: any) {
   return (
-    <Layout>
+    <>
       <Head>
         <title>{posts[0].series}</title>
       </Head>
@@ -18,14 +17,14 @@ export default function Series({ posts }: any) {
           posts.map((item: any, i: any) => {
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card type="default" color="low">
+                <Card type="default" color="low" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
             );
           })}
       </CardLayout>
-    </Layout>
+    </>
   );
 }
 

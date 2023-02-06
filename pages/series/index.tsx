@@ -2,11 +2,10 @@ import Link from "next/link";
 import { CardLayout } from "styles/globals";
 import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
-import { Layout } from "src/components/organisms";
 
 export default function Board({ series }: any) {
   return (
-    <Layout>
+    <>
       <Link href="/view">
         <Button color="gray" ButtonType="small" onClick={null}>
           Total view
@@ -22,14 +21,18 @@ export default function Board({ series }: any) {
           series.map((item: any, i: any) => {
             return (
               <Link href={`/series/detail/${item.series}`} key={i}>
-                <Card type="default" color="low">
-                  <h3>{item.series}</h3>
+                <Card
+                  type="default"
+                  color="low"
+                  info={`${item.count}개의 게시물`}
+                >
+                  {item.series}
                 </Card>
               </Link>
             );
           })}
       </CardLayout>
-    </Layout>
+    </>
   );
 }
 

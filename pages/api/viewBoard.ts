@@ -67,6 +67,7 @@ async function viewSeries(req: any, res: any) {
           },
         },
       ])
+      .sort({ _id: -1 })
       .toArray()
       .then((docs: any) => {
         docs.forEach((item: any) => {
@@ -76,6 +77,7 @@ async function viewSeries(req: any, res: any) {
           });
         });
       });
+
     // return the posts
     return res.json({
       message: result,

@@ -1,8 +1,8 @@
-import { Layout } from "src/components/organisms";
 import { Editor } from "src/components/molecules";
 import { Button, Input } from "src/components/atoms";
 import { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import parseDate from "util/parseDate";
 
 export default function Write() {
   const [title, setTitle] = useState("");
@@ -28,13 +28,11 @@ export default function Write() {
     setError("");
     if (!title || !content) return setError("제목 / 내용을 입력해주세요");
 
-    const writter = "chocoham";
     let post = {
       title,
       content,
       series,
-      writter,
-      uploadDate: new Date().toISOString(),
+      uploadDate: parseDate(new Date()),
     };
 
     let response = await fetch("/api/posts", {
@@ -55,7 +53,7 @@ export default function Write() {
   };
 
   return (
-    <Layout>
+    <>
       <Input
         size="default"
         placeholder="Series"
@@ -72,6 +70,6 @@ export default function Write() {
       <Button ButtonType="small" color="green" onClick={handlePost}>
         Submit
       </Button>
-    </Layout>
+    </>
   );
 }

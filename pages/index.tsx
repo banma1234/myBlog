@@ -5,11 +5,10 @@ import { useIcons } from "util/hooks";
 import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
 import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
-import { Layout } from "src/components/organisms";
 
 export default function Home({ posts }: any) {
   return (
-    <Layout>
+    <>
       <ImgWrapper type="banner">
         <Image src={imgUrl} alt="card Img" width={"1200"} />
         <OverlapDiv>
@@ -32,14 +31,14 @@ export default function Home({ posts }: any) {
           posts.map((item: any, i: any) => {
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card type="default" color="low">
+                <Card type="default" color="low" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
             );
           })}
       </CardLayout>
-    </Layout>
+    </>
   );
 }
 
