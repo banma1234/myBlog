@@ -21,7 +21,7 @@ export const Globals = {
 
 export const CardLayout = styled.div`
   display: grid;
-  padding:1rem;
+  padding: 1rem;
   margin-top: -2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   /* grid-row-gap: 40px;
@@ -51,7 +51,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
       overflow: hidden;
       @media all and (max-width: 935px) {
         display: none;
-      };
+      } ;
     `;
   }};
 `;
