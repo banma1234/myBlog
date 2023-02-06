@@ -51,7 +51,7 @@ async function getPosts(req: any, res: any) {
       .toArray();
     // return the posts
     return res.json({
-      message: JSON.parse(JSON.stringify(posts)),
+      message: posts,
       success: true,
     });
   } catch (error: any) {

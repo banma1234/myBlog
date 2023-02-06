@@ -8,6 +8,8 @@ export default async function boardHandler(req: any, res: any) {
     return viewAll(req, res);
   } else if (viewType == "VIEW_SERIES") {
     return viewSeries(req, res);
+  } else {
+    return viewSeriesDetail(req, res);
   }
 }
 
@@ -17,7 +19,7 @@ async function viewAll(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1 }
+      projection: { _id: 0, title: 1, uploadDate: 1 },
     };
     // fetch the posts
     let posts = await db
@@ -45,31 +47,66 @@ async function viewSeries(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, series: 1 }
+      projection: { _id: 0, series: 1 },
     };
     // fetch the posts
     let result: any = [];
-    await db.collection("posts").aggregate([
-      { $group: {
-        _id: "$series",
-        unique_id: { $addToSet: "$series" },
-        count: { $sum: 1 }
-      }}, 
-      { $match: {
-        count: { $gte: 1 }
-      }}
-    ]).toArray().then((docs: any) => {
-      docs.forEach((item: any) => {
-        result.push({ 
-          series: (item["_id"]),
-          count: (item["count"])
-         })
-      })
-    })
-    console.log(result)
+    await db
+      .collection("posts")
+      .aggregate([
+        {
+          $group: {
+            _id: "$series",
+            unique_id: { $addToSet: "$series" },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $match: {
+            count: { $gte: 1 },
+          },
+        },
+      ])
+      .toArray()
+      .then((docs: any) => {
+        docs.forEach((item: any) => {
+          result.push({
+            series: item["_id"],
+            count: item["count"],
+          });
+        });
+      });
     // return the posts
     return res.json({
       message: result,
+      success: true,
+    });
+  } catch (error: any) {
+    // return the error
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    });
+  }
+}
+
+async function viewSeriesDetail(req: any, res: any) {
+  try {
+    let selectedSeries = decodeURI(req.headers.viewtype);
+    const options = {
+      sort: { uploadDate: -1 },
+      projection: { _id: 0, series: 1, title: 1, uploadDate: 1 },
+    };
+    // connect to the database
+    let { db } = await connectToDatabase();
+    // fetch the posts
+    let posts = await db
+      .collection("posts")
+      .find({ series: selectedSeries }, options)
+      .toArray();
+    // return the posts
+    return res.json({
+      message: JSON.parse(JSON.stringify(posts)),
       success: true,
     });
   } catch (error: any) {
