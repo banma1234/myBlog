@@ -11,7 +11,7 @@ const CardComponent: React.FC<CardType> = (props: CardType) => {
       </ImageWrapper>
       <Post>
         <TitleBox>{props.children}</TitleBox>
-        <InfoBox>test</InfoBox>
+        <InfoBox>{props.info}</InfoBox>
       </Post>
     </StyledCard>
   );

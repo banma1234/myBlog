@@ -12,7 +12,7 @@ const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
         <Container>
           <nav>
             <Aside>
-              <NavBar />
+              <NavBar series={props.series} />
             </Aside>
           </nav>
           <article>
