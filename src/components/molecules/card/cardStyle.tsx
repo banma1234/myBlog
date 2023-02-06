@@ -64,7 +64,7 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Post = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   padding: 10px;
 `;

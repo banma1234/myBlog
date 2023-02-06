@@ -4,7 +4,7 @@ const NavBarComponent: React.FC = ({ series }: any) => {
   return (
     <StyledNavBar>
       <h1>navBar</h1>
-        {/* {series &&
+      {/* {series &&
           series.map((item: any, i: any) => {
             return (
               <h3>{item}</h3>
