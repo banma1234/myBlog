@@ -1,29 +1,25 @@
+import Head from "next/head";
 import Link from "next/link";
 import { CardLayout } from "styles/globals";
-import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
 import { Layout } from "src/components/organisms";
 
-export default function Board({ series }: any) {
+export default function Series({ posts }: any) {
   return (
     <Layout>
-      <Link href="/view">
-        <Button color="gray" ButtonType="small" onClick={null}>
-          Total view
-        </Button>
-      </Link>
-      <Link href="/series">
-        <Button color="green" ButtonType="small" onClick={null}>
-          Series
-        </Button>
-      </Link>
+      <Head>
+        <title>{posts[0].series}</title>
+      </Head>
+      <h1>{posts[0].series}</h1>
+      <hr />
+      <br />
       <CardLayout>
-        {series &&
-          series.map((item: any, i: any) => {
+        {posts &&
+          posts.map((item: any, i: any) => {
             return (
-              <Link href={`/series/detail/${item.series}`} key={i}>
+              <Link href={`/posts/${item.title}`} key={i}>
                 <Card type="default" color="low">
-                  <h3>{item.series}</h3>
+                  {item.title}
                 </Card>
               </Link>
             );
@@ -33,12 +29,12 @@ export default function Board({ series }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
   const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
-  myHeaders.append("viewType", "VIEW_SERIES");
+  myHeaders.append("viewType", encodeURI(context.params.series));
 
   let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
@@ -48,7 +44,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      series: data["message"],
+      posts: data["message"],
     },
   };
 }

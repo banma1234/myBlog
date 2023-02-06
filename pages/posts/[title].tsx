@@ -8,10 +8,8 @@ export default function Post({ post }: any) {
       <Head>
         <title>{post[0].title}</title>
       </Head>
-      <article>
-        <h1>{post[0].title}</h1>
-        <MarkdownReader style={{ padding: 25 }} source={post[0].content} />
-      </article>
+      <h1>{post[0].title}</h1>
+      <MarkdownReader style={{ padding: 25 }} source={post[0].content} />
     </Layout>
   );
 }
