@@ -47,7 +47,7 @@ export async function getStaticProps() {
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
-  myHeaders.append("viewType", "VIEW_TOTAL");
+  myHeaders.append("viewType", "VIEW_INDEX");
 
   let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
@@ -59,5 +59,6 @@ export async function getStaticProps() {
     props: {
       posts: data["message"],
     },
+    revalidate: 10,
   };
 }
