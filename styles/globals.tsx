@@ -24,10 +24,6 @@ export const CardLayout = styled.div`
   padding: 1rem;
   margin-top: -2rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  /* grid-row-gap: 40px;
-  row-gap: 40px;
-  grid-column-gap: 20px;
-  column-gap: 20px; */
   @media all and (max-width: 1300px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -62,4 +58,13 @@ export const OverlapDiv = styled.div`
   left: 375px;
   transform: translate(50% 50%);
   z-index: 9990;
+`;
+
+export const ButtonLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  row-gap: 10rem;
+  padding: 1rem;
+  margin: 1rem;
 `;
