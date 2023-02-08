@@ -1,14 +1,15 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-export default function Post({ post }: any) {
+export default function Post({ data }: any) {
   return (
     <>
       <Head>
-        <title>{post[0].title}</title>
+        <title>{data.post[0].title}</title>
       </Head>
-      <h1>{post[0].title}</h1>
-      <MarkdownReader style={{ padding: 25 }} source={post[0].content} />
+      <h1>{data.post[0].title}</h1>
+      <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
+      <button onClick={()=>console.log(data.comment)}>click here!</button>
     </>
   );
 }
@@ -28,15 +29,24 @@ export async function getServerSideProps(context: any) {
   });
   myHeaders.append("postName", encodeURI(context.params.title));
 
-  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
+  let response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
     method: "GET",
     headers: myHeaders,
   });
-  let data = await response.json();
+  let postData = await response_Post.json();
+
+  let response_Comment = await fetch(`${DEV_URL ? DEV_URL : ""}/api/comments`, {
+    method: "GET",
+    headers: myHeaders,
+  });
+  let commentData = await response_Comment.json();
 
   return {
     props: {
-      post: data["message"],
+      data: {
+        post: postData["message"],
+        comment: commentData["message"]
+      }
     },
   };
 }

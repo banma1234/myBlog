@@ -1,21 +1,23 @@
 import Link from "next/link";
-import { CardLayout } from "styles/globals";
+import { CardLayout, ButtonLayout } from "styles/globals";
 import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
 
 export default function Board({ series }: any) {
   return (
     <>
+      <ButtonLayout>
       <Link href="/view">
         <Button color="gray" ButtonType="small" onClick={null}>
           Total view
         </Button>
       </Link>
       <Link href="/series">
-        <Button color="green" ButtonType="small" onClick={null}>
+        <Button color="high" ButtonType="small" onClick={null}>
           Series
         </Button>
       </Link>
+      </ButtonLayout>
       <CardLayout>
         {series &&
           series.map((item: any, i: any) => {
