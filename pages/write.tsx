@@ -1,6 +1,6 @@
 import { Editor } from "src/components/molecules";
 import { Button, Input } from "src/components/atoms";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import parseDate from "util/parseDate";
 
@@ -20,6 +20,7 @@ export default function Write() {
     setTitle("");
     setContent("");
     setSeries("");
+    setError("");
   };
 
   const handlePost = async (e: any) => {
@@ -58,12 +59,14 @@ export default function Write() {
         size="default"
         placeholder="Series"
         value={series}
+        type="string"
         onChange={(e: any) => setSeries(e.target.value)}
       />
       <Input
         size="default"
         placeholder="Title"
         value={title}
+        type="string"
         onChange={(e: any) => setTitle(e.target.value)}
       />
       <Editor height={500} value={content} onChange={handleChange} />
