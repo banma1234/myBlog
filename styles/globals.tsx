@@ -68,3 +68,9 @@ export const ButtonLayout = styled.div`
   padding: 1rem;
   margin: 1rem;
 `;
+
+export const FlexEndComponent = styled.div`
+  margin: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+`;
