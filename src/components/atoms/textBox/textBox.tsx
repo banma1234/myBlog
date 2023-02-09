@@ -3,9 +3,7 @@ import { TextBoxType } from './textBoxType';
 
 const TextBoxComponent: React.FC<TextBoxType> = (props: TextBoxType) => {
     return(
-        <StyledTextBox {...props}>
-            {props.children}
-        </StyledTextBox>
+        <StyledTextBox {...props} value={props.value} onChange={props.onChange} placeholder={props.placeholder}/>
     );
 }
 

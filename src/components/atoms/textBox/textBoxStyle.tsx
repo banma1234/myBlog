@@ -3,8 +3,11 @@ import { useColor } from "util/hooks";
 
 const StyledTextBox = styled.textarea`
     width: 90%;
-    padding: 5px;
+    height: 6rem;
+    padding: 1rem;
+    overflow: auto;
     outline: none;
+    margin: 0 auto;
     background-color: ${useColor("gray")};  
 `;
 
