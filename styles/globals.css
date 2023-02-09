@@ -34,3 +34,8 @@ h2 {
   line-height: 1.4;
   margin: 1rem 0;
 }
+
+hr{
+  background-color: #00887a;
+  border: 1px solid #00887a;
+}
