@@ -1,3 +1,4 @@
 export interface CommentBoxType {
-    children: string;
+    data: any;
+    children: any;
 }

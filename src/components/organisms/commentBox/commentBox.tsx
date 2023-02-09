@@ -1,11 +1,19 @@
-import { CommentContainer } from './commentBoxStyle';
+import { CommentContainer, UserComment, Content, CommentDate } from './commentBoxStyle';
 import { CommentBoxType } from './commentBoxType';
-import { TextBox } from 'src/components/atoms';
 
 const CommentBoxComponent: React.FC<CommentBoxType> =( props: CommentBoxType) => {
+    let comments = props.data;
     return(
         <CommentContainer>
-            <TextBox>{props.children}</TextBox>
+            { comments && comments.map((item: any) => {
+                return(
+                    <UserComment>
+                        <Content>{item.content}</Content>
+                        <CommentDate>{item.date}</CommentDate>
+                    </UserComment>
+                )
+            }) }
+            {props.children}
         </CommentContainer>
     );
 }
