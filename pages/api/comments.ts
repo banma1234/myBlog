@@ -21,13 +21,24 @@ export default async function commentHandler(req: any, res: any) {
 async function getComment(req: any, res: any) {
   try {
     let title = decodeURI(req.headers.postname);
-    console.log(title)
     // connect to the database
     let { db } = await connectToDatabase();
+    const options = {
+      sort: { REF: 1, RE_STEP: 1, RE_LEVEL: 1 },
+      projection: {
+        _id: 0,
+        REF: 1,
+        RE_STEP: 1,
+        RE_LEVEL: 1,
+        writter: 1,
+        content: 1,
+        date: 1,
+      },
+    };
     // fetch the comments
     let comments = await db
       .collection("comments")
-      .find({ postName: title })
+      .find({ postName: title }, options)
       .toArray();
     // return the comments
     return res.json({
