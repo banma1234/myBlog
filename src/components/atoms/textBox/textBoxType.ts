@@ -1,5 +1,5 @@
 export interface TextBoxType {
-    value: string;
-    placeholder: string;
-    onChange: any;
+  value: string;
+  placeholder: string;
+  onChange: any;
 }

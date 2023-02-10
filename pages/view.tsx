@@ -19,15 +19,16 @@ export default function Board({ posts }: any) {
         </Link>
       </ButtonLayout>
       <CardLayout>
-        { posts && posts.map((item :any, i: any) => {
-          return(
-            <Link href={`/posts/${item.title}`} key={i}>
-              <Card type="default" color="low" info={item.uploadDate}>
-                {item.title}
-              </Card>
-            </Link>
-          )
-        }) }
+        {posts &&
+          posts.map((item: any, i: any) => {
+            return (
+              <Link href={`/posts/${item.title}`} key={i}>
+                <Card type="default" color="low" info={item.uploadDate}>
+                  {item.title}
+                </Card>
+              </Link>
+            );
+          })}
       </CardLayout>
     </>
   );

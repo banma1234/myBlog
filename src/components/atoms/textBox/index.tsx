@@ -1,6 +1,8 @@
-import TextBoxComponent from './textBox';
-import { TextBoxType } from './textBoxType';
+import TextBoxComponent from "./textBox";
+import { TextBoxType } from "./textBoxType";
 
-const TextBox: React.FC<TextBoxType> = (props: TextBoxType) => <TextBoxComponent {...props}/>;
+const TextBox: React.FC<TextBoxType> = (props: TextBoxType) => (
+  <TextBoxComponent {...props} />
+);
 
 export default TextBox;

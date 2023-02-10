@@ -52,10 +52,7 @@ async function viewAll(req: any, res: any) {
       projection: { _id: 0, title: 1, uploadDate: 1 },
     };
     // fetch the posts
-    let posts = await db
-      .collection("posts")
-      .find({}, options)
-      .toArray();
+    let posts = await db.collection("posts").find({}, options).toArray();
     // return the posts
     return res.json({
       message: posts,
