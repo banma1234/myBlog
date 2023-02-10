@@ -2,9 +2,9 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { CommentBox } from 'src/components/organisms';
-import { TextBox, Button, Input } from 'src/components/atoms';
-import { ButtonLayout, FlexEndComponent } from "styles/globals";
+import { CommentBox } from "src/components/organisms";
+import { TextBox, Button, Input } from "src/components/atoms";
+import { ButtonLayout, FlexEndComponent, AddCommentBox } from "styles/globals";
 import parseDate from "util/parseDate";
 
 export default function Post({ data }: any) {
@@ -18,7 +18,15 @@ export default function Post({ data }: any) {
   const initData = () => {
     setContent("");
     setError("");
-  }
+  };
+
+  const checkLastComment = () => {
+    if (data.comment && data.comment.length) {
+      return data.comment.slice(-1)[0].REF + 1;
+    } else {
+      return 1;
+    }
+  };
 
   const handleComment = async (e: any) => {
     e.preventDefault();
@@ -27,7 +35,7 @@ export default function Post({ data }: any) {
     if (!content) return setError("댓글을 입력해주세요");
 
     let comment = {
-      REF: 3,
+      REF: checkLastComment(),
       RE_STEP: 0,
       RE_LEVEL: 0,
       date: parseDate(new Date()),
@@ -35,7 +43,7 @@ export default function Post({ data }: any) {
       content,
       password,
       postName: data.post[0].title,
-    }
+    };
 
     let response = await fetch("/api/comments", {
       method: "POST",
@@ -46,12 +54,12 @@ export default function Post({ data }: any) {
 
     if (responseData.success) {
       initData();
-      router.replace(router.asPath)
+      router.replace(router.asPath);
     } else {
       alert(responseData.message);
       return setError(responseData.message);
     }
-  }
+  };
 
   return (
     <>
@@ -60,30 +68,37 @@ export default function Post({ data }: any) {
       </Head>
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
-      <CommentBox data={data.comment} >
-        <hr/>
-        <ButtonLayout>
-          <Input
-            size="small"
-            placeholder="닉네임"
-            value={writter}
-            type="text"
-            onChange={(e: any) => setWritter(e.target.value)}
+      <CommentBox data={data.comment}>
+        <AddCommentBox>
+          <hr />
+          <ButtonLayout>
+            <Input
+              size="small"
+              placeholder="닉네임"
+              value={writter}
+              type="text"
+              onChange={(e: any) => setWritter(e.target.value)}
+            />
+            <Input
+              size="small"
+              placeholder="비밀번호"
+              value={password}
+              type="password"
+              onChange={(e: any) => setPassword(e.target.value)}
+            />
+          </ButtonLayout>
+          <TextBox
+            placeholder="댓글 입력"
+            value={content}
+            onChange={(e: any) => setContent(e.target.value)}
           />
-          <Input
-            size="small"
-            placeholder="비밀번호"
-            value={password}
-            type="password"
-            onChange={(e: any) => setPassword(e.target.value)}
-          />
-        </ButtonLayout>
-        <TextBox placeholder="댓글 입력" value={content} onChange={(e: any) => setContent(e.target.value)} />
-        <FlexEndComponent>
-        <Button color="green" ButtonType="small" onClick={handleComment}>Submit</Button>
-        </FlexEndComponent>
+          <FlexEndComponent>
+            <Button color="green" ButtonType="small" onClick={handleComment}>
+              Submit
+            </Button>
+          </FlexEndComponent>
+        </AddCommentBox>
       </CommentBox>
-      
     </>
   );
 }
@@ -119,8 +134,8 @@ export async function getServerSideProps(context: any) {
     props: {
       data: {
         post: postData["message"],
-        comment: commentData["message"]
-      }
+        comment: commentData["message"],
+      },
     },
   };
 }
