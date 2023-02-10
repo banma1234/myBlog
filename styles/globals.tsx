@@ -23,6 +23,7 @@ export const CardLayout = styled.div`
   display: grid;
   padding: 1rem;
   margin-top: -2rem;
+  margin-bottom: 5rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   @media all and (max-width: 1300px) {
     grid-template-columns: 1fr 1fr 1fr;
@@ -66,11 +67,20 @@ export const ButtonLayout = styled.div`
   justify-content: flex-start;
   row-gap: 10rem;
   padding: 1rem;
-  margin: 1rem;
+  padding-left: 0;
+  margin-bottom: 1rem;
 `;
 
 export const FlexEndComponent = styled.div`
   margin: 0.5rem;
   display: flex;
   justify-content: flex-end;
+`;
+
+export const AddCommentBox = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  width: 100%;
+  align-items: none;
 `;
