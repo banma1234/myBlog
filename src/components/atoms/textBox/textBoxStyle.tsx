@@ -3,7 +3,7 @@ import { useColor } from "util/hooks";
 
 const StyledTextBox = styled.textarea`
   width: 100%;
-  height: 8rem;
+  height: 7.5rem;
   overflow: auto;
   outline: none;
   border: none;
