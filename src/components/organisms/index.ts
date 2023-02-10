@@ -8,4 +8,4 @@ const Organisms = {
 
 export default Organisms;
 
-export { Layout, CommentBox, };
+export { Layout, CommentBox };
