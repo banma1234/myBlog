@@ -12,6 +12,7 @@ const StyledInput = styled.input.attrs(props => ({}))<inputType>`
       width: ${props.size == "small" ? "12rem" : "90%"};
       height: ${height[props.size]};
       border: none;
+      border-radius: 0.3rem;
       padding: 10px;
       margin-right: 1rem;
       margin-bottom: -1rem;
