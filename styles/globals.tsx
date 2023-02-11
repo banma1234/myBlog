@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { ObjType } from "./globalsType";
 
 export const Globals = {
   palette: {
@@ -38,16 +39,21 @@ export const CardLayout = styled.div`
 
 export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
   ${props => {
+    const width: ObjType = {
+      profile: "300px",
+      profile_big: "160px",
+      banner: "935px",
+    };
     return css`
       position: relative;
-      width: ${props.type == "profile" ? "160px" : "935px"};
+      width: ${width[props.type]}
       margin: 0 auto;
-      margin-top: ${props.type == "profile" ? "0" : "-2rem"};
-      margin-bottom: ${props.type == "profile" ? "0" : "5.5rem"};
-      border-radius: ${props.type == "profile" ? "100%" : "0"};
+      margin-top: ${props.type == "banner" ? "-2rem" : "0"};
+      margin-bottom: ${props.type == "banner" ? "5.5rem" : "0"};
+      border-radius: ${props.type == "banner" ? "0" : "100%"};
       overflow: hidden;
       @media all and (max-width: 935px) {
-        display: none;
+        display: ${props.type == "profile" ? "block" : "none"}
       } ;
     `;
   }};
