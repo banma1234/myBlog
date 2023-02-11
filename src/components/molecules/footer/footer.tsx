@@ -15,7 +15,7 @@ const FooterComponent: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <ImgWrapper type="profile">
+        <ImgWrapper type="profile_big">
           <Image src={imgUrl} alt="profile img" priority />
         </ImgWrapper>
         <FooterMenu>
