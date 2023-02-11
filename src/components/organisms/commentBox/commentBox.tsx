@@ -1,32 +1,58 @@
 import {
   CommentContainer,
-  UserComment,
+  Comments,
   Content,
   CommentDate,
+  CommentWritter,
+  CommentMenu,
+  Temp,
+  CommentInfo,
 } from "./commentBoxStyle";
 import { CommentBoxType } from "./commentBoxType";
-import { Button } from "src/components/atoms";
+import { UserComment } from "src/components/molecules";
+import { ImgWrapper } from "styles/globals";
+import Image from "next/legacy/image";
+import imgUrl from "public/testImg.jpg";
+import { useState } from "react";
+import { useIcons } from "util/hooks";
 
 const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
 ) => {
   let comments = props.data;
-  let temp: any = [];
+  const [click, isClick] = useState(false);
+  const [commentLevel, setCommentLevel] = useState([]);
+
   return (
     <CommentContainer>
       {comments &&
         comments.map((item: any) => {
           return (
             <>
-              <UserComment level={item.RE_LEVEL * 5}>
-                {item.writter}
-                <Content>{item.content}</Content>
-                <CommentDate>{item.date}</CommentDate>
-              </UserComment>
+              <Comments level={item.RE_LEVEL * 6}>
+                <Temp>
+                  <ImgWrapper type="profile">
+                    <Image src={imgUrl} alt="comment profile" priority />
+                  </ImgWrapper>
+                </Temp>
+                <Content>
+                  <CommentInfo>
+                    <CommentWritter>{item.writter}</CommentWritter>
+                    <CommentDate>{item.date}</CommentDate>
+                  </CommentInfo>
+                  {item.content}
+                </Content>
+                <CommentMenu>{useIcons("menu", "18")}</CommentMenu>
+              </Comments>
+              {() => {
+                if (click) {
+                  return <UserComment data={item} level={null} type="reply" />;
+                }
+              }}
             </>
           );
         })}
-      {props.children}
+      <UserComment data={props.data} level={null} type="default" />
     </CommentContainer>
   );
 };
