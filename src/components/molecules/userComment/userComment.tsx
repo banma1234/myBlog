@@ -18,6 +18,8 @@ const UserCommentComponent: React.FC<UserCommentType> = (
 
   const initData = () => {
     setContent("");
+    setWritter("");
+    setPassword("");
     setError("");
   };
 
@@ -31,21 +33,13 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     }
   };
 
-  const RE_STEP_handler = () => {
-    if (props.type == "DEFAULT") {
-      return 0;
-    } else if (props.data && props.type == "REPLY") {
-      return props.data.RE_STEP + 1;
-    }
-  }
-
   const RE_LEVEL_handler = () => {
     if (props.type == "DEFAULT") {
       return 0;
     } else if (props.data && props.type == "REPLY") {
       return props.data.RE_LEVEL + 1;
     }
-  }
+  };
 
   const handleComment = async (e: any) => {
     e.preventDefault();
@@ -58,7 +52,7 @@ const UserCommentComponent: React.FC<UserCommentType> = (
 
     let comment = {
       REF: REF_handler(),
-      RE_STEP: RE_STEP_handler(),
+      RE_STEP: 0,
       RE_LEVEL: RE_LEVEL_handler(),
       date: parseDate(new Date()),
       writter,
@@ -77,6 +71,7 @@ const UserCommentComponent: React.FC<UserCommentType> = (
 
     if (responseData.success) {
       initData();
+      alert("댓글등록 완료");
       router.replace(router.asPath);
     } else {
       alert(responseData.message);

@@ -24,7 +24,7 @@ async function getComment(req: any, res: any) {
     // connect to the database
     let { db } = await connectToDatabase();
     const options = {
-      sort: { REF: 1, RE_STEP: 1, RE_LEVEL: 1 },
+      sort: { REF: 1, RE_STEP: 1 },
       projection: {
         REF: 1,
         RE_STEP: 1,
@@ -54,7 +54,7 @@ async function getComment(req: any, res: any) {
 }
 
 async function addComment(req: any, res: any) {
-  let commentType = req.headers.commentType;
+  let commentType = req.headers.commenttype;
   try {
     // connect to the database
     let { db } = await connectToDatabase();
@@ -63,24 +63,31 @@ async function addComment(req: any, res: any) {
         await db.collection("comments").insertOne(JSON.parse(req.body));
       }
       case "REPLY": {
-        await db.collection("comments")
-          .update( 
-            { 
-              REF: req.body.REF,
-              RE_STEP: { 
-                $gte: req.body.RE_STEP 
-              }
-            },
-            {
-              $set: {
-                RE_STEP: { 
-                  $inc: { RE_STEP: 1 }
-                 }
-              }
-            },
-            { multi: true },
-          )
-          .insertOne(JSON.parse(req.body))
+        let parentComment = await db
+          .collection("comments")
+          .find({ REF: req.body.REF }, { RE_LEVEL: req.body.RE_LEVEL })
+          .toArray();
+
+        let lastComment = parentComment.slice(-1).RE_STEP;
+        req.body.RE_STEP = lastComment + 1;
+
+        // db.updateMany(
+        //     {
+        //       REF: req.body.REF,
+        //       RE_STEP: {
+        //         $gte: req.body.RE_STEP
+        //       }
+        //     },
+        //     {
+        //       $set: {
+        //         RE_STEP: {
+        //           $inc: { RE_STEP: 1 }
+        //          }
+        //       }
+        //     }
+        //   );
+
+        db.collection("comments").insertOne(JSON.parse(req.body));
       }
     }
     // return a message
