@@ -26,7 +26,6 @@ async function getComment(req: any, res: any) {
     const options = {
       sort: { REF: 1, RE_STEP: 1, RE_LEVEL: 1 },
       projection: {
-        _id: 0,
         REF: 1,
         RE_STEP: 1,
         RE_LEVEL: 1,
@@ -55,11 +54,35 @@ async function getComment(req: any, res: any) {
 }
 
 async function addComment(req: any, res: any) {
+  let commentType = req.headers.commentType;
   try {
     // connect to the database
     let { db } = await connectToDatabase();
-    // add the comments
-    await db.collection("comments").insertOne(JSON.parse(req.body));
+    switch (commentType) {
+      case "DEFAULT": {
+        await db.collection("comments").insertOne(JSON.parse(req.body));
+      }
+      case "REPLY": {
+        await db.collection("comments")
+          .update( 
+            { 
+              REF: req.body.REF,
+              RE_STEP: { 
+                $gte: req.body.RE_STEP 
+              }
+            },
+            {
+              $set: {
+                RE_STEP: { 
+                  $inc: { RE_STEP: 1 }
+                 }
+              }
+            },
+            { multi: true },
+          )
+          .insertOne(JSON.parse(req.body))
+      }
+    }
     // return a message
     return res.json({
       message: "Comment added successfully",
