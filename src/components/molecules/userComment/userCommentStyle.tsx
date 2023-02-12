@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const StyledUserComment = styled.div`
+  width: 100%;
   display: flex;
   margin-top: 2rem;
   flex-direction: column;
-  width: 100%;
-  align-items: none;
+  justify-content: flex-end;
 `;

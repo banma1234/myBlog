@@ -21,33 +21,31 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     setError("");
   };
 
-  const checkLastComment = () => {
-    if (props.data && props.data.length && props.type == "default") {
+  const REF_handler = () => {
+    if (props.data && props.data.length && props.type == "DEFAULT") {
       return props.data.slice(-1)[0].REF + 1;
-    } else if (props.data && props.type == "reply") {
+    } else if (props.data && props.type == "REPLY") {
       return props.data.REF;
     } else {
       return 1;
     }
   };
 
-  // const checkCommentStep = () => {
-  //   if (props.type == "reply" && props.data.RE_STEP == 0) {
-  //     return props.data.RE_STEP + 1;
-  //   } else if (props.type == "reply") {
-  //     return props.data.RE_STEP;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
+  const RE_STEP_handler = () => {
+    if (props.type == "DEFAULT") {
+      return 0;
+    } else if (props.data && props.type == "REPLY") {
+      return props.data.RE_STEP + 1;
+    }
+  }
 
-  // const checkCommentLevel = () => {
-  //   if (props.type == "reply") {
-  //     return props.data.RE_STEP + 1;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
+  const RE_LEVEL_handler = () => {
+    if (props.type == "DEFAULT") {
+      return 0;
+    } else if (props.data && props.type == "REPLY") {
+      return props.data.RE_LEVEL + 1;
+    }
+  }
 
   const handleComment = async (e: any) => {
     e.preventDefault();
@@ -55,19 +53,23 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     setError("");
     if (!content) return setError("댓글을 입력해주세요");
 
+    let myHeaders = new Headers({});
+    myHeaders.append("commentType", props.type);
+
     let comment = {
-      REF: checkLastComment(),
-      RE_STEP: 0,
-      RE_LEVEL: 0,
+      REF: REF_handler(),
+      RE_STEP: RE_STEP_handler(),
+      RE_LEVEL: RE_LEVEL_handler(),
       date: parseDate(new Date()),
       writter,
       content,
       password,
-      postName: props.data.post[0].title,
+      postName: props.postName,
     };
 
     let response = await fetch("/api/comments", {
       method: "POST",
+      headers: myHeaders,
       body: JSON.stringify(comment),
     });
 

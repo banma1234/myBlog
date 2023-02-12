@@ -1,6 +1,6 @@
 export interface UserCommentType {
   data: any;
-  level: any;
+  postName: any;
   type: string;
   // level : {
   //     REF: any,
