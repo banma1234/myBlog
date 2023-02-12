@@ -10,7 +10,7 @@ export default function Post({ data }: any) {
       </Head>
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
-      <CommentBox data={data.comment} />
+      <CommentBox data={data.comment} postName={data.post[0].title} />
     </>
   );
 }
