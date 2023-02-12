@@ -66,7 +66,7 @@ export const CommentReply = styled.p`
   padding-top: 0.5rem;
   max-height: 1rem;
   cursor: pointer;
-`
+`;
 
 export const CommentMenu = styled.div`
   min-width: 20px;

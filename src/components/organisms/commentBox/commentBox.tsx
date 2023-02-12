@@ -28,14 +28,14 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
   useEffect(() => {
     isClick(false);
     setCommentId("");
-  }, [])
+  }, []);
 
   return (
     <StyledCommentBox>
       {comments &&
         comments.map((item: any, i: any) => {
           return (
-            <CommentContainer key = {i}>
+            <CommentContainer key={i}>
               <Comments level={item.RE_LEVEL * 6}>
                 <Temp>
                   <ImgWrapper type="profile">
@@ -50,12 +50,20 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
                   {item.content}
                 </Content>
                 <CommentMenu>{useIcons("menu", "18")}</CommentMenu>
-                <CommentReply onClick={() => {
-                  setCommentId(item._id)
-                  isClick(!click)
-                }}>&nbsp;{ click && commentId == item._id ? " 취소" :  "답글달기" }</CommentReply>
-                { click && commentId == item._id && (
-                  <UserComment postName={props.postName} data={item} type="REPLY"/>
+                <CommentReply
+                  onClick={() => {
+                    setCommentId(item._id);
+                    isClick(!click);
+                  }}
+                >
+                  &nbsp;{click && commentId == item._id ? " 취소" : "답글달기"}
+                </CommentReply>
+                {click && commentId == item._id && (
+                  <UserComment
+                    postName={props.postName}
+                    data={item}
+                    type="REPLY"
+                  />
                 )}
               </Comments>
             </CommentContainer>
