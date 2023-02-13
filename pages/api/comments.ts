@@ -58,6 +58,9 @@ async function addComment(req: any, res: any) {
   try {
     // connect to the database
     let { db } = await connectToDatabase();
+
+    let newBody = JSON.parse(req.body);
+
     switch (commentType) {
       case "DEFAULT": {
         await db.collection("comments").insertOne(JSON.parse(req.body));
@@ -65,29 +68,36 @@ async function addComment(req: any, res: any) {
       case "REPLY": {
         let parentComment = await db
           .collection("comments")
-          .find({ REF: req.body.REF }, { RE_LEVEL: req.body.RE_LEVEL })
+          .find({ REF: newBody.REF }, { RE_LEVEL: newBody.RE_LEVEL })
           .toArray();
 
-        let lastComment = parentComment.slice(-1).RE_STEP;
-        req.body.RE_STEP = lastComment + 1;
+        let lastComment = 0;
+        if (parentComment) {
+          lastComment = parentComment.slice(-1).RE_STEP;
+        } else {
+          lastComment = 1;
+        }
 
-        // db.updateMany(
-        //     {
-        //       REF: req.body.REF,
-        //       RE_STEP: {
-        //         $gte: req.body.RE_STEP
-        //       }
-        //     },
-        //     {
-        //       $set: {
-        //         RE_STEP: {
-        //           $inc: { RE_STEP: 1 }
-        //          }
-        //       }
-        //     }
-        //   );
+        newBody.RE_STEP = lastComment + 1;
 
-        db.collection("comments").insertOne(JSON.parse(req.body));
+        db.updateMany(
+            {
+              REF: newBody.REF,
+              RE_STEP: {
+                $gte: newBody.RE_STEP
+              }
+            },
+            {
+              $set: {
+                RE_STEP: {
+                  $inc: { RE_STEP: 1 }
+                 }
+              }
+            }
+          );
+
+        console.log(newBody);
+        db.collection("comments").insertOne(newBody);
       }
     }
     // return a message

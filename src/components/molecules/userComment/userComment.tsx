@@ -48,7 +48,6 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     if (!content) return setError("댓글을 입력해주세요");
 
     let myHeaders = new Headers({});
-    myHeaders.append("commentType", props.type);
 
     let comment = {
       REF: REF_handler(),
@@ -60,6 +59,10 @@ const UserCommentComponent: React.FC<UserCommentType> = (
       password,
       postName: props.postName,
     };
+
+    console.log("before : ", comment);
+    console.log("after : ", JSON.stringify(comment));
+    console.log("special : ", JSON.parse(JSON.stringify(comment)));
 
     let response = await fetch("/api/comments", {
       method: "POST",
