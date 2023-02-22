@@ -33,6 +33,14 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     }
   };
 
+  const RE_STEP_handler = () => {
+    if (props.type == "DEFAULT") {
+      return 0;
+    } else if (props.data && props.type == "REPLY") {
+      return props.data.RE_STEP + 1;
+    }
+  }
+
   const RE_LEVEL_handler = () => {
     if (props.type == "DEFAULT") {
       return 0;
@@ -48,10 +56,13 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     if (!content) return setError("댓글을 입력해주세요");
 
     let myHeaders = new Headers({});
+    myHeaders.append("commentType", props.type);
+    console.log("RE_LEVEL : ", props.data.RE_LEVEL);
+    console.log("RE_STEP : ", props.data.RE_STEP);
 
     let comment = {
       REF: REF_handler(),
-      RE_STEP: 0,
+      RE_STEP: RE_STEP_handler(),
       RE_LEVEL: RE_LEVEL_handler(),
       date: parseDate(new Date()),
       writter,
@@ -60,10 +71,8 @@ const UserCommentComponent: React.FC<UserCommentType> = (
       postName: props.postName,
     };
 
-    console.log("before : ", comment);
-    console.log("after : ", JSON.stringify(comment));
-    console.log("special : ", JSON.parse(JSON.stringify(comment)));
-
+    console.log("commnetInfo : ", comment);
+    
     let response = await fetch("/api/comments", {
       method: "POST",
       headers: myHeaders,

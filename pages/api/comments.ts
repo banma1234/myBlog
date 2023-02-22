@@ -55,6 +55,7 @@ async function getComment(req: any, res: any) {
 
 async function addComment(req: any, res: any) {
   let commentType = req.headers.commenttype;
+
   try {
     // connect to the database
     let { db } = await connectToDatabase();
@@ -66,25 +67,44 @@ async function addComment(req: any, res: any) {
         await db.collection("comments").insertOne(JSON.parse(req.body));
       }
       case "REPLY": {
-        let parentComment = await db
+        // let parentComment = await db
+        //   .collection("comments")
+        //   .find({ REF: newBody.REF }, { RE_LEVEL: newBody.RE_LEVEL })
+        //   .toArray();
+
+        // console.log("parent : ", parentComment);
+
+        // let lastComment = 0;
+        // if (parentComment) {
+        //   lastComment = parentComment.slice(-1).RE_STEP;
+        // } else {
+        //   lastComment = 1;
+        // }
+
+        // console.log("lastComment : ", lastComment);
+        // newBody.RE_STEP = lastComment + 1;
+        // console.log("newBody.RE_STEP : ", newBody.RE_STEP);
+
+        let lastComment = await db
           .collection("comments")
-          .find({ REF: newBody.REF }, { RE_LEVEL: newBody.RE_LEVEL })
+          .find({ 
+            REF: newBody.REF,
+            RE_LEVEL: newBody.RE_LEVEL
+           })
           .toArray();
 
-        let lastComment = 0;
-        if (parentComment) {
-          lastComment = parentComment.slice(-1).RE_STEP;
-        } else {
-          lastComment = 1;
+        console.log(lastComment);
+        let temp = newBody.RE_STEP;
+        if(lastComment) {
+          temp = lastComment.RE_STEP + 1;
         }
 
-        newBody.RE_STEP = lastComment + 1;
-
-        db.updateMany(
+        await db.collection("comments")
+          .updateMany(
             {
               REF: newBody.REF,
               RE_STEP: {
-                $gte: newBody.RE_STEP
+                $gte: temp
               }
             },
             {
@@ -96,7 +116,6 @@ async function addComment(req: any, res: any) {
             }
           );
 
-        console.log(newBody);
         db.collection("comments").insertOne(newBody);
       }
     }
