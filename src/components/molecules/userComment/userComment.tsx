@@ -39,7 +39,7 @@ const UserCommentComponent: React.FC<UserCommentType> = (
     } else if (props.data && props.type == "REPLY") {
       return props.data.RE_STEP + 1;
     }
-  }
+  };
 
   const RE_LEVEL_handler = () => {
     if (props.type == "DEFAULT") {
@@ -57,8 +57,6 @@ const UserCommentComponent: React.FC<UserCommentType> = (
 
     let myHeaders = new Headers({});
     myHeaders.append("commentType", props.type);
-    console.log("RE_LEVEL : ", props.data.RE_LEVEL);
-    console.log("RE_STEP : ", props.data.RE_STEP);
 
     let comment = {
       REF: REF_handler(),
@@ -71,8 +69,6 @@ const UserCommentComponent: React.FC<UserCommentType> = (
       postName: props.postName,
     };
 
-    console.log("commnetInfo : ", comment);
-    
     let response = await fetch("/api/comments", {
       method: "POST",
       headers: myHeaders,

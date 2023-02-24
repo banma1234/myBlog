@@ -12,9 +12,9 @@ export default async function commentHandler(req: any, res: any) {
     // case 'PUT': {
     //     return updatePost(req, res);
     // }
-    // case 'DELETE': {
-    //     return deletePost(req, res);
-    // }
+    case "DELETE": {
+      return deleteComment(req, res);
+    }
   }
 }
 
@@ -67,54 +67,35 @@ async function addComment(req: any, res: any) {
         await db.collection("comments").insertOne(JSON.parse(req.body));
       }
       case "REPLY": {
-        // let parentComment = await db
-        //   .collection("comments")
-        //   .find({ REF: newBody.REF }, { RE_LEVEL: newBody.RE_LEVEL })
-        //   .toArray();
-
-        // console.log("parent : ", parentComment);
-
-        // let lastComment = 0;
-        // if (parentComment) {
-        //   lastComment = parentComment.slice(-1).RE_STEP;
-        // } else {
-        //   lastComment = 1;
-        // }
-
-        // console.log("lastComment : ", lastComment);
-        // newBody.RE_STEP = lastComment + 1;
-        // console.log("newBody.RE_STEP : ", newBody.RE_STEP);
-
         let lastComment = await db
           .collection("comments")
-          .find({ 
+          .find({
             REF: newBody.REF,
-            RE_LEVEL: newBody.RE_LEVEL
-           })
+            RE_LEVEL: newBody.RE_LEVEL,
+          })
+          .sort({ RE_STEP: -1 })
+          .limit(1)
           .toArray();
 
-        console.log(lastComment);
-        let temp = newBody.RE_STEP;
-        if(lastComment) {
-          temp = lastComment.RE_STEP + 1;
+        let temp = 0;
+        if (lastComment && lastComment.length > 0) {
+          temp = lastComment[0].RE_STEP + 1;
+          newBody.RE_STEP = temp;
+        } else {
+          temp = newBody.RE_STEP;
         }
 
-        await db.collection("comments")
-          .updateMany(
-            {
-              REF: newBody.REF,
-              RE_STEP: {
-                $gte: temp
-              }
+        await db.collection("comments").updateMany(
+          {
+            REF: newBody.REF,
+            RE_STEP: {
+              $gte: temp,
             },
-            {
-              $set: {
-                RE_STEP: {
-                  $inc: { RE_STEP: 1 }
-                 }
-              }
-            }
-          );
+          },
+          {
+            $inc: { RE_STEP: 1 },
+          },
+        );
 
         db.collection("comments").insertOne(newBody);
       }
@@ -124,6 +105,28 @@ async function addComment(req: any, res: any) {
       message: "Comment added successfully",
       success: true,
     });
+  } catch (error: any) {
+    // return an error
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    });
+  }
+}
+
+async function deleteComment(req: any, res: any) {
+  try {
+    let { db } = await connectToDatabase();
+    let newBody = JSON.parse(req.body);
+
+    await db.collection("comments").deleteOne({ _id: newBody._id });
+
+    await db
+      .collection("comments")
+      .updateMany(
+        { REF: newBody.REF, RE_STEP: { $gt: newBody.RE_STEP } },
+        { $inc: { RE_STEP: -1 } },
+      );
   } catch (error: any) {
     // return an error
     return res.json({
