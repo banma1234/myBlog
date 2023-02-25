@@ -118,15 +118,42 @@ async function deleteComment(req: any, res: any) {
   try {
     let { db } = await connectToDatabase();
     let newBody = JSON.parse(req.body);
+    const option = {
+      projection: {
+        _id: 1,
+      },
+    };
 
-    await db.collection("comments").deleteOne({ _id: newBody._id });
-
-    await db
+    let targetComment = await db
       .collection("comments")
-      .updateMany(
-        { REF: newBody.REF, RE_STEP: { $gt: newBody.RE_STEP } },
-        { $inc: { RE_STEP: -1 } },
-      );
+      .find(
+        {
+          _id: newBody._id,
+          password: newBody.password,
+        },
+        option,
+      )
+      .toArray();
+
+    if (targetComment && targetComment.length > 0) {
+      await db.collection("comments").deleteOne({ _id: targetComment[0]._id });
+      await db
+        .collection("comments")
+        .updateMany(
+          { REF: newBody.REF, RE_STEP: { $gt: newBody.RE_STEP } },
+          { $inc: { RE_STEP: -1 } },
+        );
+
+      return res.json({
+        message: "Comment deleted successfully",
+        success: true,
+      });
+    } else {
+      return res.json({
+        message: "invalid password issue",
+        success: false,
+      });
+    }
   } catch (error: any) {
     // return an error
     return res.json({
