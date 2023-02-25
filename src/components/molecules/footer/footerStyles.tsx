@@ -23,15 +23,10 @@ export const FooterContainer = styled.div`
 
 export const FooterMenu = styled.ul`
   max-width: 250px;
-  list-style: none;
   margin-top: -0.2rem;
   margin-left: -1.5rem;
   li {
     padding: 0.3rem;
-    &:hover {
-      transition: all 0.3s;
-      color: ${useColor("green")};
-    }
   }
 `;
 
