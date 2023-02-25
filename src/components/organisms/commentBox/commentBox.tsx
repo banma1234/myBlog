@@ -11,7 +11,7 @@ import {
   CommentInfo,
 } from "./commentBoxStyle";
 import { CommentBoxType } from "./commentBoxType";
-import { UserComment } from "src/components/molecules";
+import { UserComment, DropDown } from "src/components/molecules";
 import { ImgWrapper } from "styles/globals";
 import Image from "next/legacy/image";
 import imgUrl from "public/testImg.jpg";
@@ -22,11 +22,12 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
 ) => {
   let comments = props.data;
-  const [click, isClick] = useState(false);
+  const [replyClick, setReplyClick] = useState(false);
+  const [menuClick, setMenuClick] = useState(false);
   const [commentId, setCommentId] = useState("");
 
   useEffect(() => {
-    isClick(false);
+    setReplyClick(false);
     setCommentId("");
   }, []);
 
@@ -49,16 +50,31 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
                   </CommentInfo>
                   {item.content}
                 </Content>
-                <CommentMenu>{useIcons("menu", "18")}</CommentMenu>
+                <CommentMenu>
+                  <div
+                    onClick={() => {
+                      setCommentId(item._id);
+                      setMenuClick(!menuClick);
+                    }}
+                  >
+                    {menuClick && commentId == item._id
+                      ? useIcons("cancel", "18")
+                      : useIcons("menu", "18")}
+                  </div>
+                  {menuClick && commentId == item._id && (
+                    <DropDown children={["댓글복사", "수정", "삭제"]} />
+                  )}
+                </CommentMenu>
                 <CommentReply
                   onClick={() => {
                     setCommentId(item._id);
-                    isClick(!click);
+                    setReplyClick(!replyClick);
                   }}
                 >
-                  &nbsp;{click && commentId == item._id ? " 취소" : "답글달기"}
+                  &nbsp;
+                  {replyClick && commentId == item._id ? " 취소" : "답글달기"}
                 </CommentReply>
-                {click && commentId == item._id && (
+                {replyClick && commentId == item._id && (
                   <UserComment
                     postName={props.postName}
                     data={item}
