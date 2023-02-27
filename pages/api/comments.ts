@@ -143,19 +143,17 @@ async function deleteComment(req: any, res: any) {
     console.log("target : ", targetComment);
 
     if (targetComment && targetComment.length > 0) {
-      await db
-        .collection("comments")
-        .updateMany(
-          { 
-            REF: newBody.REF, 
-            RE_STEP: { 
-              $gte: targetComment[0].RE_STEP 
-            } 
+      await db.collection("comments").updateMany(
+        {
+          REF: newBody.REF,
+          RE_STEP: {
+            $gte: targetComment[0].RE_STEP,
           },
-          { 
-            $inc: { RE_STEP: -1 } 
-          },
-        );
+        },
+        {
+          $inc: { RE_STEP: -1 },
+        },
+      );
       await db.collection("comments").deleteOne({ _id: targetComment[0]._id });
 
       return res.json({
