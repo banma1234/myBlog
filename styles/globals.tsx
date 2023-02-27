@@ -73,7 +73,6 @@ export const ButtonLayout = styled.div`
   justify-content: flex-start;
   row-gap: 10rem;
   padding: 1rem;
-  padding-left: 0;
   margin-bottom: 1rem;
 `;
 
