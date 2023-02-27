@@ -12,6 +12,7 @@ export default function Board({ posts }: any) {
             Total view
           </Button>
         </Link>
+        <span>&nbsp;&nbsp;</span>
         <Link href="/series">
           <Button color="gray" ButtonType="small" onClick={null}>
             Series

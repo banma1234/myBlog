@@ -12,6 +12,7 @@ export default function Board({ series }: any) {
             Total view
           </Button>
         </Link>
+        <span>&nbsp;&nbsp;</span>
         <Link href="/series">
           <Button color="high" ButtonType="small" onClick={null}>
             Series
