@@ -57,12 +57,14 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
                       setMenuClick(!menuClick);
                     }}
                   >
-                    {menuClick && commentId == item._id
-                      ? useIcons("cancel", "18")
-                      : useIcons("menu", "18")}
+                    {useIcons("cancel", "18")}
                   </div>
                   {menuClick && commentId == item._id && (
-                    <DropDown children={["댓글복사", "수정", "삭제"]} />
+                    <DropDown
+                      type="form"
+                      id={commentId}
+                      children={["댓글복사", "수정", "삭제"]}
+                    />
                   )}
                 </CommentMenu>
                 <CommentReply
