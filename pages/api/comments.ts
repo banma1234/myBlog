@@ -9,9 +9,6 @@ export default async function commentHandler(req: any, res: any) {
     case "POST": {
       return addComment(req, res);
     }
-    // case 'PUT': {
-    //     return updatePost(req, res);
-    // }
     case "DELETE": {
       return deleteComment(req, res);
     }
@@ -65,6 +62,7 @@ async function addComment(req: any, res: any) {
     switch (commentType) {
       case "DEFAULT": {
         await db.collection("comments").insertOne(JSON.parse(req.body));
+        break;
       }
       case "REPLY": {
         let lastComment = await db
@@ -77,19 +75,19 @@ async function addComment(req: any, res: any) {
           .limit(1)
           .toArray();
 
-        let temp = 0;
+        let targetStep = 0;
         if (lastComment && lastComment.length > 0) {
-          temp = lastComment[0].RE_STEP + 1;
-          newBody.RE_STEP = temp;
+          targetStep = lastComment[0].RE_STEP + 1;
+          newBody.RE_STEP = targetStep;
         } else {
-          temp = newBody.RE_STEP;
+          targetStep = newBody.RE_STEP;
         }
 
         await db.collection("comments").updateMany(
           {
             REF: newBody.REF,
             RE_STEP: {
-              $gte: temp,
+              $gte: targetStep,
             },
           },
           {
@@ -97,7 +95,8 @@ async function addComment(req: any, res: any) {
           },
         );
 
-        db.collection("comments").insertOne(newBody);
+        await db.collection("comments").insertOne(newBody);
+        break;
       }
     }
     // return a message
@@ -121,28 +120,43 @@ async function deleteComment(req: any, res: any) {
     const option = {
       projection: {
         _id: 1,
+        password: 1,
+        RE_STEP: 1,
       },
     };
+
+    console.log("newbody : ", newBody);
+    console.log("\n\nid : ", newBody._id);
+    console.log("pw : ", newBody.password);
 
     let targetComment = await db
       .collection("comments")
       .find(
         {
-          _id: newBody._id,
+          _id: new ObjectId(newBody._id),
           password: newBody.password,
         },
         option,
       )
       .toArray();
 
+    console.log("target : ", targetComment);
+
     if (targetComment && targetComment.length > 0) {
-      await db.collection("comments").deleteOne({ _id: targetComment[0]._id });
       await db
         .collection("comments")
         .updateMany(
-          { REF: newBody.REF, RE_STEP: { $gt: newBody.RE_STEP } },
-          { $inc: { RE_STEP: -1 } },
+          { 
+            REF: newBody.REF, 
+            RE_STEP: { 
+              $gte: targetComment[0].RE_STEP 
+            } 
+          },
+          { 
+            $inc: { RE_STEP: -1 } 
+          },
         );
+      await db.collection("comments").deleteOne({ _id: targetComment[0]._id });
 
       return res.json({
         message: "Comment deleted successfully",
