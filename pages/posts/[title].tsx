@@ -1,17 +1,25 @@
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import { CommentBox } from "src/components/organisms";
 
 export default function Post({ data }: any) {
+  const title = data.post[0].title;
+  const url = `https://www.chocoham.dev/${data.post[0].title}`;
+  const description = data.post[0].content;
+  const SEO = {
+    title: title,
+    canonical: url,
+    description: description,
+    author: "초코햄",
+    openGraph: {
+      title,
+      url,
+      description,
+    },
+  };
   return (
     <>
-      <Head>
-        <title>{data.post[0].title} | 초코햄</title>
-        <meta name="keywords" content={data.post[0].series}/>
-        <meta name="author" content="초코햄"/>
-        <meta name="description" content={data.post[0].content} />
-        <meta property="og:title" content={`${data.post[0].title} | 초코햄`}/>
-      </Head>
+      <NextSeo {...SEO} />
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
       <CommentBox data={data.comment} postName={data.post[0].title} />
