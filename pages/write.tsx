@@ -8,6 +8,7 @@ export default function Write() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [series, setSeries] = useState("");
+  const [images, setImages] = useState<File[]>([]);
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -16,11 +17,19 @@ export default function Write() {
     setContent(content);
   }, []);
 
+  const handleImageChange = useCallback((e: any) => {
+    const files = e.target.files;
+    if (files) {
+      setImages((prevFiles) => [...prevFiles, ...files]);
+    }
+  }, []);
+
   const initData = () => {
     setTitle("");
     setContent("");
     setSeries("");
     setError("");
+    setImages([]);
   };
 
   const handlePost = async (e: any) => {
@@ -29,16 +38,19 @@ export default function Write() {
     setError("");
     if (!title || !content) return setError("제목 / 내용을 입력해주세요");
 
-    let post = {
-      title,
-      content,
-      series,
-      uploadDate: parseDate(new Date()),
-    };
+    const post = new FormData();
+    
+    post.append("title", title);
+    post.append("content", content);
+    post.append("series", series);
+    post.append("uploadDate", parseDate(new Date()));
+    for (let i = 0; i < images.length; i++) {
+      post.append('images', images[i]);
+    }
 
     let response = await fetch("/api/posts", {
       method: "POST",
-      body: JSON.stringify(post),
+      body: post,
     });
 
     let data = await response.json();
@@ -70,6 +82,7 @@ export default function Write() {
         onChange={(e: any) => setTitle(e.target.value)}
       />
       <Editor height={500} value={content} onChange={handleChange} />
+      <input type="file" onChange={handleImageChange} multiple />
       <Button ButtonType="small" color="green" onClick={handlePost}>
         Submit
       </Button>
