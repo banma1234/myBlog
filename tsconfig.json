@@ -19,11 +19,6 @@
       "@": ["src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "util/handleImg/compressImg.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "util/handleImg/compressImg.ts"],
   "exclude": ["node_modules"]
 }
