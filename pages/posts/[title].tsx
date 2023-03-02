@@ -54,6 +54,11 @@ export async function getServerSideProps(context: any) {
   });
   let commentData = await response_Comment.json();
 
+  // let urlImg = await fetch(`${DEV_URL ? DEV_URL : ""}/api/images`, {
+  //   method: "GET",
+  //   headers: myHeaders,
+  // });
+
   return {
     props: {
       data: {
