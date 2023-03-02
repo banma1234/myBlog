@@ -1,42 +1,37 @@
 import { connectToDatabase } from "util/mongodb";
+import { Blob } from "buffer";
 
 export default async function imgToUrl(req: any, res: any) {
-  let postName = decodeURI(req.headers.postname);
-
   try {
     const { db } = await connectToDatabase();
-    const options = {
-        projection: {
-            title: 1,
-            images: 1,
-        }
-    }
-    const result = await db.collection("posts").findOne({ title: postName }, options);
+    const imageTitle = req.query.title;
+
+    console.log("imageTitle : ", imageTitle);
+
+    const result = await db
+      .collection("images")
+      .findOne({ imageTitle: imageTitle });
     const images = result.images;
 
-    const urls = [];
-    for (let item of images) {
-      const buffer = Buffer.from(item.data.buffer);
-      const blob = new Blob([buffer], { type: item.contentType });
-      const url = URL.createObjectURL(blob);
-      urls.push(url);
-    }
+    const base64Image = Buffer.from(images.data.buffer).toString("base64");
 
-    return res.json({
-        urls,
-        message: "parsing images to Url are success",
-        succss: true
+    const buffer = Buffer.from(images.data.buffer);
+    const blob: any = new Blob([buffer], { type: images.contentType });
+    const url = URL.createObjectURL(blob);
+
+    console.log("url : ", url);
+
+    res.writeHead(200, {
+      "Content-Type": images.contentType,
+      "Content-Length": base64Image.length,
     });
+
+    res.end(Buffer.from(base64Image, "base64"));
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ 
-        message: "Internal Server Error",
-        success: false
+    return res.status(500).json({
+      message: `Internal Server Error : ${error}`,
+      success: false,
     });
   }
 }
-
-
-    //   const dataURI = `data:${item.contentType};base64,${buffer.toString(
-    //     "base64",
-    //   )}`;

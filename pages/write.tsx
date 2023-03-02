@@ -3,6 +3,7 @@ import { Button, Input } from "src/components/atoms";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import parseDate from "util/parseDate";
+import { uploadImage } from "util/handleImg/uploadImg";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -19,32 +20,11 @@ export default function Write() {
   }, []);
 
   const handleImgUpload = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    async (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
-        const files = Array.from(e.target.files);
-        Promise.all(
-          files.map(file => {
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.readAsDataURL(file);
-              reader.onload = () => {
-                const base64 = reader.result as string;
-                setImageTitle(prevImageTitle => [...prevImageTitle, file.name]);
-                resolve(base64);
-              };
-              reader.onerror = () => {
-                console.error("Error occurred while encoding image file.");
-                reject();
-              };
-            });
-          }),
-        )
-          .then((base64Array: any) => {
-            setImages(base64Array);
-          })
-          .catch(() => {
-            setError("Error occurred while uploading image files.");
-          });
+        const { images, imageTitle } = await uploadImage(e.target.files);
+        setImages(images);
+        setImageTitle(imageTitle);
       }
     },
     [],
