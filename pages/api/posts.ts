@@ -1,39 +1,49 @@
-const { connectToDatabase } = require("util/mongodb");
-const ObjectId = require("mongodb").ObjectId;
+import { connectToDatabase } from "util/mongodb";
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
-    case "GET": {
+    case "GET":
       return getPosts(req, res);
-    }
-
-    case "POST": {
+    case "POST":
       return addPost(req, res);
-    }
-    // case 'PUT': {
-    //     return updatePost(req, res);
-    // }
-    // case 'DELETE': {
-    //     return deletePost(req, res);
-    // }
   }
 }
 
 async function addPost(req: any, res: any) {
   try {
-    // connect to the database
+    const { title, content, series, images, uploadDate, imageTitle } = req.body;
     let { db } = await connectToDatabase();
-    // add the post
-    await db.collection("posts").insertOne(JSON.parse(req.body));
-    // return a message
+    const imageContainer = [];
+
+    if (images && images.length > 0) {
+      for (let item of images) {
+        const base64Data = item.split(",")[1];
+        const imageBuffer = Buffer.from(base64Data, "base64");
+        imageContainer.push({
+          data: imageBuffer,
+          contentType: "image/jpeg", // Replace this with the actual content type of the image
+        });
+      }
+    }
+
+    let result = await db.collection("posts").insertOne({
+      title,
+      content,
+      series,
+      images: imageContainer,
+      imageTitle,
+      uploadDate,
+    });
+
     return res.json({
       message: "Post added successfully",
       success: true,
+      post: result.ops ? result.ops[0] : null,
     });
-  } catch (error: any) {
-    // return an error
-    return res.json({
-      message: new Error(error).message,
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Failed to add post",
       success: false,
     });
   }
@@ -44,10 +54,13 @@ async function getPosts(req: any, res: any) {
     let postName = decodeURI(req.headers.postname);
     // connect to the database
     let { db } = await connectToDatabase();
+    const options = {
+      projection: { imageContainer: 0 }
+    }
     // fetch the posts
     let posts = await db
       .collection("posts")
-      .find({ title: postName })
+      .find({ title: postName }, options)
       .toArray();
     // return the posts
     return res.json({
