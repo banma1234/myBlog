@@ -21,24 +21,31 @@ async function addPost(req: any, res: any) {
         const imageBuffer = Buffer.from(base64Data, "base64");
         imageContainer.push({
           data: imageBuffer,
-          contentType: "image/jpeg", // Replace this with the actual content type of the image
+          contentType: "image/jpg", // Replace this with the actual content type of the image
         });
       }
     }
 
-    let result = await db.collection("posts").insertOne({
+    for (let i=0; i<imageTitle.length; i++) {
+      await db.collection("images").insertOne({
+        title,
+        imageTitle: imageTitle[i],
+        images: imageContainer[i],
+      })
+    }
+
+    await db.collection("posts").insertOne({
       title,
       content,
       series,
-      images: imageContainer,
-      imageTitle,
+      thumbnail: imageContainer[0],
+      imageTitle: imageTitle,
       uploadDate,
     });
 
     return res.json({
       message: "Post added successfully",
       success: true,
-      post: result.ops ? result.ops[0] : null,
     });
   } catch (error) {
     console.error(error);
@@ -55,7 +62,7 @@ async function getPosts(req: any, res: any) {
     // connect to the database
     let { db } = await connectToDatabase();
     const options = {
-      projection: { imageContainer: 0 }
+      projection: { images: 0 }
     }
     // fetch the posts
     let posts = await db

@@ -42,27 +42,29 @@ export async function getServerSideProps(context: any) {
   });
   myHeaders.append("postName", encodeURI(context.params.title));
 
-  let response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
+  const response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
     method: "GET",
     headers: myHeaders,
   });
-  let postData = await response_Post.json();
+  const postInfo = await response_Post.json();
+  const postData = postInfo["message"];
 
-  let response_Comment = await fetch(`${DEV_URL ? DEV_URL : ""}/api/comments`, {
+  const response_Comment = await fetch(`${DEV_URL ? DEV_URL : ""}/api/comments`, {
     method: "GET",
     headers: myHeaders,
   });
-  let commentData = await response_Comment.json();
+  const commentData = await response_Comment.json();
 
-  // let urlImg = await fetch(`${DEV_URL ? DEV_URL : ""}/api/images`, {
-  //   method: "GET",
-  //   headers: myHeaders,
-  // });
+  await postData[0].imageTitle.forEach((title: string) => {
+    fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
+      method: "GET",
+    });
+  })
 
   return {
     props: {
       data: {
-        post: postData["message"],
+        post: postData,
         comment: commentData["message"],
       },
     },
