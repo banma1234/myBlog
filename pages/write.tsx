@@ -1,13 +1,15 @@
 import { Editor } from "src/components/molecules";
 import { Button, Input } from "src/components/atoms";
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import parseDate from "util/parseDate";
 
 export default function Write() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [series, setSeries] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [series, setSeries] = useState<string>("");
+  const [images, setImages] = useState<any[]>([]);
+  const [imageTitle, setImageTitle] = useState<any[]>([]);
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -16,11 +18,45 @@ export default function Write() {
     setContent(content);
   }, []);
 
+  const handleImgUpload = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const files = Array.from(e.target.files);
+        Promise.all(
+          files.map(file => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = () => {
+                const base64 = reader.result as string;
+                setImageTitle(prevImageTitle => [...prevImageTitle, file.name]);
+                resolve(base64);
+              };
+              reader.onerror = () => {
+                console.error("Error occurred while encoding image file.");
+                reject();
+              };
+            });
+          }),
+        )
+          .then((base64Array: any) => {
+            setImages(base64Array);
+          })
+          .catch(() => {
+            setError("Error occurred while uploading image files.");
+          });
+      }
+    },
+    [],
+  );
+
   const initData = () => {
     setTitle("");
     setContent("");
     setSeries("");
+    setImages([]);
     setError("");
+    setImageTitle([]);
   };
 
   const handlePost = async (e: any) => {
@@ -34,10 +70,17 @@ export default function Write() {
       content,
       series,
       uploadDate: parseDate(new Date()),
+      images,
+      imageTitle,
     };
+
+    console.log("post : ", post);
 
     let response = await fetch("/api/posts", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(post),
     });
 
@@ -49,12 +92,14 @@ export default function Write() {
       router.replace("/");
     } else {
       alert(data.message);
+      console.log(data.message);
       return setError(data.message);
     }
   };
 
   return (
     <>
+      <input type="file" onChange={handleImgUpload} multiple />
       <Input
         size="default"
         placeholder="Series"
