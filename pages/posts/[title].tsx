@@ -1,6 +1,7 @@
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import { CommentBox } from "src/components/organisms";
+import { useEffect, useState } from 'react';
 
 export default function Post({ data }: any) {
   const title = data.post[0].title;
@@ -17,6 +18,12 @@ export default function Post({ data }: any) {
       description,
     },
   };
+
+  const [imgurl, setImgUrl] = useState<string | null>(data.post[0].thumbnail);
+
+  useEffect(() => {
+
+  })
   return (
     <>
       <NextSeo {...SEO} />
@@ -49,17 +56,20 @@ export async function getServerSideProps(context: any) {
   const postInfo = await response_Post.json();
   const postData = postInfo["message"];
 
-  const response_Comment = await fetch(`${DEV_URL ? DEV_URL : ""}/api/comments`, {
-    method: "GET",
-    headers: myHeaders,
-  });
+  const response_Comment = await fetch(
+    `${DEV_URL ? DEV_URL : ""}/api/comments`,
+    {
+      method: "GET",
+      headers: myHeaders,
+    },
+  );
   const commentData = await response_Comment.json();
 
   await postData[0].imageTitle.forEach((title: string) => {
     fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
       method: "GET",
     });
-  })
+  });
 
   return {
     props: {
