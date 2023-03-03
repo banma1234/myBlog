@@ -1,4 +1,5 @@
 import { connectToDatabase } from "util/mongodb";
+import sharp from "sharp";
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
@@ -16,12 +17,12 @@ async function addPost(req: any, res: any) {
     const imageContainer = [];
 
     if (images && images.length > 0) {
-      for (let item of images) {
-        const base64Data = item.split(",")[1];
+      for (let i = 0; i < images.length; i++) {
+        const base64Data = images[i].split(",")[1];
         const imageBuffer = Buffer.from(base64Data, "base64");
         imageContainer.push({
           data: imageBuffer,
-          contentType: "image/jpg", // Replace this with the actual content type of the image
+          contentType: imageTitle[i].split(".").pop(), // Replace this with the actual content type of the image
         });
       }
     }
