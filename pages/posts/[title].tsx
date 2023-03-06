@@ -1,18 +1,36 @@
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
-import { Layout } from "src/components/organisms";
+import { CommentBox } from "src/components/organisms";
+import { useEffect, useState } from 'react';
 
-export default function Post({ post }: any) {
+export default function Post({ data }: any) {
+  const title = data.post[0].title;
+  const url = `https://www.chocoham.dev/${data.post[0].title}`;
+  const description = data.post[0].content;
+  const SEO = {
+    title: title,
+    canonical: url,
+    description: description,
+    author: "초코햄",
+    openGraph: {
+      title,
+      url,
+      description,
+    },
+  };
+
+  const [imgurl, setImgUrl] = useState<string | null>(data.post[0].thumbnail);
+
+  useEffect(() => {
+
+  })
   return (
-    <Layout>
-      <Head>
-        <title>{post[0].title}</title>
-      </Head>
-      <article>
-        <h1>{post[0].title}</h1>
-        <MarkdownReader style={{padding: 25}} source={post[0].content} />
-      </article>
-    </Layout>
+    <>
+      <NextSeo {...SEO} />
+      <h1>{data.post[0].title}</h1>
+      <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
+      <CommentBox data={data.comment} postName={data.post[0].title} />
+    </>
   );
 }
 
@@ -24,23 +42,41 @@ const MarkdownReader = dynamic(
   { ssr: false },
 );
 
-
 export async function getServerSideProps(context: any) {
   const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
-    'Content-Type': 'text/html; charset=utf-8' 
+    "Content-Type": "text/html; charset=utf-8",
   });
-  myHeaders.append("postName", encodeURI(context.params.title))
+  myHeaders.append("postName", encodeURI(context.params.title));
 
-  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
+  const response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
     method: "GET",
     headers: myHeaders,
   });
-  let data = await response.json();
+  const postInfo = await response_Post.json();
+  const postData = postInfo["message"];
+
+  const response_Comment = await fetch(
+    `${DEV_URL ? DEV_URL : ""}/api/comments`,
+    {
+      method: "GET",
+      headers: myHeaders,
+    },
+  );
+  const commentData = await response_Comment.json();
+
+  await postData[0].imageTitle.forEach((title: string) => {
+    fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
+      method: "GET",
+    });
+  });
 
   return {
     props: {
-      post: data["message"],
+      data: {
+        post: postData,
+        comment: commentData["message"],
+      },
     },
   };
 }

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { useColor } from "util/hooks";
 import { inputType } from "./inputType";
 
 const StyledInput = styled.input.attrs(props => ({}))<inputType>`
@@ -6,14 +7,15 @@ const StyledInput = styled.input.attrs(props => ({}))<inputType>`
     const height = { default: "40px", small: "25px" };
 
     return css`
-      background-color: white;
-      color: black;
-      width: 100%;
+      display: flex;
+      background-color: ${useColor("gray")};
+      width: ${props.size == "small" ? "12rem" : "90%"};
       height: ${height[props.size]};
       border: none;
+      border-radius: 0.3rem;
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
+      margin-right: 1rem;
+      margin-bottom: -1rem;
       outline: none;
     `;
   }};

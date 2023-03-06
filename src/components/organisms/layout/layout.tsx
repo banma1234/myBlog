@@ -1,6 +1,6 @@
 import { Container, Section, Article, Aside } from "./layoutStyle";
 import { LayoutType } from "./layoutType";
-import { Header, Footer } from "../../molecules";
+import { Header, Footer, NavBar } from "../../molecules";
 
 const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
   return (
@@ -11,7 +11,9 @@ const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
       <main>
         <Container>
           <nav>
-            <Aside />
+            <Aside>
+              <NavBar series={props.series} />
+            </Aside>
           </nav>
           <article>
             <Article>{props.children}</Article>

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { ObjType } from "./globalsType";
 
 export const Globals = {
   palette: {
@@ -19,33 +20,40 @@ export const Globals = {
   },
 };
 
-export const Board = styled.div`
+export const CardLayout = styled.div`
   display: grid;
-  padding: 2rem;
+  padding: 1rem;
   margin-top: -2rem;
+  margin-bottom: 5rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  @media all and (max-width: 1100px) {
+  @media all and (max-width: 1300px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
-  @media all and (max-width: 768px) {
+  @media all and (max-width: 935px) {
     grid-template-columns: 1fr 1fr;
   }
-  @media all and (max-width: 576px) {
+  @media all and (max-width: 670px) {
     grid-template-columns: 1fr;
   }
 `;
 
 export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
   ${props => {
+    const width: ObjType = {
+      profile: "300px",
+      profile_big: "160px",
+      banner: "935px",
+    };
     return css`
       position: relative;
-      width: ${props.type == "profile" ? "160px" : "100%"};
-      margin-top: ${props.type == "profile" ? "0" : "-2rem"};
-      margin-bottom: ${props.type == "profile" ? "0" : "5rem"};
-      border-radius: ${props.type == "profile" ? "100%" : "0"};
+      width: ${width[props.type]}
+      margin: 0 auto;
+      margin-top: ${props.type == "banner" ? "-2rem" : "0"};
+      margin-bottom: ${props.type == "banner" ? "5.5rem" : "0"};
+      border-radius: ${props.type == "banner" ? "0" : "100%"};
       overflow: hidden;
-      @media all and (max-width: 768px) {
-        display: none;
+      @media all and (max-width: 935px) {
+        display: ${props.type == "profile" ? "block" : "none"}
       } ;
     `;
   }};
@@ -54,7 +62,30 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
 export const OverlapDiv = styled.div`
   position: absolute;
   top: 70%;
-  left: 450px;
+  left: 375px;
   transform: translate(50% 50%);
   z-index: 9990;
+`;
+
+export const ButtonLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  row-gap: 10rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+`;
+
+export const FlexEndComponent = styled.div`
+  margin: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const AddCommentBox = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  width: 100%;
+  align-items: none;
 `;

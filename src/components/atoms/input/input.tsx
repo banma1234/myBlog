@@ -5,6 +5,7 @@ const InputComponent: React.FC<any> = props => {
     <StyledInput
       size={props.size}
       placeholder={props.placeholder}
+      type={props.type}
       {...props}
     ></StyledInput>
   );

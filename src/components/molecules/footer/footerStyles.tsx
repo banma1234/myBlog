@@ -16,22 +16,17 @@ export const FooterContainer = styled.div`
   border-color: ${useColor("green")};
   color: ${useColor("gray")};
   grid-template-columns: 160px 1fr 8rem;
-  @media all and (max-width: 768px) {
+  @media all and (max-width: 935px) {
     grid-template-columns: 1fr 8rem;
   }
 `;
 
 export const FooterMenu = styled.ul`
   max-width: 250px;
-  list-style: none;
   margin-top: -0.2rem;
   margin-left: -1.5rem;
   li {
     padding: 0.3rem;
-    &:hover {
-      transition: all 0.3s;
-      color: ${useColor("green")};
-    }
   }
 `;
 

@@ -4,15 +4,34 @@ body {
   margin: 0;
   font-size: 16px;
   font-family: "nanumGothic";
+  color: #262626;
   @font-face {
     font-family: "nanumGothic";
     src: url("/fonts/NanumBarunGothicBold.ttf") format("truetype");
   }
 }
 
+ul {
+  list-style: none;
+}
+
+li {
+  padding: 0.2rem;
+}
+
+li:hover {
+  transition: all 0.3s;
+  color: #00887a;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+}
+
+a:hover {
+  color: #00887a;
+  transition: all 0.3s;
 }
 
 h1 {
@@ -27,4 +46,9 @@ h2 {
   font-size: 1.5rem;
   line-height: 1.4;
   margin: 1rem 0;
+}
+
+hr {
+  background-color: #00887a;
+  border: 1px solid #00887a;
 }

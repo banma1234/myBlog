@@ -15,7 +15,7 @@ const FooterComponent: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <ImgWrapper type="profile">
+        <ImgWrapper type="profile_big">
           <Image src={imgUrl} alt="profile img" priority />
         </ImgWrapper>
         <FooterMenu>
@@ -28,9 +28,9 @@ const FooterComponent: React.FC = () => {
           </li>
         </FooterMenu>
         <FooterAsideMenu>
-          <Button color="green" ButtonType="small">
+          {/* <Button color="green" ButtonType="small">
             {useIcons("enter", "16")} &nbsp; Go
-          </Button>
+          </Button> */}
         </FooterAsideMenu>
       </FooterContainer>
     </StyledFooter>
