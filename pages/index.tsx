@@ -15,9 +15,7 @@ export default function Home({ posts }: any) {
           <Button
             color="high"
             ButtonType="default"
-            onClick={() => {
-              console.log("damn");
-            }}
+            onClick={() => {null}}
           >
             Go
           </Button>
@@ -29,9 +27,13 @@ export default function Home({ posts }: any) {
       <CardLayout>
         {posts &&
           posts.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card type="default" color="low" info={item.uploadDate}>
+                <Card src={url} type="default" color="low" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
