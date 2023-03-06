@@ -29,21 +29,6 @@ async function viewIndexBoard(req: any, res: any) {
       .find({}, options)
       .limit(4)
       .toArray();
-
-    posts.forEach((item: any, index: number, arr: any) => {
-      let target = item.thumbnail;
-      if (target != null) {
-        const buffer = Buffer.from(target.data.buffer);
-        const blob: any = new Blob([buffer], { type: target.contentType});
-        const url = URL.createObjectURL(blob);
-
-        arr[index].thumbnail = url;
-      }
-    })
-
-    // res.writeHead(200, {
-    //   'Cache-Control': 'public, max-age=3600',
-    // });
   
     // return the posts
     return res.json({
@@ -65,10 +50,13 @@ async function viewAll(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1 },
+      projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // fetch the posts
-    let posts = await db.collection("posts").find({}, options).toArray();
+    let posts = await db
+    .collection("posts")
+    .find({}, options)
+    .toArray();
     // return the posts
     return res.json({
       message: posts,
@@ -139,7 +127,7 @@ async function viewSeriesDetail(req: any, res: any) {
     let selectedSeries = decodeURI(req.headers.viewtype);
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, series: 1, title: 1, uploadDate: 1 },
+      projection: { _id: 0, series: 1, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // connect to the database
     let { db } = await connectToDatabase();
