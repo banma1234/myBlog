@@ -68,6 +68,5 @@ export async function getServerSideProps() {
     props: {
       posts: data["message"],
     },
-    revalidate: 10,
   };
 }
