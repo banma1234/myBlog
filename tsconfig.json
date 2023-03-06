@@ -16,11 +16,14 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@": [
-        "src/*"
-      ]
+      "@": ["src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "util/handleImg/compressImg.ts"
+  ],
   "exclude": ["node_modules"]
 }
