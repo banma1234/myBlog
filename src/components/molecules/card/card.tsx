@@ -8,7 +8,7 @@ const CardComponent: React.FC<CardType> = (props: CardType) => {
   return (
     <StyledCard {...props} color={props.color} type={props.type}>
       <ImageWrapper>
-        <Image src={imgUrl} alt="card Img" width={270} height={200} />
+        <Image src={imgUrl} alt="card Img" width={290} height={200} />
       </ImageWrapper>
       <Post>
         <TitleBox>{props.children}</TitleBox>
