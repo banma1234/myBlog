@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "babel src -d lib",
+    "build": "next babel",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint . --config .eslintrc.js",
@@ -13,6 +13,7 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@babel/cli": "^7.21.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
