@@ -52,13 +52,13 @@ export default function Home({ posts }: any) {
 }
 
 export async function getServerSideProps() {
-  // const DEV_URL = process.env.DEV_URL;
+  const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
   myHeaders.append("viewType", "VIEW_INDEX");
 
-  let response = await fetch(`https://chocoham.dev/api/viewBoard`, {
+  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
     headers: myHeaders,
   });
