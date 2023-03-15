@@ -17,7 +17,7 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           DEV_URL: ${{ secrets.DEV_URL }}
       - run: yarn install
-      - run: yarn run build
+      - run: yarn build
 
 
 
