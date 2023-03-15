@@ -18,9 +18,6 @@ jobs:
 
       - name: build page
         run: yarn run build
-
-      - name: start page
-        run: yarn run start
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           DB_NAME: ${{ secrets.DB_NAME }}
