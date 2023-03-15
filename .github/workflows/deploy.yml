@@ -13,7 +13,19 @@ jobs:
           vercel-token: ${{ secretes.VERCEL_TOKEN }}
           projectName: chocoham
         env:
-          MONGODB_URL: ${ secrets.MONGODB_URL }
-          DB_NAME: ${ secrets.DB_NAME }
-          DEV_URL: ${ secrets.DEV_URL }
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DEV_URL: ${{ secrets.DEV_URL }}
       - run: yarn install
+
+
+
+
+
+
+      # - name: test for chocoham's blog
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '16'
+      # - run: yarn install
+      # - run: yarn run build
