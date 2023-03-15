@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: set Env
+      - name: deploy and build
         uses: dkershner6/vercel-set-env-action@v1
         with:
+          vercel-token: ${{ secretes.VERCEL_TOKEN }}
           projectName: chocoham
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
