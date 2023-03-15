@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next babel",
+    "build": "babel src -d lib",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint . --config .eslintrc.js",
