@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "deploy": "serverless"
+    "deploy": "vercel-deploy"
   },
   "dependencies": {
     "@babel/cli": "^7.21.0",
