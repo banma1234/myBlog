@@ -16,13 +16,13 @@ export default function App({ Component, pageProps, series }: AppProps | any) {
 }
 
 App.getInitialProps = async () => {
-  // const DEV_URL = process.env.DEV_URL;
+  const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
   myHeaders.append("viewType", "VIEW_SERIES");
 
-  let response = await fetch(`https://chocoham.dev/api/viewBoard`, {
+  let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
     headers: myHeaders,
   });
