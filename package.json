@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "TEST_ENV=success",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint . --config .eslintrc.js",

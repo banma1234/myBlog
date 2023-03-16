@@ -22,3 +22,7 @@ jobs:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           DB_NAME: ${{ secrets.DB_NAME }}
           DEV_URL: ${{ secrets.DEV_URL }}
+          TEST_ENV: ${{ secrets.TEST_ENV }}
+
+      - name: doTest
+        run: yarn run test
