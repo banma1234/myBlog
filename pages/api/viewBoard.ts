@@ -21,7 +21,7 @@ async function viewIndexBoard(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1 },
+      projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // fetch the posts
     let posts = await db
@@ -29,6 +29,7 @@ async function viewIndexBoard(req: any, res: any) {
       .find({}, options)
       .limit(4)
       .toArray();
+
     // return the posts
     return res.json({
       message: posts,
@@ -49,7 +50,7 @@ async function viewAll(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1 },
+      projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // fetch the posts
     let posts = await db.collection("posts").find({}, options).toArray();
@@ -123,7 +124,7 @@ async function viewSeriesDetail(req: any, res: any) {
     let selectedSeries = decodeURI(req.headers.viewtype);
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, series: 1, title: 1, uploadDate: 1 },
+      projection: { _id: 0, series: 1, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // connect to the database
     let { db } = await connectToDatabase();

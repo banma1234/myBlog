@@ -3,7 +3,7 @@ import { StyledNavBar, NavTitle, NavItem } from "./navBarStyle";
 import { NavBarType } from "./navBarType";
 
 const NavBarComponent: React.FC<NavBarType> = (props: NavBarType) => {
-  let data = props.series;
+  const data = props.series;
   return (
     <StyledNavBar {...props}>
       <NavTitle>

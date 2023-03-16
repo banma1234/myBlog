@@ -1,10 +1,11 @@
-const { connectToDatabase } = require("util/mongodb");
-const ObjectId = require("mongodb").ObjectId;
+import { connectToDatabase } from "util/mongodb";
+import sharp from "sharp";
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
-    case "GET": {
+    case "GET":
       return getPosts(req, res);
+<<<<<<< HEAD
     }
     case "POST": {
       return addPost(req, res);
@@ -12,11 +13,16 @@ export default async function postHandler(req: any, res: any) {
     default: {
       return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
+=======
+    case "POST":
+      return addPost(req, res);
+>>>>>>> main
   }
 }
 
 async function addPost(req: any, res: any) {
   try {
+<<<<<<< HEAD
     let { db } = await connectToDatabase();
 
     const post = {
@@ -45,14 +51,48 @@ async function addPost(req: any, res: any) {
 
     await db.collection("posts").insertOne(JSON.parse(req.body));
     // return a message
+=======
+    const { title, content, series, images, uploadDate, imageTitle } = req.body;
+    let { db } = await connectToDatabase();
+    const imageContainer = [];
+
+    if (images && images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        const base64Data = images[i].split(",")[1];
+        const imageBuffer = Buffer.from(base64Data, "base64");
+        imageContainer.push({
+          data: imageBuffer,
+          contentType: imageTitle[i].split(".").pop(), // Replace this with the actual content type of the image
+        });
+      }
+    }
+
+    for (let i = 0; i < imageTitle.length; i++) {
+      await db.collection("images").insertOne({
+        title,
+        imageTitle: imageTitle[i],
+        images: imageContainer[i],
+      });
+    }
+
+    await db.collection("posts").insertOne({
+      title,
+      content,
+      series,
+      thumbnail: imageContainer[0],
+      imageTitle: imageTitle,
+      uploadDate,
+    });
+
+>>>>>>> main
     return res.json({
       message: "Post added successfully",
       success: true,
     });
-  } catch (error: any) {
-    // return an error
-    return res.json({
-      message: new Error(error).message,
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Failed to add post",
       success: false,
     });
   }
@@ -63,10 +103,13 @@ async function getPosts(req: any, res: any) {
     let postName = decodeURI(req.headers.postname);
     // connect to the database
     let { db } = await connectToDatabase();
+    const options = {
+      projection: { images: 0 },
+    };
     // fetch the posts
     let posts = await db
       .collection("posts")
-      .find({ title: postName })
+      .find({ title: postName }, options)
       .toArray();
     // return the posts
     return res.json({

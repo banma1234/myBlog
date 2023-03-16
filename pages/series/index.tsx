@@ -22,9 +22,14 @@ export default function Board({ series }: any) {
       <CardLayout>
         {series &&
           series.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
             return (
               <Link href={`/series/detail/${item.series}`} key={i}>
                 <Card
+                  src={url}
                   type="default"
                   color="low"
                   info={`${item.count}개의 게시물`}

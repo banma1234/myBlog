@@ -1,12 +1,17 @@
 import "../styles/globals.css";
+import { DefaultSeo } from "next-seo";
+import SEO from "seo.config.js";
 import { Layout } from "src/components/organisms";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps, series }: AppProps | any) {
   return (
-    <Layout series={series}>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <DefaultSeo {...SEO} />
+      <Layout series={series}>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }
 
