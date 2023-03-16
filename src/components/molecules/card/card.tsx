@@ -1,7 +1,7 @@
 import { StyledCard, ImageWrapper, Post, TitleBox, InfoBox } from "./cardStyle";
 import { CardType } from "./cardType";
 import Image from "next/legacy/image";
-import noneImg from "public/testImg.jpg";
+import noneImg from "public/default_thumbnail.png";
 
 const CardComponent: React.FC<CardType> = (props: CardType) => {
   let imgUrl = props.src ? props.src : noneImg;
