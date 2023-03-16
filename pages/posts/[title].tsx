@@ -24,17 +24,7 @@ export default function Post({ data }: any) {
   useEffect(() => {});
   return (
     <>
-<<<<<<< HEAD
-      <Head>
-        <title>{data.post[0].title} | 초코햄</title>
-        <meta name="keywords" content={data.post[0].series} />
-        <meta name="author" content="초코햄" />
-        <meta name="description" content={data.post[0].content} />
-        <meta property="og:title" content={`${data.post[0].title} | 초코햄`} />
-      </Head>
-=======
       <NextSeo {...SEO} />
->>>>>>> main
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
       <CommentBox data={data.comment} postName={data.post[0].title} />

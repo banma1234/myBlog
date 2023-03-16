@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export default {
-  titleTemplate: "$s | 초코햄",
-};
-=======
 const url = "https://chocoham.dev/";
 
 const SEO = {
@@ -17,7 +12,7 @@ const SEO = {
     description: "그림과 코딩을 좋아하는 프론트엔드 개발자 ChocoHam의 블로그",
     images: [
       {
-        url: `${url}/images/defaultThumbnail.jpg`,
+        url: `${url}/images/default_thumbnail.png`,
         width: 400,
         height: 400,
         alt: "default Thumbnail",
@@ -39,4 +34,3 @@ const SEO = {
 };
 
 export default SEO;
->>>>>>> main
