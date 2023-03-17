@@ -27,7 +27,7 @@ async function viewIndexBoard(req: any, res: any) {
     let posts = await db
       .collection("posts")
       .find({}, options)
-      .limit(4)
+      .limit(3)
       .toArray();
 
     // return the posts
