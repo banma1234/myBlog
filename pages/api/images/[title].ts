@@ -15,7 +15,7 @@ export default async function imgToUrl(req: any, res: any) {
     res.writeHead(200, {
       "Content-Type": images.contentType,
       "Content-Length": base64Image.length,
-      Connection: "keep-alive",
+      "Connection": "keep-alive",
     });
 
     res.end(base64Image);
