@@ -58,7 +58,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
 
 export const OverlapDiv = styled.div`
   position: absolute;
-  top: 70%;
+  top: 85%;
   left: 375px;
   transform: translate(50% 50%);
   z-index: 9990;
