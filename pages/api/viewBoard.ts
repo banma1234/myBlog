@@ -27,9 +27,9 @@ async function viewIndexBoard(req: any, res: any) {
     let posts = await db
       .collection("posts")
       .find({}, options)
-      .limit(4)
+      .limit(3)
       .toArray();
-  
+
     // return the posts
     return res.json({
       message: posts,
@@ -53,10 +53,7 @@ async function viewAll(req: any, res: any) {
       projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
     };
     // fetch the posts
-    let posts = await db
-    .collection("posts")
-    .find({}, options)
-    .toArray();
+    let posts = await db.collection("posts").find({}, options).toArray();
     // return the posts
     return res.json({
       message: posts,
