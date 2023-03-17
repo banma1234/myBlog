@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/legacy/image";
-import imgUrl from "public/bannerImg.png";
+import imgUrl from "public/banner_svg.svg";
 import { useIcons } from "util/hooks";
 import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
 import { Button } from "src/components/atoms";
@@ -10,10 +10,10 @@ export default function Home({ posts }: any) {
   return (
     <>
       <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" width={"1200"} />
+        <Image src={imgUrl} alt="card Img" width={"950"} />
         <OverlapDiv>
           <Button
-            color="high"
+            color="green"
             ButtonType="default"
             onClick={() => {
               null;

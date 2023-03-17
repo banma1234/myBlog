@@ -26,13 +26,10 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       width: 270px;
       @media all and (max-width: 1300px) {
         width: 270px;
-      }
-      @media all and (max-width: 935px) {
-        width: 285px;
         margin: 5;
       }
       @media all and (max-width: 670px) {
-        width: 400px;
+        width: 380px;
         height: 350px;
       }
       @keyframes cardUp {
