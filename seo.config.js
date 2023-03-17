@@ -12,16 +12,10 @@ const SEO = {
     description: "그림과 코딩을 좋아하는 프론트엔드 개발자 ChocoHam의 블로그",
     images: [
       {
-        url: `${url}/images/defaultThumbnail.jpg`,
-        width: 400,
-        height: 400,
+        url: `public/default_thumbnail.svg`,
+        width: 380,
+        height: 250,
         alt: "default Thumbnail",
-      },
-      {
-        url: `${url}/images/banner.jpg`,
-        width: 1200,
-        height: 500,
-        alt: "website banner",
       },
     ],
     site_name: "초코햄의 블로그",
