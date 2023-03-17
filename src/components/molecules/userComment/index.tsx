@@ -1,4 +1,4 @@
-import UserCommentComponent from "./userComment";
+import UserCommentComponent from "./usercomment";
 import { UserCommentType } from "./userCommentType";
 
 const UserComment: React.FC<UserCommentType> = (props: UserCommentType) => (

@@ -28,12 +28,7 @@ export default function Board({ posts }: any) {
             }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card
-                  src={url}
-                  type="default"
-                  color="low"
-                  info={item.uploadDate}
-                >
+                <Card src={url} type="default" color="low" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
@@ -44,7 +39,7 @@ export default function Board({ posts }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",

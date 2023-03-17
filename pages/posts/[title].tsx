@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import { CommentBox } from "src/components/organisms";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function Post({ data }: any) {
   const title = data.post[0].title;
@@ -21,7 +21,9 @@ export default function Post({ data }: any) {
 
   const [imgurl, setImgUrl] = useState<string | null>(data.post[0].thumbnail);
 
-  useEffect(() => {});
+  useEffect(() => {
+
+  })
   return (
     <>
       <NextSeo {...SEO} />
