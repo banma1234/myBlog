@@ -10,7 +10,7 @@ export default function Home({ posts }: any) {
   return (
     <>
       <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" width={"1200"} />
+        <Image src={imgUrl} alt="card Img" width={"980"} />
         <OverlapDiv>
           <Button
             color="high"
