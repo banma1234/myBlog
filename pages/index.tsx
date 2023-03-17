@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/legacy/image";
-import imgUrl from "public/bannerImg.png";
+import imgUrl from "public/banner_svg.svg";
 import { useIcons } from "util/hooks";
 import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
 import { Button } from "src/components/atoms";
