@@ -25,10 +25,7 @@ export const CardLayout = styled.div`
   padding: 1rem;
   margin-top: -2rem;
   margin-bottom: 5rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  @media all and (max-width: 1300px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+  grid-template-columns: 1fr 1fr 1fr;
   @media all and (max-width: 935px) {
     grid-template-columns: 1fr 1fr;
   }
