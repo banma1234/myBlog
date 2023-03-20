@@ -125,10 +125,6 @@ async function deleteComment(req: any, res: any) {
       },
     };
 
-    console.log("newbody : ", newBody);
-    console.log("\n\nid : ", newBody._id);
-    console.log("pw : ", newBody.password);
-
     let targetComment = await db
       .collection("comments")
       .find(
@@ -139,8 +135,6 @@ async function deleteComment(req: any, res: any) {
         option,
       )
       .toArray();
-
-    console.log("target : ", targetComment);
 
     if (targetComment && targetComment.length > 0) {
       await db.collection("comments").updateMany(
