@@ -86,3 +86,9 @@ export const AddCommentBox = styled.div`
   width: 100%;
   align-items: none;
 `;
+
+export const HashTagBox = styled.div`
+  background-color: gray;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  margin-right: 2rem;
+`;
