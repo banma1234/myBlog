@@ -1,17 +1,26 @@
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
+import { ButtonLayout, HashTagBox } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
 import { useEffect, useState } from "react";
 
 export default function Post({ data }: any) {
   const title = data.post[0].title;
   const url = `https://www.chocoham.dev/${data.post[0].title}`;
-  const description = data.post[0].content;
+  const description = data.post[0].hashtag;
   const SEO = {
     title: title,
     canonical: url,
     description: description,
     author: "초코햄",
+    images: [
+      {
+        url: "https://chocoham.dev/public/default_thumbnail.svg",
+        width: 380,
+        height: 250,
+        alt: "Thumbnail",
+      },
+    ],
     openGraph: {
       title,
       url,
@@ -27,6 +36,15 @@ export default function Post({ data }: any) {
       <NextSeo {...SEO} />
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
+      <br />
+      <br />
+      <ButtonLayout>
+        {description &&
+          description.split(" ").map((item: string, i: any) => {
+            item = "#" + item;
+            return <HashTagBox>{item}</HashTagBox>;
+          })}
+      </ButtonLayout>
       <CommentBox data={data.comment} postName={data.post[0].title} />
     </>
   );

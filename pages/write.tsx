@@ -1,6 +1,6 @@
 import { Editor } from "src/components/molecules";
 import { Button, Input } from "src/components/atoms";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import parseDate from "util/parseDate";
 import { uploadImage } from "util/handleImg/uploadImg";
@@ -9,11 +9,23 @@ export default function Write() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [series, setSeries] = useState<string>("");
+  const [hashtag, setHashtag] = useState<string>("");
   const [images, setImages] = useState<any[]>([]);
   const [imageTitle, setImageTitle] = useState<any[]>([]);
   const [error, setError] = useState("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    let inputPw = prompt("ACCESS CODE 입력");
+    const pw = process.env.USER_ROOT;
+    if (inputPw != pw) {
+      alert(pw);
+      router.replace("/");
+    } else {
+      alert("success");
+    }
+  }, []);
 
   const handleChange = useCallback((content: any) => {
     setContent(content);
@@ -50,6 +62,7 @@ export default function Write() {
       content,
       series,
       uploadDate: parseDate(new Date()),
+      hashtag,
       images,
       imageTitle,
     };
@@ -95,6 +108,13 @@ export default function Write() {
         onChange={(e: any) => setTitle(e.target.value)}
       />
       <Editor height={500} value={content} onChange={handleChange} />
+      <Input
+        size="default"
+        placeholder="스페이스바로 태그를 구분해주세요"
+        value={hashtag}
+        type="string"
+        onChange={(e: any) => setHashtag(e.target.value)}
+      />
       <Button ButtonType="small" color="green" onClick={handlePost}>
         Submit
       </Button>
