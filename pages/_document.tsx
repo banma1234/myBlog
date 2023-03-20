@@ -36,7 +36,11 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="icon" type="image/x-icon" href="public/favicon.ico" />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="https//chocoham.dev/public/favicon.ico"
+          />
         </Head>
         <body>
           <Main />
