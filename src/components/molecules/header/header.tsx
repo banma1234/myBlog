@@ -18,7 +18,7 @@ const HeaderComponent: React.FC = () => {
             <Link href="/about">About</Link>
           </li>
           <li>
-            <Link href="/">Login</Link>
+            <Link href="/write">Login</Link>
           </li>
         </HeaderMenu>
       </HeaderContainer>

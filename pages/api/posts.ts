@@ -1,5 +1,4 @@
 import { connectToDatabase } from "util/mongodb";
-import sharp from "sharp";
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
@@ -12,7 +11,8 @@ export default async function postHandler(req: any, res: any) {
 
 async function addPost(req: any, res: any) {
   try {
-    const { title, content, series, images, uploadDate, imageTitle } = req.body;
+    const { title, content, series, hashtag, images, uploadDate, imageTitle } =
+      req.body;
     let { db } = await connectToDatabase();
     const imageContainer = [];
 
@@ -39,6 +39,7 @@ async function addPost(req: any, res: any) {
       title,
       content,
       series,
+      hashtag,
       thumbnail: imageContainer[0],
       imageTitle: imageTitle,
       uploadDate,

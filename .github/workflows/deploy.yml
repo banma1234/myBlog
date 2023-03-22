@@ -23,6 +23,7 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           DEV_URL: ${{ secrets.DEV_URL }}
           TEST_ENV: ${{ secrets.TEST_ENV }}
+          USER_ROOT: ${{ secrets.USER_ROOT }}
 
       - name: doTest
         run: yarn run test
