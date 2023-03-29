@@ -6,13 +6,15 @@
 ### 프로젝트 미리보기
 
 - 대댓글
-    ![대댓글](https://user-images.githubusercontent.com/77619465/228568957-0ed090ae-edbc-4bf3-81b7-66a01e129776.gif)
+![대댓글](https://user-images.githubusercontent.com/77619465/228568957-0ed090ae-edbc-4bf3-81b7-66a01e129776.gif)
+
 
 - 포스트
-    ![포스트](https://user-images.githubusercontent.com/77619465/228569324-17e10cad-f904-4cfe-87a7-11fe8d6624fa.gif)
+![포스트](https://user-images.githubusercontent.com/77619465/228569324-17e10cad-f904-4cfe-87a7-11fe8d6624fa.gif)
+
 
 - 작성
-    ![작성](https://user-images.githubusercontent.com/77619465/228571054-31a10ff2-76a8-4973-ae03-d047b3cb215e.gif)
+![작성](https://user-images.githubusercontent.com/77619465/228571054-31a10ff2-76a8-4973-ae03-d047b3cb215e.gif)
 
 ---
 ### build by...
