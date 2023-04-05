@@ -2,12 +2,16 @@ import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import { ButtonLayout, HashTagBox } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Post({ data }: any) {
   const title = data.post[0].title;
   const url = `https://www.chocoham.dev/${data.post[0].title}`;
-  const description = data.post[0].hashtag;
+  const description =
+    data.post[0].content.length > 150
+      ? data.post[0].content.subString(0, 150)
+      : data.post[0].content;
+  const keywords = data.post[0].hashtag;
   const SEO = {
     title: title,
     canonical: url,
@@ -28,8 +32,6 @@ export default function Post({ data }: any) {
     },
   };
 
-  const [imgurl, setImgUrl] = useState<string | null>(data.post[0].thumbnail);
-
   useEffect(() => {});
   return (
     <>
@@ -39,8 +41,8 @@ export default function Post({ data }: any) {
       <br />
       <br />
       <ButtonLayout>
-        {description &&
-          description.split(" ").map((item: string, i: any) => {
+        {keywords &&
+          keywords.split(" ").map((item: string, i: any) => {
             item = "#" + item;
             return <HashTagBox>{item}</HashTagBox>;
           })}

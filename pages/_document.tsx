@@ -35,7 +35,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
+        <Head lang="ko">
+          <meta name="google-site-verification" content="A1qLguIf9gLBQEkoscbYdxPvOgBxPrI3NF0v3FaFDKU" />
           <link
             rel="icon"
             type="image/x-icon"

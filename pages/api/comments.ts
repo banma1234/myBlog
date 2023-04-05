@@ -29,6 +29,7 @@ async function getComment(req: any, res: any) {
         writter: 1,
         content: 1,
         date: 1,
+        user_type: 1,
       },
     };
     // fetch the comments
@@ -58,6 +59,9 @@ async function addComment(req: any, res: any) {
     let { db } = await connectToDatabase();
 
     let newBody = JSON.parse(req.body);
+    if (newBody.password == process.env.USER_ROOT) {
+      newBody.user_type = "USER_ROOT";
+    }
 
     switch (commentType) {
       case "DEFAULT": {

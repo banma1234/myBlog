@@ -18,14 +18,23 @@ export default function Write() {
 
   useEffect(() => {
     let inputPw = prompt("ACCESS CODE 입력");
-    const pw = process.env.USER_ROOT;
-    if (inputPw != pw) {
-      alert(pw);
-      router.replace("/");
-    } else {
-      alert("success");
-    }
+    accessAdmin(inputPw);
   }, []);
+
+  const accessAdmin = async (pw: string | null) => {
+    let response = await fetch("api/auth/login", {
+      method: "POST",
+      body: pw,
+    });
+    let data = await response.json();
+
+    if (data.success) {
+      alert(data.message);
+    } else {
+      alert(data.message);
+      router.replace("/");
+    }
+  };
 
   const handleChange = useCallback((content: any) => {
     setContent(content);

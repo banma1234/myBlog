@@ -88,7 +88,8 @@ export const AddCommentBox = styled.div`
 `;
 
 export const HashTagBox = styled.div`
-  background-color: gray;
+  background-color: #d3e3fc;
+  color: #262626;
   padding: 0.5rem 1rem 0.5rem 1rem;
   margin-right: 2rem;
 `;
