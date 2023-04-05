@@ -18,5 +18,5 @@ module.exports = {
   targetFolder: "./public",
   pagesDirectory: __dirname + "/pages",
   buildId: "chocoham",
-  additionalSitemaps: ["https://chocoham.dev/new/sitemap.xml"],
+  additionalSitemaps: ["https://chocoham.dev/server-sitemap.xml"],
 };
