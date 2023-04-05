@@ -63,10 +63,11 @@ const UserCommentComponent: React.FC<UserCommentType> = (
       RE_STEP: RE_STEP_handler(),
       RE_LEVEL: RE_LEVEL_handler(),
       date: parseDate(new Date()),
+      user_type: "USER_DEFAULT",
       writter,
-      content,
       password,
       postName: props.postName,
+      content,
     };
 
     let response = await fetch("/api/comments", {

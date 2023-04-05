@@ -15,9 +15,10 @@ const NavBarComponent: React.FC<NavBarType> = (props: NavBarType) => {
         </Link>
         {data &&
           data.map((item: any, i: any) => {
+            let menu = item.series + "(" + item.count + ")";
             return (
               <Link href={`/series/detail/${item.series}`} key={i}>
-                <h3>{item.series}</h3>
+                <h3>{menu}</h3>
               </Link>
             );
           })}

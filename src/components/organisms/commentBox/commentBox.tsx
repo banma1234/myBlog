@@ -14,9 +14,11 @@ import { CommentBoxType } from "./commentBoxType";
 import { UserComment, DropDown } from "src/components/molecules";
 import { ImgWrapper } from "styles/globals";
 import Image from "next/legacy/image";
-import imgUrl from "public/testImg.jpg";
+import user_root from "public/testImg.jpg";
+import user_default from "public/default_profile.png";
 import { useState, useEffect } from "react";
 import { useIcons } from "util/hooks";
+import { StaticImageData } from "next/image";
 
 const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
@@ -25,6 +27,15 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
   const [replyClick, setReplyClick] = useState(false);
   const [menuClick, setMenuClick] = useState(false);
   const [commentId, setCommentId] = useState("");
+
+  const profileHandler = (USER_TYPE: string) => {
+    switch (USER_TYPE) {
+      case "USER_ROOT":
+        return user_root;
+      default:
+        return user_default;
+    }
+  };
 
   useEffect(() => {
     setReplyClick(false);
@@ -40,7 +51,11 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
               <Comments level={item.RE_LEVEL * 6}>
                 <Temp>
                   <ImgWrapper type="profile">
-                    <Image src={imgUrl} alt="comment profile" priority />
+                    <Image
+                      src={profileHandler(item.user_type)}
+                      alt="comment profile"
+                      priority
+                    />
                   </ImgWrapper>
                 </Temp>
                 <Content>
