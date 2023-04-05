@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export default function Post({ data }: any) {
   const title = data.post[0].title;
-  const url = `https://www.chocoham.dev/${data.post[0].title}`;
+  const url = `https://www.chocoham.dev/posts/${data.post[0].title}`;
   const description =
     data.post[0].content.length > 150
       ? data.post[0].content.subString(0, 150)
