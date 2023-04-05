@@ -13,7 +13,7 @@ export default function Home({ posts }: any) {
         <Image src={imgUrl} alt="card Img" width={"980"} />
         <OverlapDiv>
           <Button
-            color="high"
+            color="green"
             ButtonType="default"
             onClick={() => {
               null;
