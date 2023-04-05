@@ -5,11 +5,15 @@ import { CommentBox } from "src/components/organisms";
 import { useEffect } from "react";
 
 export default function Post({ data }: any) {
+  let imgUrl = "/default_thumbnail.svg";
+  if (data.post[0].thumbnail != null) {
+    imgUrl = `data:image/${data.post[0].thumbnail.contentType};base64,${data.post[0].thumbnail.data};`;
+  }
   const title = data.post[0].title;
   const url = `https://www.chocoham.dev/posts/${data.post[0].title}`;
   const description =
     data.post[0].content.length > 150
-      ? data.post[0].content.subString(0, 150)
+      ? data.post[0].content.substr(0, 150)
       : data.post[0].content;
   const keywords = data.post[0].hashtag;
   const SEO = {
@@ -19,16 +23,24 @@ export default function Post({ data }: any) {
     author: "초코햄",
     images: [
       {
-        url: "https://chocoham.dev/public/default_thumbnail.svg",
+        url: `${imgUrl}`,
         width: 380,
         height: 250,
-        alt: "Thumbnail",
+        alt: `${title}의 썸네일`,
       },
     ],
     openGraph: {
       title,
       url,
       description,
+      images: [
+        {
+          url: `${imgUrl}`,
+          width: 380,
+          height: 250,
+          alt: `${title}의 썸네일`,
+        },
+      ],
     },
   };
 

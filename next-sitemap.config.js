@@ -8,10 +8,10 @@ module.exports = {
   robotsTxtOptions: {
     policies: [
       {
-        userAgent: '*',
+        userAgent: "*",
         disallow: ['/api/**/*.ts", "/write.tsx'],
       },
-      { userAgent: '*', allow: '/' },
+      { userAgent: "*", allow: "/" },
     ],
     additionalSitemaps: [`https://chocoham.dev/server-sitemap.xml`],
   },
