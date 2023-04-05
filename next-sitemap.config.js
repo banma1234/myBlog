@@ -13,7 +13,7 @@ module.exports = {
       },
       { userAgent: '*', allow: '/' },
     ],
-    additionalSitemaps: [`${siteUrl}server-sitemap.xml`],
+    additionalSitemaps: [`https://chocoham.dev/server-sitemap.xml`],
   },
   targetFolder: "./public",
   pagesDirectory: __dirname + "/pages",
