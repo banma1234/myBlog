@@ -20,7 +20,10 @@ export default function Write() {
 
   useEffect(() => {
     let inputPw = prompt("ACCESS CODE 입력");
-    accessAdmin(inputPw);
+    let result = accessAdmin(inputPw);
+    if (!result) {
+      router.replace("/");
+    }
   }, []);
 
   const handleChange = useCallback((content: any) => {
