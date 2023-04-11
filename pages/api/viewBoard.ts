@@ -38,12 +38,18 @@ async function viewIndexBoard(req: any, res: any) {
       .toArray();
 
     let thumbnail = null;
+    const options2 = { projection: { _id: 0, images: 1 } };
     for (let i = 0; i < 3; i++) {
-      if (!posts[0].isThumbnail) {
-        thumbnail = await db
-          .collection("thumbnails")
-          .find({ series: posts[i].series });
-        posts[i].thumbnail = thumbnail;
+      if (!posts[i].isThumbnail) {
+        try {
+          thumbnail = await db
+            .collection("thumbnail")
+            .findOne({ series: posts[i].series }, options2);
+
+          posts[i].thumbnail = thumbnail.images;
+        } catch (e: any) {
+          console.log(e);
+        }
       }
     }
 
@@ -80,12 +86,18 @@ async function viewAll(req: any, res: any) {
     let posts = await db.collection("posts").find({}, options).toArray();
 
     let thumbnail = null;
-    for (let i = 0; i < 3; i++) {
-      if (!posts[0].isThumbnail) {
-        thumbnail = await db
-          .collection("thumbnails")
-          .find({ series: posts[i].series });
-        posts[i].thumbnail = thumbnail;
+    const options2 = { projection: { _id: 0, images: 1 } };
+    for (let i = 0; i < posts.length; i++) {
+      if (!posts[i].isThumbnail) {
+        try {
+          thumbnail = await db
+            .collection("thumbnail")
+            .findOne({ series: posts[i].series }, options2);
+
+          posts[i].thumbnail = thumbnail.images;
+        } catch (e: any) {
+          console.log(e);
+        }
       }
     }
 
@@ -157,6 +169,7 @@ async function viewSeries(req: any, res: any) {
 async function viewSeriesDetail(req: any, res: any) {
   try {
     let selectedSeries = decodeURI(req.headers.viewtype);
+
     const options = {
       sort: { uploadDate: -1 },
       projection: {
@@ -177,12 +190,18 @@ async function viewSeriesDetail(req: any, res: any) {
       .toArray();
 
     let thumbnail = null;
-    for (let i = 0; i < 3; i++) {
-      if (!posts[0].isThumbnail) {
-        thumbnail = await db
-          .collection("thumbnails")
-          .find({ series: posts[i].series });
-        posts[i].thumbnail = thumbnail;
+    const options2 = { projection: { _id: 0, images: 1 } };
+    for (let i = 0; i < posts.length; i++) {
+      if (!posts[i].isThumbnail) {
+        try {
+          thumbnail = await db
+            .collection("thumbnail")
+            .findOne({ series: posts[i].series }, options2);
+
+          posts[i].thumbnail = thumbnail.images;
+        } catch (e: any) {
+          console.log(e);
+        }
       }
     }
 
