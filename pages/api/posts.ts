@@ -11,8 +11,17 @@ export default async function postHandler(req: any, res: any) {
 
 async function addPost(req: any, res: any) {
   try {
-    const { title, content, series, hashtag, images, uploadDate, imageTitle } =
-      req.body;
+    const {
+      title,
+      content,
+      series,
+      hashtag,
+      images,
+      uploadDate,
+      imageTitle,
+      isThumbnail,
+    } = req.body;
+
     let { db } = await connectToDatabase();
     const imageContainer = [];
 
@@ -40,8 +49,9 @@ async function addPost(req: any, res: any) {
       content,
       series,
       hashtag,
-      thumbnail: imageContainer[0],
+      thumbnail: isThumbnail ? imageContainer[0] : null,
       imageTitle: imageTitle,
+      isThumbnail,
       uploadDate,
     });
 

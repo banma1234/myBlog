@@ -21,7 +21,14 @@ async function viewIndexBoard(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
+      projection: {
+        _id: 0,
+        title: 1,
+        uploadDate: 1,
+        thumbnail: 1,
+        series: 1,
+        isThumbnail: 1,
+      },
     };
     // fetch the posts
     let posts = await db
@@ -29,6 +36,16 @@ async function viewIndexBoard(req: any, res: any) {
       .find({}, options)
       .limit(3)
       .toArray();
+
+    let thumbnail = null;
+    for (let i = 0; i < 3; i++) {
+      if (!posts[0].isThumbnail) {
+        thumbnail = await db
+          .collection("thumbnails")
+          .find({ series: posts[i].series });
+        posts[i].thumbnail = thumbnail;
+      }
+    }
 
     // return the posts
     return res.json({
@@ -50,10 +67,28 @@ async function viewAll(req: any, res: any) {
     let { db } = await connectToDatabase();
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, title: 1, uploadDate: 1, thumbnail: 1 },
+      projection: {
+        _id: 0,
+        title: 1,
+        uploadDate: 1,
+        thumbnail: 1,
+        series: 1,
+        isThumbnail: 1,
+      },
     };
     // fetch the posts
     let posts = await db.collection("posts").find({}, options).toArray();
+
+    let thumbnail = null;
+    for (let i = 0; i < 3; i++) {
+      if (!posts[0].isThumbnail) {
+        thumbnail = await db
+          .collection("thumbnails")
+          .find({ series: posts[i].series });
+        posts[i].thumbnail = thumbnail;
+      }
+    }
+
     // return the posts
     return res.json({
       message: posts,
@@ -124,7 +159,14 @@ async function viewSeriesDetail(req: any, res: any) {
     let selectedSeries = decodeURI(req.headers.viewtype);
     const options = {
       sort: { uploadDate: -1 },
-      projection: { _id: 0, series: 1, title: 1, uploadDate: 1, thumbnail: 1 },
+      projection: {
+        _id: 0,
+        series: 1,
+        title: 1,
+        uploadDate: 1,
+        thumbnail: 1,
+        isThumbnail: 1,
+      },
     };
     // connect to the database
     let { db } = await connectToDatabase();
@@ -133,6 +175,17 @@ async function viewSeriesDetail(req: any, res: any) {
       .collection("posts")
       .find({ series: selectedSeries }, options)
       .toArray();
+
+    let thumbnail = null;
+    for (let i = 0; i < 3; i++) {
+      if (!posts[0].isThumbnail) {
+        thumbnail = await db
+          .collection("thumbnails")
+          .find({ series: posts[i].series });
+        posts[i].thumbnail = thumbnail;
+      }
+    }
+
     // return the posts
     return res.json({
       message: JSON.parse(JSON.stringify(posts)),
