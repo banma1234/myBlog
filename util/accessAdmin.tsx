@@ -1,5 +1,5 @@
 export default async function accessAdmin(pw: string | null) {
-  let response = await fetch("api/auth/login", {
+  let response = await fetch("/api/auth/login", {
     method: "POST",
     body: pw,
   });
@@ -7,7 +7,9 @@ export default async function accessAdmin(pw: string | null) {
 
   if (data.success) {
     alert(data.message);
+    return true;
   } else {
     alert(data.message);
+    return false;
   }
 }
