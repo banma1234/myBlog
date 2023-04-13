@@ -6,9 +6,6 @@ import { useEffect } from "react";
 
 export default function Post({ data }: any) {
   let imgUrl = "/default_thumbnail.svg";
-  if (data.post[0].thumbnail != null) {
-    imgUrl = `data:image/${data.post[0].thumbnail.contentType};base64,${data.post[0].thumbnail.data};`;
-  }
   const title = data.post[0].title;
   const url = `https://www.chocoham.dev/posts/${data.post[0].title}`;
   const description =
