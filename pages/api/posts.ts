@@ -79,7 +79,6 @@ async function getPosts(req: any, res: any) {
         thumbnails: 0,
         isThumbnail: 0,
         series: 0,
-        imageTitle: 0,
       },
     };
     // fetch the posts
