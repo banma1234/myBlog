@@ -74,7 +74,13 @@ async function getPosts(req: any, res: any) {
     // connect to the database
     let { db } = await connectToDatabase();
     const options = {
-      projection: { images: 0 },
+      projection: {
+        images: 0,
+        thumbnails: 0,
+        isThumbnail: 0,
+        series: 0,
+        imageTitle: 0,
+      },
     };
     // fetch the posts
     let posts = await db

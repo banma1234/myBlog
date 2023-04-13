@@ -4,12 +4,12 @@ module.exports = {
   siteUrl: process.env.DEV_URL,
   generateRobotsTxt: true,
   changefreq: "weekly",
-  exclude: ["/api/**/*.ts", "/write.tsx, /server-sitemap.xml"],
+  exclude: ["/api/**/*.ts", "/admin/*.tsx"],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: "*",
-        disallow: ['/api/**/*.ts", "/write.tsx'],
+        disallow: ["/api/**/*.ts", "/admin/*.tsx"],
       },
       { userAgent: "*", allow: "/" },
     ],
