@@ -76,7 +76,7 @@ async function getPosts(req: any, res: any) {
     const options = {
       projection: {
         images: 0,
-        thumbnails: 0,
+        thumbnail: 0,
         isThumbnail: 0,
         series: 0,
       },
