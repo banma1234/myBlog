@@ -12,15 +12,17 @@ export default function Home({ posts }: any) {
       <ImgWrapper type="banner">
         <Image src={imgUrl} alt="card Img" width={"980"} />
         <OverlapDiv>
-          <Button
-            color="green"
-            ButtonType="default"
-            onClick={() => {
-              null;
-            }}
-          >
-            Go
-          </Button>
+          <Link href="https://github.com/banma1234">
+            <Button
+              color="green"
+              ButtonType="default"
+              onClick={() => {
+                null;
+              }}
+            >
+              Go
+            </Button>
+          </Link>
         </OverlapDiv>
       </ImgWrapper>
       <Link href="/view">
