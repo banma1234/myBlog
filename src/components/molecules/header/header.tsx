@@ -15,10 +15,10 @@ const HeaderComponent: React.FC = () => {
         </HeaderIcon>
         <HeaderMenu>
           <li>
-            <Link href="/about">About</Link>
+            <Link href="https://github.com/banma1234">About</Link>
           </li>
           <li>
-            <Link href="/write">Login</Link>
+            <Link href="/admin">Login</Link>
           </li>
         </HeaderMenu>
       </HeaderContainer>
