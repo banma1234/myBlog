@@ -1,19 +1,17 @@
 import styled, { css } from "styled-components";
 import { useColor } from "util/hooks";
 import { CardType, ObjType } from "./cardType";
+import localstorage from "util/localstorage";
 
 export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
     const height: ObjType = { default: "300px", login: "700px" };
-
+    const darkmode = localstorage("darkmode");
     const temp = props.type;
+
     return css`
-      background-color: ${useColor(props.color)};
-      color: ${props.color == "gray" ||
-      props.color == "og_white" ||
-      props.color == "low"
-        ? "black"
-        : "white"};
+      background-color: ${props => props.theme.cardColor};
+      color: ${props => props.theme.fontColor};
       cursor: "pointer";
       position: relative;
       margin: 10px;
