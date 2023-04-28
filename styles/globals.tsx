@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled, { css, createGlobalStyle } from "styled-components";
+import { Theme } from "styles/Theme";
 import { ObjType } from "./globalsType";
 
 export const Globals = {
@@ -19,6 +20,24 @@ export const Globals = {
     $color_og_black: "#000000",
   },
 };
+
+export const GlobalStyle = createGlobalStyle<{
+  theme: Theme;
+}>`
+  body{
+    transition: 0.3s;
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.fontColor};
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-family: "nanumGothic";
+    @font-face {
+      font-family: "nanumGothic";
+      src: url("/fonts/NanumBarunGothicBold.ttf") format("truetype");
+    }
+  }
+`;
 
 export const CardLayout = styled.div`
   display: grid;
