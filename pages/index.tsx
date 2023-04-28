@@ -37,12 +37,7 @@ export default function Home({ posts }: any) {
             }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card
-                  src={url}
-                  type="default"
-                  color="low"
-                  info={item.uploadDate}
-                >
+                <Card src={url} type="default" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>

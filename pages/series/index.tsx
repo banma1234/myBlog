@@ -31,7 +31,6 @@ export default function Board({ series }: any) {
                 <Card
                   src={url}
                   type="default"
-                  color="low"
                   info={`${item.count}개의 게시물`}
                 >
                   {item.series}
