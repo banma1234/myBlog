@@ -27,7 +27,7 @@ export const HeaderMenu = styled.ul`
   }
 `;
 
-export const HeaderIcon = styled.div`
+export const HeaderLogo = styled.div`
   margin-left: 1.5rem;
   display: flex;
   color: ${useColor("high")};
@@ -41,4 +41,18 @@ export const HeaderContainer = styled.div`
   margin: 0 auto;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const HeaderIcon = styled.button`
+  width: 2.3rem;
+  height: 2.3rem;
+  border: none;
+  background-color: ${useColor("black")};
+  border-radius: 100%;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1f1f1f;
+  }
 `;

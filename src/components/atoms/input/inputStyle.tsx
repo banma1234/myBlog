@@ -8,7 +8,8 @@ const StyledInput = styled.input.attrs(props => ({}))<inputType>`
 
     return css`
       display: flex;
-      background-color: ${useColor("gray")};
+      background-color: ${props => props.theme.cardColor};
+      color: ${props => props.theme.fontColor};
       width: ${props.size == "small" ? "12rem" : "90%"};
       height: ${height[props.size]};
       border: none;
