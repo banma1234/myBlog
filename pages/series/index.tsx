@@ -48,7 +48,7 @@ export async function getServerSideProps() {
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
-  myHeaders.append("viewType", "VIEW_SERIES");
+  myHeaders.append("viewType", "VIEW_SERIES_BOARD");
 
   let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
