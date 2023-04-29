@@ -1,20 +1,17 @@
 import styled, { css } from "styled-components";
 import { useColor } from "util/hooks";
 import { CardType, ObjType } from "./cardType";
+import localstorage from "util/localstorage";
 
 export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
-    const width: ObjType = { default: "90%", login: "400px" };
     const height: ObjType = { default: "300px", login: "700px" };
-
+    const darkmode = localstorage("darkmode");
     const temp = props.type;
+
     return css`
-      background-color: ${useColor(props.color)};
-      color: ${props.color == "gray" ||
-      props.color == "og_white" ||
-      props.color == "low"
-        ? "black"
-        : "white"};
+      background-color: ${props => props.theme.cardColor};
+      color: ${props => props.theme.fontColor};
       cursor: "pointer";
       position: relative;
       margin: 10px;
@@ -30,7 +27,7 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       }
       @media all and (max-width: 670px) {
         width: 380px;
-        height: 250px;
+        height: 400px;
       }
       @keyframes cardUp {
         0% {
@@ -63,20 +60,31 @@ export const ImageWrapper = styled.div`
 export const Post = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 0 10px 10px 10px;
 `;
 
 export const TitleBox = styled.div`
-  height: 40px;
+  line-height: 1.2rem;
+  height: 2.4rem;
   font-weight: 700;
-  font-size: 17px;
+  font-size: 1.05rem;
   margin-bottom: 1rem;
-  white-space: nowrap;
+  display: -webkit-box;
+  word-wrap: break-all;
   overflow: hidden;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  @media all and (max-width: 670px) {
+    font-size: 1.2rem;
+    height: 2.6rem;
+  }
 `;
 
 export const InfoBox = styled.div`
   display: flex;
   justify-content: flex-end;
+  font-size: 0.85rem;
+  @media all and (max-width: 670px) {
+    font-size: 1rem;
+  }
 `;

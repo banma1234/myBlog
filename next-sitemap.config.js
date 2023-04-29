@@ -4,14 +4,14 @@ module.exports = {
   siteUrl: process.env.DEV_URL,
   generateRobotsTxt: true,
   changefreq: "weekly",
-  exclude: ["/api/**/*.ts", "/write.tsx, /server-sitemap.xml"],
+  exclude: ["/api/**/*.ts", "/admin/*.tsx", "/admin/*", "/admin", "/404"],
   robotsTxtOptions: {
     policies: [
       {
-        userAgent: '*',
-        disallow: ['/api/**/*.ts", "/write.tsx'],
+        userAgent: "*",
+        disallow: ["/api/**/*", "/admin/*", "/admin", "/404"],
       },
-      { userAgent: '*', allow: '/' },
+      { userAgent: "*", allow: "/" },
     ],
     additionalSitemaps: [`https://chocoham.dev/server-sitemap.xml`],
   },

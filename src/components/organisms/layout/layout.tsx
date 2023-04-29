@@ -6,7 +6,7 @@ const LayoutComponent: React.FC<LayoutType> = (props: LayoutType) => {
   return (
     <Section>
       <header>
-        <Header />
+        <Header onToggle={props.onToggle} theme={props.theme} />
       </header>
       <main>
         <Container>

@@ -1,9 +1,10 @@
 import { Editor } from "src/components/molecules";
+import { useRouter } from "next/router";
 import { Button, Input } from "src/components/atoms";
 import { ChangeEvent, useCallback, useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import parseDate from "util/parseDate";
 import { uploadImage } from "util/handleImg/uploadImg";
+import accessAdmin from "util/accessAdmin";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -12,29 +13,18 @@ export default function Write() {
   const [hashtag, setHashtag] = useState<string>("");
   const [images, setImages] = useState<any[]>([]);
   const [imageTitle, setImageTitle] = useState<any[]>([]);
+  const [isThumbnail, setIsThumbnail] = useState<boolean>(false);
   const [error, setError] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
     let inputPw = prompt("ACCESS CODE 입력");
-    accessAdmin(inputPw);
-  }, []);
-
-  const accessAdmin = async (pw: string | null) => {
-    let response = await fetch("api/auth/login", {
-      method: "POST",
-      body: pw,
-    });
-    let data = await response.json();
-
-    if (data.success) {
-      alert(data.message);
-    } else {
-      alert(data.message);
+    let result = accessAdmin(inputPw);
+    if (!result) {
       router.replace("/");
     }
-  };
+  }, []);
 
   const handleChange = useCallback((content: any) => {
     setContent(content);
@@ -74,9 +64,8 @@ export default function Write() {
       hashtag,
       images,
       imageTitle,
+      isThumbnail,
     };
-
-    console.log("post : ", post);
 
     let response = await fetch("/api/posts", {
       method: "POST",
@@ -102,6 +91,12 @@ export default function Write() {
   return (
     <>
       <input type="file" onChange={handleImgUpload} multiple />
+      <span>자체 썸네일 사용</span>
+      <input
+        type="checkbox"
+        checked={isThumbnail}
+        onChange={(e: any) => setIsThumbnail(!isThumbnail)}
+      />
       <Input
         size="default"
         placeholder="Series"

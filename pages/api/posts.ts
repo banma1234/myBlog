@@ -11,8 +11,17 @@ export default async function postHandler(req: any, res: any) {
 
 async function addPost(req: any, res: any) {
   try {
-    const { title, content, series, hashtag, images, uploadDate, imageTitle } =
-      req.body;
+    const {
+      title,
+      content,
+      series,
+      hashtag,
+      images,
+      uploadDate,
+      imageTitle,
+      isThumbnail,
+    } = req.body;
+
     let { db } = await connectToDatabase();
     const imageContainer = [];
 
@@ -40,8 +49,9 @@ async function addPost(req: any, res: any) {
       content,
       series,
       hashtag,
-      thumbnail: imageContainer[0],
+      thumbnail: isThumbnail ? imageContainer[0] : null,
       imageTitle: imageTitle,
+      isThumbnail,
       uploadDate,
     });
 
@@ -64,16 +74,64 @@ async function getPosts(req: any, res: any) {
     // connect to the database
     let { db } = await connectToDatabase();
     const options = {
-      projection: { images: 0 },
+      projection: {
+        images: 0,
+        thumbnail: 0,
+        isThumbnail: 0,
+      },
     };
+    const options2 = {
+      sort: { uploadDate: -1 },
+      projection: {
+        _id: 0,
+        title: 1,
+        uploadDate: 1,
+        thumbnail: 1,
+        isThumbnail: 1,
+        series: 1,
+      },
+    };
+    const options3 = { projection: { _id: 0, images: 1 } };
+
     // fetch the posts
     let posts = await db
       .collection("posts")
       .find({ title: postName }, options)
       .toArray();
-    // return the posts
+
+    let recentPosts = null;
+    try {
+      recentPosts = await db
+        .collection("posts")
+        .find({ series: posts[0].series, title: { $ne: postName } }, options2)
+        .limit(3)
+        .toArray();
+    } catch (error: any) {
+      console.log(error);
+      return res.json({
+        message: posts,
+        success: true,
+      });
+    }
+
+    let thumbnail = null;
+    thumbnail = await db
+      .collection("thumbnail")
+      .findOne({ series: posts[0].series }, options3);
+
+    for (let i = 0; i < recentPosts.length; i++) {
+      if (!recentPosts[i].isThumbnail) {
+        try {
+          recentPosts[i].thumbnail = thumbnail.images;
+        } catch (e: any) {
+          console.log(e);
+        }
+      }
+    }
+
     return res.json({
       message: posts,
+      recent: recentPosts,
       success: true,
     });
   } catch (error: any) {
