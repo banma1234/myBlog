@@ -1,8 +1,10 @@
-import { NextSeo } from "next-seo";
+import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ButtonLayout, HashTagBox } from "styles/globals";
+import { NextSeo } from "next-seo";
+import { CardLayout, ButtonLayout, HashTagBox } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
-import { useEffect } from "react";
+import { Card } from "src/components/molecules";
+import { useIcons } from "util/hooks";
 
 export default function Post({ data }: any) {
   let imgUrl = "/default_thumbnail.svg";
@@ -41,7 +43,6 @@ export default function Post({ data }: any) {
     },
   };
 
-  useEffect(() => {});
   return (
     <>
       <NextSeo {...SEO} />
@@ -57,6 +58,26 @@ export default function Post({ data }: any) {
           })}
       </ButtonLayout>
       <CommentBox data={data.comment} postName={data.post[0].title} />
+      <hr />
+      <Link href={`/series/detail/${data.post[0].series}`}>
+        <h2>{useIcons("arrowRight", "18")} 관련 포스트</h2>
+      </Link>
+      <CardLayout>
+        {data.recentPost &&
+          data.recentPost.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
+            return (
+              <Link href={`/posts/${item.title}`} key={i}>
+                <Card src={url} type="default" info={item.uploadDate}>
+                  {item.title}
+                </Card>
+              </Link>
+            );
+          })}
+      </CardLayout>
     </>
   );
 }
@@ -82,6 +103,7 @@ export async function getServerSideProps(context: any) {
   });
   const postInfo = await response_Post.json();
   const postData = postInfo["message"];
+  const recentData = postInfo["recent"] ? postInfo["recent"] : null;
 
   const response_Comment = await fetch(
     `${DEV_URL ? DEV_URL : ""}/api/comments`,
@@ -103,6 +125,7 @@ export async function getServerSideProps(context: any) {
       data: {
         post: postData,
         comment: commentData["message"],
+        recentPost: recentData,
       },
     },
   };
