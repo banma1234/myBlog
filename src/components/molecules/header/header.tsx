@@ -8,18 +8,18 @@ import {
 import { HeaderType } from "./headerType";
 import Link from "next/link";
 import { useIcons } from "util/hooks";
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from "react";
 
 const HeaderComponent: React.FC<HeaderType> = (props: HeaderType) => {
   const [isDark, setIsDark] = useState<string | null>("light");
   useEffect(() => {
     setIsDark(window.localStorage.getItem("darkmode"));
-  }, [isDark])
+  }, [isDark]);
 
   const handleIcon = () => {
     props.onToggle();
-    setIsDark(prev => prev === "dark" ? "light" : "dark");
-  }
+    setIsDark(prev => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
     <StyledHeader>
@@ -35,9 +35,7 @@ const HeaderComponent: React.FC<HeaderType> = (props: HeaderType) => {
             <Link href="/admin">Login</Link>
           </li>
           <HeaderIcon onClick={handleIcon}>
-            {isDark === "dark"
-              ? useIcons("moon", "22")
-              : useIcons("sun", "22")}
+            {isDark === "dark" ? useIcons("moon", "22") : useIcons("sun", "22")}
           </HeaderIcon>
         </HeaderMenu>
       </HeaderContainer>
