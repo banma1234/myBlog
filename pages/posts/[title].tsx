@@ -1,16 +1,83 @@
-import Head from "next/head";
+import Link from "next/link";
 import dynamic from "next/dynamic";
+import { NextSeo } from "next-seo";
+import { CardLayout, ButtonLayout, HashTagBox } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
+import { Card } from "src/components/molecules";
+import { useIcons } from "util/hooks";
 
 export default function Post({ data }: any) {
+  let imgUrl = "/default_thumbnail.svg";
+  const title = data.post[0].title;
+  const url = `https://www.chocoham.dev/posts/${data.post[0].title}`;
+  const description =
+    data.post[0].content.length > 150
+      ? data.post[0].content.substr(0, 150)
+      : data.post[0].content;
+  const keywords = data.post[0].hashtag;
+  const SEO = {
+    title: title,
+    canonical: url,
+    description: description,
+    author: "초코햄",
+    images: [
+      {
+        url: `${imgUrl}`,
+        width: 380,
+        height: 250,
+        alt: `${title}의 썸네일`,
+      },
+    ],
+    openGraph: {
+      title,
+      url,
+      description,
+      images: [
+        {
+          url: `${imgUrl}`,
+          width: 380,
+          height: 250,
+          alt: `${title}의 썸네일`,
+        },
+      ],
+    },
+  };
+
   return (
     <>
-      <Head>
-        <title>{data.post[0].title}</title>
-      </Head>
+      <NextSeo {...SEO} />
       <h1>{data.post[0].title}</h1>
       <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
+      <br />
+      <br />
+      <ButtonLayout>
+        {keywords &&
+          keywords.split(" ").map((item: string, i: any) => {
+            item = "#" + item;
+            return <HashTagBox>{item}</HashTagBox>;
+          })}
+      </ButtonLayout>
       <CommentBox data={data.comment} postName={data.post[0].title} />
+      <hr />
+      <Link href={`/series/detail/${data.post[0].series}`}>
+        <h2>{useIcons("arrowRight", "18")} 관련 포스트</h2>
+      </Link>
+      <CardLayout>
+        {data.recentPost &&
+          data.recentPost.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
+            return (
+              <Link href={`/posts/${item.title}`} key={i}>
+                <Card src={url} type="default" info={item.uploadDate}>
+                  {item.title}
+                </Card>
+              </Link>
+            );
+          })}
+      </CardLayout>
     </>
   );
 }
@@ -30,23 +97,35 @@ export async function getServerSideProps(context: any) {
   });
   myHeaders.append("postName", encodeURI(context.params.title));
 
-  let response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
+  const response_Post = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
     method: "GET",
     headers: myHeaders,
   });
-  let postData = await response_Post.json();
+  const postInfo = await response_Post.json();
+  const postData = postInfo["message"];
+  const recentData = postInfo["recent"] ? postInfo["recent"] : null;
 
-  let response_Comment = await fetch(`${DEV_URL ? DEV_URL : ""}/api/comments`, {
-    method: "GET",
-    headers: myHeaders,
+  const response_Comment = await fetch(
+    `${DEV_URL ? DEV_URL : ""}/api/comments`,
+    {
+      method: "GET",
+      headers: myHeaders,
+    },
+  );
+  const commentData = await response_Comment.json();
+
+  await postData[0].imageTitle.forEach((title: string) => {
+    fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
+      method: "GET",
+    });
   });
-  let commentData = await response_Comment.json();
 
   return {
     props: {
       data: {
-        post: postData["message"],
+        post: postData,
         comment: commentData["message"],
+        recentPost: recentData,
       },
     },
   };

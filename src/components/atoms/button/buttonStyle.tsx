@@ -17,7 +17,7 @@ const StyledButton = styled.button.attrs(props => ({}))<ButtonType>`
       width: ${width[typeHandler]};
       height: ${height[typeHandler]};
       border: none;
-      margin: 0.5rem;
+      /* margin: 0.5rem; */
       cursor: pointer;
       transition: all 0.3s;
       border-radius: 999999px;

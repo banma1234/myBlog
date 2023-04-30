@@ -1,23 +1,38 @@
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { CardLayout } from "styles/globals";
 import { Card } from "src/components/molecules";
 
 export default function Series({ posts }: any) {
+  const title = `series | ${posts[0].series}`;
+  const url = `https://www.chocoham.dev/${posts[0].series}`;
+  const description = `초코햄 blog의 게시글 모음 | ${posts[0].series}`;
+  const SEO = {
+    title: title,
+    canonical: url,
+    description: description,
+    openGraph: {
+      title,
+      url,
+      description,
+    },
+  };
   return (
     <>
-      <Head>
-        <title>{posts[0].series}</title>
-      </Head>
+      <NextSeo {...SEO} />
       <h1>{posts[0].series}</h1>
       <hr />
       <br />
       <CardLayout>
         {posts &&
           posts.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card type="default" color="low" info={item.uploadDate}>
+                <Card src={url} type="default" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>

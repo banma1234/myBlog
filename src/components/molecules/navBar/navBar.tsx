@@ -3,7 +3,7 @@ import { StyledNavBar, NavTitle, NavItem } from "./navBarStyle";
 import { NavBarType } from "./navBarType";
 
 const NavBarComponent: React.FC<NavBarType> = (props: NavBarType) => {
-  let data = props.series;
+  const data = props.series;
   return (
     <StyledNavBar {...props}>
       <NavTitle>
@@ -11,13 +11,14 @@ const NavBarComponent: React.FC<NavBarType> = (props: NavBarType) => {
       </NavTitle>
       <NavItem>
         <Link href="/view">
-          <h3>전체보기</h3>
+          <h3>[ 전체보기 ]</h3>
         </Link>
         {data &&
           data.map((item: any, i: any) => {
+            let menu = item.series + "(" + item.count + ")";
             return (
               <Link href={`/series/detail/${item.series}`} key={i}>
-                <h3>{item.series}</h3>
+                <h3>{menu}</h3>
               </Link>
             );
           })}

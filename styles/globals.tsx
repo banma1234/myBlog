@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled, { css, createGlobalStyle } from "styled-components";
+import { Theme } from "styles/Theme";
 import { ObjType } from "./globalsType";
 
 export const Globals = {
@@ -20,15 +21,43 @@ export const Globals = {
   },
 };
 
+export const GlobalStyle = createGlobalStyle<{
+  theme: Theme;
+}>`
+  body{
+    transition: 0.3s;
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.fontColor};
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-family: "nanumGothic";
+    @font-face {
+      font-family: "nanumGothic";
+      src: url("/fonts/NanumBarunGothicBold.ttf") format("truetype");
+    }
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: ${props => props.theme.fontColor};
+      border-radius: 0.8rem;
+    }
+    &::-webkit-scrollbar-track {
+      background: none;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+  }
+`;
+
 export const CardLayout = styled.div`
   display: grid;
   padding: 1rem;
   margin-top: -2rem;
-  margin-bottom: 5rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  @media all and (max-width: 1300px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+  margin-bottom: 8rem;
+  grid-template-columns: 1fr 1fr 1fr;
   @media all and (max-width: 935px) {
     grid-template-columns: 1fr 1fr;
   }
@@ -61,7 +90,7 @@ export const ImgWrapper = styled.div.attrs(props => ({}))<any>`
 
 export const OverlapDiv = styled.div`
   position: absolute;
-  top: 70%;
+  top: 85%;
   left: 375px;
   transform: translate(50% 50%);
   z-index: 9990;
@@ -73,7 +102,6 @@ export const ButtonLayout = styled.div`
   justify-content: flex-start;
   row-gap: 10rem;
   padding: 1rem;
-  padding-left: 0;
   margin-bottom: 1rem;
 `;
 
@@ -89,4 +117,15 @@ export const AddCommentBox = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: none;
+`;
+
+export const HashTagBox = styled.div.attrs(props => ({}))<any>`
+  ${props => {
+    return css`
+      background-color: ${props => props.theme.cardColor};
+      color: ${props => props.theme.fontColor};
+      padding: 0.5rem 1rem 0.5rem 1rem;
+      margin-right: 2rem;
+    `;
+  }};
 `;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/legacy/image";
-import imgUrl from "public/bannerImg.png";
+import imgUrl from "public/banner_svg.svg";
 import { useIcons } from "util/hooks";
 import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
 import { Button } from "src/components/atoms";
@@ -10,17 +10,19 @@ export default function Home({ posts }: any) {
   return (
     <>
       <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" width={"1200"} />
+        <Image src={imgUrl} alt="card Img" width={"980"} />
         <OverlapDiv>
-          <Button
-            color="high"
-            ButtonType="default"
-            onClick={() => {
-              console.log("damn");
-            }}
-          >
-            Go
-          </Button>
+          <Link href="https://github.com/banma1234">
+            <Button
+              color="green"
+              ButtonType="default"
+              onClick={() => {
+                null;
+              }}
+            >
+              Go
+            </Button>
+          </Link>
         </OverlapDiv>
       </ImgWrapper>
       <Link href="/view">
@@ -29,9 +31,13 @@ export default function Home({ posts }: any) {
       <CardLayout>
         {posts &&
           posts.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card type="default" color="low" info={item.uploadDate}>
+                <Card src={url} type="default" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
@@ -42,7 +48,7 @@ export default function Home({ posts }: any) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const DEV_URL = process.env.DEV_URL;
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
@@ -59,6 +65,5 @@ export async function getStaticProps() {
     props: {
       posts: data["message"],
     },
-    revalidate: 10,
   };
 }

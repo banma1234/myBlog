@@ -1,11 +1,11 @@
-import { getServerSideSitemap } from 'next-sitemap';
-import { GetServerSideProps } from 'next';
+import { getServerSideSitemap } from "next-sitemap";
+import { GetServerSideProps } from "next";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   // Method to source urls from cms
   // const urls = await fetch('https//example.com/api')
   const DEV_URL = process.env.DEV_URL;
-  const postData = await fetch(`${DEV_URL ? DEV_URL : ""}/api/posts`, {
+  const postData = await fetch(`${DEV_URL ? DEV_URL : ""}/api/buildSitemap`, {
     method: "GET",
   });
   const postInfo = await postData.json();

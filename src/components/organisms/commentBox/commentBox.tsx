@@ -11,22 +11,34 @@ import {
   CommentInfo,
 } from "./commentBoxStyle";
 import { CommentBoxType } from "./commentBoxType";
-import { UserComment } from "src/components/molecules";
+import { UserComment, DropDown } from "src/components/molecules";
 import { ImgWrapper } from "styles/globals";
 import Image from "next/legacy/image";
-import imgUrl from "public/testImg.jpg";
+import user_root from "public/testImg.jpg";
+import user_default from "public/default_profile.png";
 import { useState, useEffect } from "react";
 import { useIcons } from "util/hooks";
+import { StaticImageData } from "next/image";
 
 const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
 ) => {
   let comments = props.data;
-  const [click, isClick] = useState(false);
+  const [replyClick, setReplyClick] = useState(false);
+  const [menuClick, setMenuClick] = useState(false);
   const [commentId, setCommentId] = useState("");
 
+  const profileHandler = (USER_TYPE: string) => {
+    switch (USER_TYPE) {
+      case "USER_ROOT":
+        return user_root;
+      default:
+        return user_default;
+    }
+  };
+
   useEffect(() => {
-    isClick(false);
+    setReplyClick(false);
     setCommentId("");
   }, []);
 
@@ -39,7 +51,11 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
               <Comments level={item.RE_LEVEL * 6}>
                 <Temp>
                   <ImgWrapper type="profile">
-                    <Image src={imgUrl} alt="comment profile" priority />
+                    <Image
+                      src={profileHandler(item.user_type)}
+                      alt="comment profile"
+                      priority
+                    />
                   </ImgWrapper>
                 </Temp>
                 <Content>
@@ -49,16 +65,33 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
                   </CommentInfo>
                   {item.content}
                 </Content>
-                <CommentMenu>{useIcons("menu", "18")}</CommentMenu>
+                <CommentMenu>
+                  <div
+                    onClick={() => {
+                      setCommentId(item._id);
+                      setMenuClick(!menuClick);
+                    }}
+                  >
+                    {useIcons("cancel", "18")}
+                  </div>
+                  {menuClick && commentId == item._id && (
+                    <DropDown
+                      type="form"
+                      id={commentId}
+                      children={["댓글복사", "수정", "삭제"]}
+                    />
+                  )}
+                </CommentMenu>
                 <CommentReply
                   onClick={() => {
                     setCommentId(item._id);
-                    isClick(!click);
+                    setReplyClick(!replyClick);
                   }}
                 >
-                  &nbsp;{click && commentId == item._id ? " 취소" : "답글달기"}
+                  &nbsp;
+                  {replyClick && commentId == item._id ? " 취소" : "답글달기"}
                 </CommentReply>
-                {click && commentId == item._id && (
+                {replyClick && commentId == item._id && (
                   <UserComment
                     postName={props.postName}
                     data={item}

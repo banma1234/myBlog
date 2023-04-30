@@ -12,6 +12,7 @@ export default function Board({ series }: any) {
             Total view
           </Button>
         </Link>
+        <span>&nbsp;&nbsp;</span>
         <Link href="/series">
           <Button color="high" ButtonType="small" onClick={null}>
             Series
@@ -21,11 +22,15 @@ export default function Board({ series }: any) {
       <CardLayout>
         {series &&
           series.map((item: any, i: any) => {
+            let url = null;
+            if (item.thumbnail) {
+              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
+            }
             return (
               <Link href={`/series/detail/${item.series}`} key={i}>
                 <Card
+                  src={url}
                   type="default"
-                  color="low"
                   info={`${item.count}개의 게시물`}
                 >
                   {item.series}
@@ -43,7 +48,7 @@ export async function getServerSideProps() {
   let myHeaders = new Headers({
     "Content-Type": "text/html; charset=utf-8",
   });
-  myHeaders.append("viewType", "VIEW_SERIES");
+  myHeaders.append("viewType", "VIEW_SERIES_BOARD");
 
   let response = await fetch(`${DEV_URL ? DEV_URL : ""}/api/viewBoard`, {
     method: "GET",
