@@ -14,14 +14,14 @@ export const light: Theme = {
   bgColor: "#ffffff",
   fontColor: "#2f2f2f",
   cardColor: "#D3E3FC",
-  type: "light"
+  type: "light",
 };
 
 export const dark: Theme = {
   bgColor: "#1d1d1d",
   fontColor: "#f0f3f5",
   cardColor: "#262626",
-  type: "dark"
+  type: "dark",
 };
 
 const theme: ThemeGroup = {

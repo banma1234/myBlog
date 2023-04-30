@@ -43,6 +43,30 @@ export const GlobalStyle = createGlobalStyle<{
       display: none;
     }
   };
+
+  [class*='cardStyle__StyledCard'] {
+    transition: 0.3s;
+    background-color: ${props => props.theme.cardColor};
+    color: ${props => props.theme.fontColor};
+  };
+
+  [class*='hashTagStyle__HashTagBox'] {
+    transition: 0.3s;
+    background-color: ${props => props.theme.cardColor};
+    color: ${props => props.theme.fontColor};
+  }
+
+  [class*='inputStyle__StyledInput'] {
+    transition: 0.3s;
+    background-color: ${props => props.theme.cardColor};
+    color: ${props => props.theme.fontColor};
+  }
+
+  [class*='textBoxStyle__StyledTextBox'] {
+    transition: 0.3s;
+    background-color: ${props => props.theme.cardColor};
+    color: ${props => props.theme.fontColor};
+  }
 `;
 
 export const CardLayout = styled.div`
@@ -110,15 +134,4 @@ export const AddCommentBox = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: none;
-`;
-
-export const HashTagBox = styled.div.attrs(props => ({}))<any>`
-  ${props => {
-    return css`
-      background-color: ${props => props.theme.cardColor};
-      color: ${props => props.theme.fontColor};
-      padding: 0.5rem 1rem 0.5rem 1rem;
-      margin-right: 2rem;
-    `;
-  }};
 `;
