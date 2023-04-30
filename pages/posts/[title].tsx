@@ -1,9 +1,10 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
-import { CardLayout, ButtonLayout, HashTagBox } from "styles/globals";
+import { CardLayout } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
 import { Card } from "src/components/molecules";
+import {HashTag} from 'src/components/atoms';
 import { useIcons } from "util/hooks";
 
 export default function Post({ data }: any) {
@@ -47,16 +48,12 @@ export default function Post({ data }: any) {
     <>
       <NextSeo {...SEO} />
       <h1>{data.post[0].title}</h1>
-      <MarkdownReader style={{ padding: 25 }} source={data.post[0].content} />
-      <br />
-      <br />
-      <ButtonLayout>
-        {keywords &&
-          keywords.split(" ").map((item: string, i: any) => {
-            item = "#" + item;
-            return <HashTagBox>{item}</HashTagBox>;
-          })}
-      </ButtonLayout>
+      <MarkdownReader
+        color-schema="dark"
+        style={{ padding: 25 }}
+        source={data.post[0].content}
+      />
+      <HashTag keywords={keywords} />
       <CommentBox data={data.comment} postName={data.post[0].title} />
       <hr />
       <Link href={`/series/detail/${data.post[0].series}`}>
