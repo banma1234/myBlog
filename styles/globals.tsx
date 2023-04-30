@@ -24,20 +24,13 @@ export const Globals = {
 export const GlobalStyle = createGlobalStyle<{
   theme: Theme;
 }>`
-  body{
+  body {
     transition: 0.3s;
     background-color: ${props => props.theme.bgColor};
     color: ${props => props.theme.fontColor};
-    padding: 0;
-    margin: 0;
-    font-size: 16px;
-    font-family: "nanumGothic";
-    @font-face {
-      font-family: "nanumGothic";
-      src: url("/fonts/NanumBarunGothicBold.ttf") format("truetype");
-    }
+    color-scheme: ${props => props.theme.type};
     &::-webkit-scrollbar {
-      width: 0.5rem;
+      width: 0.4rem;
     }
     &::-webkit-scrollbar-thumb {
       background: ${props => props.theme.fontColor};
@@ -49,7 +42,7 @@ export const GlobalStyle = createGlobalStyle<{
     &::-webkit-scrollbar-button {
       display: none;
     }
-  }
+  };
 `;
 
 export const CardLayout = styled.div`

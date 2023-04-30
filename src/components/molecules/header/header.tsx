@@ -7,12 +7,19 @@ import {
 } from "./headerStyles";
 import { HeaderType } from "./headerType";
 import Link from "next/link";
-import localstorage from "util/localstorage";
 import { useIcons } from "util/hooks";
-import React, { useState, useEffect } from "react";
+import {useState, useEffect} from 'react'
 
 const HeaderComponent: React.FC<HeaderType> = (props: HeaderType) => {
-  const darkmode = localstorage("darkmode");
+  const [isDark, setIsDark] = useState<string | null>("light");
+  useEffect(() => {
+    setIsDark(window.localStorage.getItem("darkmode"));
+  }, [isDark])
+
+  const handleIcon = () => {
+    props.onToggle();
+    setIsDark(prev => prev === "dark" ? "light" : "dark");
+  }
 
   return (
     <StyledHeader>
@@ -27,8 +34,8 @@ const HeaderComponent: React.FC<HeaderType> = (props: HeaderType) => {
           <li>
             <Link href="/admin">Login</Link>
           </li>
-          <HeaderIcon onClick={props.onToggle}>
-            {props.theme === "dark"
+          <HeaderIcon onClick={handleIcon}>
+            {isDark === "dark"
               ? useIcons("moon", "22")
               : useIcons("sun", "22")}
           </HeaderIcon>

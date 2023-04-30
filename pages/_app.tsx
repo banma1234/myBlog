@@ -5,7 +5,7 @@ import SEO from "seo.config.js";
 import { Layout } from "src/components/organisms";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
-import useTheme from "util/hooks/useTheme/useTheme";
+import { useTheme } from "util/hooks";
 import { default as THEME } from "styles/Theme";
 
 export default function App({ Component, pageProps, series }: AppProps | any) {
@@ -15,7 +15,7 @@ export default function App({ Component, pageProps, series }: AppProps | any) {
     <>
       <DefaultSeo {...SEO} />
       <ThemeProvider theme={THEME[theme]}>
-        <GlobalStyle theme={THEME[theme]}></GlobalStyle>
+        <GlobalStyle theme={THEME[theme]} />
         <Layout series={series} onToggle={onToggle} theme={theme}>
           <Component {...pageProps} />
         </Layout>
