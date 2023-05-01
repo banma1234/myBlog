@@ -10,8 +10,6 @@ const StyledTextBox = styled.textarea`
   border-radius: 0.3rem;
   margin-left: 1rem;
   padding: 1rem;
-  background-color: ${props => props.theme.cardColor};
-  color: ${props => props.theme.fontColor};
 `;
 
 export default StyledTextBox;

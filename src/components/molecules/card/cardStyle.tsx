@@ -1,17 +1,11 @@
 import styled, { css } from "styled-components";
-import { useColor } from "util/hooks";
 import { CardType, ObjType } from "./cardType";
-import localstorage from "util/localstorage";
 
 export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
   ${props => {
     const height: ObjType = { default: "300px", login: "700px" };
-    const darkmode = localstorage("darkmode");
-    const temp = props.type;
 
     return css`
-      background-color: ${props => props.theme.cardColor};
-      color: ${props => props.theme.fontColor};
       cursor: "pointer";
       position: relative;
       margin: 10px;
@@ -19,7 +13,7 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
       border-radius: 1rem;
       overflow: hidden;
       box-shadow: 0 7px 10px rgb(0 0 0 / 10%);
-      height: ${height[temp]};
+      height: ${height[props.type]};
       width: 270px;
       @media all and (max-width: 1300px) {
         width: 270px;
@@ -41,7 +35,6 @@ export const StyledCard = styled.div.attrs(props => ({}))<CardType>`
         }
       }
       &:hover {
-        position: relative;
         animation: cardUp 0.6s;
       }
     `;
