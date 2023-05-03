@@ -39,22 +39,6 @@ async function viewIndexBoard(req: any, res: any) {
       .limit(6)
       .toArray();
 
-    let thumbnail = null;
-    const options2 = { projection: { _id: 0, images: 1 } };
-    for (let i = 0; i < 6; i++) {
-      if (!posts[i].isThumbnail) {
-        try {
-          thumbnail = await db
-            .collection("thumbnail")
-            .findOne({ series: posts[i].series }, options2);
-
-          posts[i].thumbnail = thumbnail.images;
-        } catch (e: any) {
-          console.log(e);
-        }
-      }
-    }
-
     // return the posts
     return res.json({
       message: posts,
@@ -86,21 +70,6 @@ async function viewAll(req: any, res: any) {
     };
     // fetch the posts
     let posts = await db.collection("posts").find({}, options).toArray();
-
-    let thumbnail = null;
-    const options2 = { projection: { _id: 0, images: 1 } };
-    for (let i = 0; i < posts.length; i++) {
-      if (!posts[i].isThumbnail) {
-        try {
-          thumbnail = await db
-            .collection("thumbnail")
-            .findOne({ series: posts[i].series }, options2);
-          posts[i].thumbnail = thumbnail.images;
-        } catch (e: any) {
-          console.log(e);
-        }
-      }
-    }
 
     // return the posts
     return res.json({
@@ -190,22 +159,6 @@ async function viewSeriesDetail(req: any, res: any) {
       .find({ series: selectedSeries }, options)
       .toArray();
 
-    let thumbnail = null;
-    const options2 = { projection: { _id: 0, images: 1 } };
-    for (let i = 0; i < posts.length; i++) {
-      if (!posts[i].isThumbnail) {
-        try {
-          thumbnail = await db
-            .collection("thumbnail")
-            .findOne({ series: posts[i].series }, options2);
-
-          posts[i].thumbnail = thumbnail.images;
-        } catch (e: any) {
-          console.log(e);
-        }
-      }
-    }
-
     // return the posts
     return res.json({
       message: JSON.parse(JSON.stringify(posts)),
@@ -258,13 +211,13 @@ async function viewSeriesBoard(req: any, res: any) {
       });
 
     let thumbnail = null;
-    const options2 = { projection: { _id: 0, images: 1 } };
+    const options2 = { projection: { _id: 0, imageTitle: 1 } };
     for (let i = 0; i < result.length; i++) {
       try {
         thumbnail = await db
           .collection("thumbnail")
           .findOne({ series: result[i].series }, options2);
-        result[i].thumbnail = thumbnail.images;
+        result[i].thumbnail = `${process.env.NAVER_CDN_URL}/thumbnail/${thumbnail.imageTitle}`;
       } catch (e: any) {
         console.log(e);
       }
