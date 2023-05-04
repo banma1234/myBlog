@@ -29,33 +29,29 @@ async function addPost(req: any, res: any) {
       region: "kr-standard",
       endpoint: process.env.AWS_HOSTNAME,
     });
-    
-    // let { Bucket } = await connectToS3();
-    const bucketName = "images"
-    const inherentThumbnail = [];
+    let inherentThumbnail = null;
 
     if (images && images.length > 0) {
       for (let i = 0; i < images.length; i++) {
         const base64Data = images[i].split(",")[1];
         const imageBuffer = Buffer.from(base64Data, "base64");
         const contentType = imageTitle[i].split(".").pop();
-        if (isThumbnail && i === 1) {
-          inherentThumbnail.push({
-            data: imageBuffer,
-            contentType: `image/${contentType}`,
-          });
-        }
 
-        const command = new PutObjectCommand({
-          Bucket: bucketName,
-          Key: imageTitle[i],
+        const params = {
+          Bucket: "choco-image",
+          Key: `images/${imageTitle[i]}`,
           Body: imageBuffer,
           ACL: "public-read",
           ContentEncoding: "base64",
           ContentType: `image/${contentType}`,
-        });  
+        };
+        if (isThumbnail && i === 1) {
+          inherentThumbnail = `${process.env.NAVER_CDN_URL}/images/${imageTitle[i]}`;
+        }
+
+        const putImagesCommand = new PutObjectCommand(params);
         try {
-          const response = await client.send(command);
+          const response = await client.send(putImagesCommand);
           console.log(response);
         } catch (e: any) {
           console.log(e);
