@@ -107,12 +107,6 @@ export async function getServerSideProps(context: any) {
   );
   const commentData = await response_Comment.json();
 
-  await postData[0].imageTitle.forEach((title: string) => {
-    fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
-      method: "GET",
-    });
-  });
-
   return {
     props: {
       data: {
