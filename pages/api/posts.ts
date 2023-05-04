@@ -1,4 +1,6 @@
 import { connectToDatabase } from "util/mongodb";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+// import { connectToS3 } from 'util/accessS3';
 
 export default async function postHandler(req: any, res: any) {
   switch (req.method) {
@@ -23,25 +25,50 @@ async function addPost(req: any, res: any) {
     } = req.body;
 
     let { db } = await connectToDatabase();
-    const imageContainer = [];
+    const client = new S3Client({
+      region: "kr-standard",
+      endpoint: process.env.AWS_HOSTNAME,
+    });
+    let inherentThumbnail = null;
 
     if (images && images.length > 0) {
       for (let i = 0; i < images.length; i++) {
         const base64Data = images[i].split(",")[1];
         const imageBuffer = Buffer.from(base64Data, "base64");
-        imageContainer.push({
-          data: imageBuffer,
-          contentType: imageTitle[i].split(".").pop(), // Replace this with the actual content type of the image
-        });
+        const contentType = imageTitle[i].split(".").pop();
+
+        const params = {
+          Bucket: "choco-image",
+          Key: `images/${imageTitle[i]}`,
+          Body: imageBuffer,
+          ACL: "public-read",
+          ContentEncoding: "base64",
+          ContentType: `image/${contentType}`,
+        };
+        if (isThumbnail && i === 1) {
+          inherentThumbnail = `${process.env.NAVER_CDN_URL}/images/${imageTitle[i]}`;
+        }
+
+        const putImagesCommand = new PutObjectCommand(params);
+        try {
+          const response = await client.send(putImagesCommand);
+          console.log(response);
+        } catch (e: any) {
+          console.log(e);
+        }
       }
     }
 
-    for (let i = 0; i < imageTitle.length; i++) {
-      await db.collection("images").insertOne({
-        title,
-        imageTitle: imageTitle[i],
-        images: imageContainer[i],
-      });
+    let seriesThumbnail = null;
+    try {
+      const option = { projection: { _id: 0, images: 0 } };
+      seriesThumbnail = await db
+        .collection("thumbnail")
+        .findOne({ series: series }, option);
+
+      seriesThumbnail = `${process.env.NAVER_CDN_URL}/thumbnail/${seriesThumbnail.imageTitle}`;
+    } catch {
+      seriesThumbnail = null;
     }
 
     await db.collection("posts").insertOne({
@@ -49,7 +76,7 @@ async function addPost(req: any, res: any) {
       content,
       series,
       hashtag,
-      thumbnail: isThumbnail ? imageContainer[0] : null,
+      thumbnail: isThumbnail ? inherentThumbnail : seriesThumbnail,
       imageTitle: imageTitle,
       isThumbnail,
       uploadDate,
@@ -91,7 +118,6 @@ async function getPosts(req: any, res: any) {
         series: 1,
       },
     };
-    const options3 = { projection: { _id: 0, images: 1 } };
 
     // fetch the posts
     let posts = await db
@@ -112,21 +138,6 @@ async function getPosts(req: any, res: any) {
         message: posts,
         success: true,
       });
-    }
-
-    let thumbnail = null;
-    thumbnail = await db
-      .collection("thumbnail")
-      .findOne({ series: posts[0].series }, options3);
-
-    for (let i = 0; i < recentPosts.length; i++) {
-      if (!recentPosts[i].isThumbnail) {
-        try {
-          recentPosts[i].thumbnail = thumbnail.images;
-        } catch (e: any) {
-          console.log(e);
-        }
-      }
     }
 
     return res.json({

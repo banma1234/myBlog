@@ -62,13 +62,9 @@ export default function Post({ data }: any) {
       <CardLayout>
         {data.recentPost &&
           data.recentPost.map((item: any, i: any) => {
-            let url = null;
-            if (item.thumbnail) {
-              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
-            }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={url} type="default" info={item.uploadDate}>
+                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
@@ -110,12 +106,6 @@ export async function getServerSideProps(context: any) {
     },
   );
   const commentData = await response_Comment.json();
-
-  await postData[0].imageTitle.forEach((title: string) => {
-    fetch(`${DEV_URL ? DEV_URL : ""}/api/images/${title}`, {
-      method: "GET",
-    });
-  });
 
   return {
     props: {
