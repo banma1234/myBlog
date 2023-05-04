@@ -31,13 +31,9 @@ export default function Home({ posts }: any) {
       <CardLayout>
         {posts &&
           posts.map((item: any, i: any) => {
-            let url = null;
-            if (item.thumbnail) {
-              url = `data:image/${item.thumbnail.contentType};base64,${item.thumbnail.data}`;
-            }
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={url} type="default" info={item.uploadDate}>
+                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
                   {item.title}
                 </Card>
               </Link>
