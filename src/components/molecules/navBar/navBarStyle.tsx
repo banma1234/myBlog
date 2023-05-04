@@ -13,16 +13,14 @@ export const StyledNavBar = styled.div.attrs(props => ({}))<any>`
       border-radius: 1rem;
       transition: 0.3s;
       overflow: hidden;
-      background-color: ${props => props.theme.bgColor};
       &:hover {
-        background-color: ${props => props.theme.cardColor};
         overflow: auto;
       }
       &::-webkit-scrollbar {
         width: 0.3rem;
       }
       &::-webkit-scrollbar-thumb {
-        background: ${props => props.theme.fontColor};
+        background: ${props => props.theme};
         border-radius: 0.8rem;
       }
       &::-webkit-scrollbar-track {

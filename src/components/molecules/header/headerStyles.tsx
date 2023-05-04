@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { useColor } from "util/hooks";
+import { ObjType } from "styles/globalsType";
 
 export const StyledHeader = styled.div`
   display: flex;
