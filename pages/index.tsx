@@ -33,7 +33,11 @@ export default function Home({ posts }: any) {
           posts.map((item: any, i: any) => {
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
+                <Card
+                  src={item.thumbnail}
+                  type="default"
+                  info={item.uploadDate}
+                >
                   {item.title}
                 </Card>
               </Link>

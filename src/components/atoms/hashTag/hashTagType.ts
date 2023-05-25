@@ -1,3 +1,3 @@
 export interface HashTagType {
-    keywords: string;
+  keywords: string;
 }

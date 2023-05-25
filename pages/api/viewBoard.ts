@@ -217,7 +217,9 @@ async function viewSeriesBoard(req: any, res: any) {
         thumbnail = await db
           .collection("thumbnail")
           .findOne({ series: result[i].series }, options2);
-        result[i].thumbnail = `${process.env.NAVER_CDN_URL}/thumbnail/${thumbnail.imageTitle}`;
+        result[
+          i
+        ].thumbnail = `${process.env.NAVER_CDN_URL}/thumbnail/${thumbnail.imageTitle}`;
       } catch (e: any) {
         console.log(e);
       }

@@ -7,7 +7,7 @@ const Atoms = {
   Button,
   Input,
   TextBox,
-  HashTag
+  HashTag,
 };
 
 export default Atoms;

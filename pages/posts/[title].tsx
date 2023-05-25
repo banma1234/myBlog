@@ -4,7 +4,7 @@ import { NextSeo } from "next-seo";
 import { CardLayout } from "styles/globals";
 import { CommentBox } from "src/components/organisms";
 import { Card } from "src/components/molecules";
-import {HashTag} from 'src/components/atoms';
+import { HashTag } from "src/components/atoms";
 import { useIcons } from "util/hooks";
 
 export default function Post({ data }: any) {
@@ -64,7 +64,11 @@ export default function Post({ data }: any) {
           data.recentPost.map((item: any, i: any) => {
             return (
               <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
+                <Card
+                  src={item.thumbnail}
+                  type="default"
+                  info={item.uploadDate}
+                >
                   {item.title}
                 </Card>
               </Link>
