@@ -14,14 +14,11 @@ const sessionConfig = {
   cookieName: "session",
   cookieOptions: {
     secure: process.env.ENVIRONMENT === "production",
+    httpOnly: process.env.ENVIRONMENT === "production",
   },
 };
 
-async function loginHandler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-  session: Session,
-) {
+async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { email, password } = req.body;
     let { db } = await connectToDatabase();
@@ -34,12 +31,15 @@ async function loginHandler(
         requestUser.password,
       );
       if (isPasswordMatched) {
-        session.set("user", { id: requestUser.userName });
-        await session.save();
+        req.session.set("user", {
+          id: requestUser.userName,
+          userType: requestUser.userType,
+        });
+        await req.session.save();
 
         return res.json({
           success: false,
-          message: req.session,
+          message: "success",
         });
       } else {
         return res.json({
@@ -59,9 +59,9 @@ async function loginHandler(
 }
 
 export default withIronSession(
-  async (req: NextApiRequest, res: NextApiResponse, session: Session) => {
+  async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
-      await loginHandler(req, res, session);
+      await loginHandler(req, res);
     } else {
       return res.json({
         success: false,
