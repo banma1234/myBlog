@@ -1,7 +1,23 @@
 import { connectToDatabase } from "util/mongodb";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { NextApiRequest, NextApiResponse } from "next";
+import authMiddleware from "util/auth/authMiddleware";
 
-export default async function addThumbnail(req: any, res: any) {
+export default authMiddleware(authHandler);
+
+async function authHandler(req: NextApiRequest, res: NextApiResponse) {
+  const user = req.session.get("user");
+  if (user) {
+    return addThumbnail(req, res);
+  } else {
+    return res.status(401).json({
+      message: "access denied",
+      success: false,
+    });
+  }
+}
+
+async function addThumbnail(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { series, images, imageTitle } = req.body;
     let { db } = await connectToDatabase();
@@ -33,7 +49,7 @@ export default async function addThumbnail(req: any, res: any) {
     }
     imageContainer.push({
       data: imageBuffer,
-      contentType: imageTitle[0].split(".").pop(), // Replace this with the actual content type of the image
+      contentType: imageTitle[0].split(".").pop(),
     });
 
     await db.collection("thumbnail").insertOne({

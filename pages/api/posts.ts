@@ -1,13 +1,23 @@
 import { connectToDatabase } from "util/mongodb";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-// import { connectToS3 } from 'util/accessS3';
+import authMiddleware from "util/auth/authMiddleware";
 
-export default async function postHandler(req: any, res: any) {
+export default authMiddleware(postHandler);
+
+async function postHandler(req: any, res: any) {
+  const user = req.session.get("session");
   switch (req.method) {
     case "GET":
       return getPosts(req, res);
     case "POST":
-      return addPost(req, res);
+      if (user) {
+        return addPost(req, res);
+      } else {
+        return res.status(401).json({
+          message: "access denied",
+          success: false,
+        });
+      }
   }
 }
 
