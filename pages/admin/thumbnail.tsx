@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent } from "react";
 import { Button, Input } from "src/components/atoms";
 import { uploadImage } from "util/handleImg/uploadImg";
 import { useRouter } from "next/router";
-import accessAdmin from "util/accessAdmin";
+import { GetServerSideProps } from "next";
+import authMiddleware from "util/auth/authMiddleware";
 
 export default function thumbnail() {
   const [series, setSeries] = useState<string>("");
@@ -11,14 +12,6 @@ export default function thumbnail() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-
-  useEffect(() => {
-    let inputPw = prompt("ACCESS CODE 입력");
-    let result = accessAdmin(inputPw);
-    if (!result) {
-      router.replace("/");
-    }
-  }, []);
 
   const handleImgUpload = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +54,7 @@ export default function thumbnail() {
     if (data.success) {
       initData();
       alert("썸네일 등록이 완료되었습니다.");
-      router.replace("/");
+      router.replace("/admin");
     } else {
       alert(data.message);
       console.log(data.message);
@@ -86,3 +79,21 @@ export default function thumbnail() {
     </>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = authMiddleware(
+//   async context => {
+//     const session = context.session;
+//     if (!session || !session.get("session")) {
+//       return {
+//         redirect: {
+//           destination: "/",
+//           permanent: false,
+//         },
+//       };
+//     }
+
+//     return {
+//       props: {},
+//     };
+//   },
+// );

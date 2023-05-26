@@ -1,19 +1,8 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import accessAdmin from "util/accessAdmin";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
+import authMiddleware from "util/auth/authMiddleware";
 
 export default function Admin() {
-  const router = useRouter();
-
-  useEffect(() => {
-    let inputPw = prompt("ACCESS CODE 입력");
-    let result = accessAdmin(inputPw);
-    if (!result) {
-      router.replace("/");
-    }
-  }, []);
-
   return (
     <>
       <h1>Admin Page</h1>
@@ -28,3 +17,23 @@ export default function Admin() {
     </>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = authMiddleware(
+//   async context => {
+//     const session = context.session;
+//     if (!session || !session.get("session")) {
+//       console.log(session);
+//       console.log(context.rawHeaders);
+//       return {
+//         redirect: {
+//           destination: "/",
+//           permanent: false,
+//         },
+//       };
+//     }
+
+//     return {
+//       props: {},
+//     };
+//   },
+// );

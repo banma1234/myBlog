@@ -1,10 +1,11 @@
 import { Editor } from "src/components/molecules";
 import { useRouter } from "next/router";
 import { Button, Input } from "src/components/atoms";
-import { ChangeEvent, useCallback, useState, useEffect } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import parseDate from "util/parseDate";
 import { uploadImage } from "util/handleImg/uploadImg";
-import accessAdmin from "util/accessAdmin";
+import { GetServerSideProps } from "next";
+import authMiddleware from "util/auth/authMiddleware";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -17,14 +18,6 @@ export default function Write() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-
-  useEffect(() => {
-    let inputPw = prompt("ACCESS CODE 입력");
-    let result = accessAdmin(inputPw);
-    if (!result) {
-      router.replace("/");
-    }
-  }, []);
 
   const handleChange = useCallback((content: any) => {
     setContent(content);
@@ -80,7 +73,7 @@ export default function Write() {
     if (data.success) {
       initData();
       alert("게시글 작성이 완료되었습니다.");
-      router.replace("/");
+      router.replace("/admin");
     } else {
       alert(data.message);
       console.log(data.message);
@@ -125,3 +118,21 @@ export default function Write() {
     </>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = authMiddleware(
+//   async context => {
+//     const session = context.session;
+//     if (!session || !session.get("session")) {
+//       return {
+//         redirect: {
+//           destination: "/",
+//           permanent: false,
+//         },
+//       };
+//     }
+
+//     return {
+//       props: {},
+//     };
+//   },
+// );
