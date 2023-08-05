@@ -18,7 +18,7 @@ import user_root from "public/testImg.jpg";
 import user_default from "public/default_profile.png";
 import { useState, useEffect } from "react";
 import { useIcons } from "util/hooks";
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 
 const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
