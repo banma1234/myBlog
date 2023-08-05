@@ -22,7 +22,7 @@ const FooterComponent: React.FC = () => {
           <h1>Choco Ham</h1>
           <li>{useIcons("mail", "16")} &nbsp; banma1234@gmail.com</li>
           <li>
-            <Link href="https://github.com/banma1234">
+            <Link href="https://github.com/banma1234" legacyBehavior>
               {useIcons("github", "16")} &nbsp; github.com/banma1234
             </Link>
           </li>

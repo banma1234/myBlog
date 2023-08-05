@@ -4,39 +4,37 @@ import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
 
 export default function Board({ series }: any) {
-  return (
-    <>
-      <ButtonLayout>
-        <Link href="/view">
-          <Button color="gray" ButtonType="small" onClick={null}>
-            Total view
-          </Button>
-        </Link>
-        <span>&nbsp;&nbsp;</span>
-        <Link href="/series">
-          <Button color="high" ButtonType="small" onClick={null}>
-            Series
-          </Button>
-        </Link>
-      </ButtonLayout>
-      <CardLayout>
-        {series &&
-          series.map((item: any, i: any) => {
-            return (
-              <Link href={`/series/detail/${item.series}`} key={i}>
-                <Card
-                  src={item.thumbnail}
-                  type="default"
-                  info={`${item.count}개의 게시물`}
-                >
-                  {item.series}
-                </Card>
-              </Link>
-            );
-          })}
-      </CardLayout>
-    </>
-  );
+  return <>
+    <ButtonLayout>
+      <Link href="/view" legacyBehavior>
+        <Button color="gray" ButtonType="small" onClick={null}>
+          Total view
+        </Button>
+      </Link>
+      <span>&nbsp;&nbsp;</span>
+      <Link href="/series" legacyBehavior>
+        <Button color="high" ButtonType="small" onClick={null}>
+          Series
+        </Button>
+      </Link>
+    </ButtonLayout>
+    <CardLayout>
+      {series &&
+        series.map((item: any, i: any) => {
+          return (
+            <Link href={`/series/detail/${item.series}`} key={i} legacyBehavior>
+              <Card
+                src={item.thumbnail}
+                type="default"
+                info={`${item.count}개의 게시물`}
+              >
+                {item.series}
+              </Card>
+            </Link>
+          );
+        })}
+    </CardLayout>
+  </>;
 }
 
 export async function getServerSideProps() {

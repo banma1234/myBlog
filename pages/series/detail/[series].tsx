@@ -17,30 +17,28 @@ export default function Series({ posts }: any) {
       description,
     },
   };
-  return (
-    <>
-      <NextSeo {...SEO} />
-      <h1>{posts[0].series}</h1>
-      <hr />
-      <br />
-      <CardLayout>
-        {posts &&
-          posts.map((item: any, i: any) => {
-            return (
-              <Link href={`/posts/${item.title}`} key={i}>
-                <Card
-                  src={item.thumbnail}
-                  type="default"
-                  info={item.uploadDate}
-                >
-                  {item.title}
-                </Card>
-              </Link>
-            );
-          })}
-      </CardLayout>
-    </>
-  );
+  return <>
+    <NextSeo {...SEO} />
+    <h1>{posts[0].series}</h1>
+    <hr />
+    <br />
+    <CardLayout>
+      {posts &&
+        posts.map((item: any, i: any) => {
+          return (
+            <Link href={`/posts/${item.title}`} key={i} legacyBehavior>
+              <Card
+                src={item.thumbnail}
+                type="default"
+                info={item.uploadDate}
+              >
+                {item.title}
+              </Card>
+            </Link>
+          );
+        })}
+    </CardLayout>
+  </>;
 }
 
 export async function getServerSideProps(context: any) {

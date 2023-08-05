@@ -7,41 +7,39 @@ import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
 
 export default function Home({ posts }: any) {
-  return (
-    <>
-      <ImgWrapper type="banner">
-        <Image src={imgUrl} alt="card Img" width={"980"} />
-        <OverlapDiv>
-          <Link href="https://github.com/banma1234">
-            <Button
-              color="green"
-              ButtonType="default"
-              onClick={() => {
-                null;
-              }}
-            >
-              Go
-            </Button>
-          </Link>
-        </OverlapDiv>
-      </ImgWrapper>
-      <Link href="/view">
-        <h2>{useIcons("arrowRight", "18")} view more</h2>
-      </Link>
-      <CardLayout>
-        {posts &&
-          posts.map((item: any, i: any) => {
-            return (
-              <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
-                  {item.title}
-                </Card>
-              </Link>
-            );
-          })}
-      </CardLayout>
-    </>
-  );
+  return <>
+    <ImgWrapper type="banner">
+      <Image src={imgUrl} alt="card Img" width={"980"} />
+      <OverlapDiv>
+        <Link href="https://github.com/banma1234" legacyBehavior>
+          <Button
+            color="green"
+            ButtonType="default"
+            onClick={() => {
+              null;
+            }}
+          >
+            Go
+          </Button>
+        </Link>
+      </OverlapDiv>
+    </ImgWrapper>
+    <Link href="/view" legacyBehavior>
+      <h2>{useIcons("arrowRight", "18")} view more</h2>
+    </Link>
+    <CardLayout>
+      {posts &&
+        posts.map((item: any, i: any) => {
+          return (
+            <Link href={`/posts/${item.title}`} key={i} legacyBehavior>
+              <Card src={item.thumbnail} type="default" info={item.uploadDate}>
+                {item.title}
+              </Card>
+            </Link>
+          );
+        })}
+    </CardLayout>
+  </>;
 }
 
 export async function getServerSideProps() {

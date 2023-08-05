@@ -44,35 +44,33 @@ export default function Post({ data }: any) {
     },
   };
 
-  return (
-    <>
-      <NextSeo {...SEO} />
-      <h1>{data.post[0].title}</h1>
-      <MarkdownReader
-        color-schema="dark"
-        style={{ padding: 25 }}
-        source={data.post[0].content}
-      />
-      <HashTag keywords={keywords} />
-      <CommentBox data={data.comment} postName={data.post[0].title} />
-      <hr />
-      <Link href={`/series/detail/${data.post[0].series}`}>
-        <h2>{useIcons("arrowRight", "18")} 관련 포스트</h2>
-      </Link>
-      <CardLayout>
-        {data.recentPost &&
-          data.recentPost.map((item: any, i: any) => {
-            return (
-              <Link href={`/posts/${item.title}`} key={i}>
-                <Card src={item.thumbnail} type="default" info={item.uploadDate}>
-                  {item.title}
-                </Card>
-              </Link>
-            );
-          })}
-      </CardLayout>
-    </>
-  );
+  return <>
+    <NextSeo {...SEO} />
+    <h1>{data.post[0].title}</h1>
+    <MarkdownReader
+      color-schema="dark"
+      style={{ padding: 25 }}
+      source={data.post[0].content}
+    />
+    <HashTag keywords={keywords} />
+    <CommentBox data={data.comment} postName={data.post[0].title} />
+    <hr />
+    <Link href={`/series/detail/${data.post[0].series}`} legacyBehavior>
+      <h2>{useIcons("arrowRight", "18")} 관련 포스트</h2>
+    </Link>
+    <CardLayout>
+      {data.recentPost &&
+        data.recentPost.map((item: any, i: any) => {
+          return (
+            <Link href={`/posts/${item.title}`} key={i} legacyBehavior>
+              <Card src={item.thumbnail} type="default" info={item.uploadDate}>
+                {item.title}
+              </Card>
+            </Link>
+          );
+        })}
+    </CardLayout>
+  </>;
 }
 
 const MarkdownReader = dynamic(

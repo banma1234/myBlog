@@ -4,39 +4,37 @@ import { Button } from "src/components/atoms";
 import { Card } from "src/components/molecules";
 
 export default function Board({ posts }: any) {
-  return (
-    <>
-      <ButtonLayout>
-        <Link href="/view">
-          <Button color="high" ButtonType="small" onClick={null}>
-            Total view
-          </Button>
-        </Link>
-        <span>&nbsp;&nbsp;</span>
-        <Link href="/series">
-          <Button color="gray" ButtonType="small" onClick={null}>
-            Series
-          </Button>
-        </Link>
-      </ButtonLayout>
-      <CardLayout>
-        {posts &&
-          posts.map((item: any, i: any) => {
-            return (
-              <Link href={`/posts/${item.title}`} key={i}>
-                <Card
-                  src={item.thumbnail}
-                  type="default"
-                  info={item.uploadDate}
-                >
-                  {item.title}
-                </Card>
-              </Link>
-            );
-          })}
-      </CardLayout>
-    </>
-  );
+  return <>
+    <ButtonLayout>
+      <Link href="/view" legacyBehavior>
+        <Button color="high" ButtonType="small" onClick={null}>
+          Total view
+        </Button>
+      </Link>
+      <span>&nbsp;&nbsp;</span>
+      <Link href="/series" legacyBehavior>
+        <Button color="gray" ButtonType="small" onClick={null}>
+          Series
+        </Button>
+      </Link>
+    </ButtonLayout>
+    <CardLayout>
+      {posts &&
+        posts.map((item: any, i: any) => {
+          return (
+            <Link href={`/posts/${item.title}`} key={i} legacyBehavior>
+              <Card
+                src={item.thumbnail}
+                type="default"
+                info={item.uploadDate}
+              >
+                {item.title}
+              </Card>
+            </Link>
+          );
+        })}
+    </CardLayout>
+  </>;
 }
 
 export async function getServerSideProps() {

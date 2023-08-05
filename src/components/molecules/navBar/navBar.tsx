@@ -10,14 +10,14 @@ const NavBarComponent: React.FC<NavBarType> = (props: NavBarType) => {
         <h2>시리즈 목록</h2>
       </NavTitle>
       <NavItem>
-        <Link href="/view">
+        <Link href="/view" legacyBehavior>
           <h3>[ 전체보기 ]</h3>
         </Link>
         {data &&
           data.map((item: any, i: any) => {
             let menu = item.series + "(" + item.count + ")";
             return (
-              <Link href={`/series/detail/${item.series}`} key={i}>
+              <Link href={`/series/detail/${item.series}`} key={i} legacyBehavior>
                 <h3>{menu}</h3>
               </Link>
             );
