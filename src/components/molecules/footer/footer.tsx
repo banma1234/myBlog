@@ -9,7 +9,6 @@ import { ImgWrapper } from "styles/globals";
 import Link from "next/link";
 import Image from "next/image";
 import imgUrl from "public/testImg.jpg";
-import { Button } from "src/components/atoms";
 
 const FooterComponent: React.FC = () => {
   return (
@@ -22,8 +21,9 @@ const FooterComponent: React.FC = () => {
             priority
             style={{
               maxWidth: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
         </ImgWrapper>
         <FooterMenu>
           <h1>Choco Ham</h1>
@@ -34,11 +34,7 @@ const FooterComponent: React.FC = () => {
             </Link>
           </li>
         </FooterMenu>
-        <FooterAsideMenu>
-          {/* <Button color="green" ButtonType="small">
-            {useIcons("enter", "16")} &nbsp; Go
-          </Button> */}
-        </FooterAsideMenu>
+        <FooterAsideMenu></FooterAsideMenu>
       </FooterContainer>
     </StyledFooter>
   );
