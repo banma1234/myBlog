@@ -7,7 +7,7 @@ import {
 import { useIcons } from "util/hooks";
 import { ImgWrapper } from "styles/globals";
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import imgUrl from "public/testImg.jpg";
 import { Button } from "src/components/atoms";
 
@@ -16,7 +16,14 @@ const FooterComponent: React.FC = () => {
     <StyledFooter>
       <FooterContainer>
         <ImgWrapper type="profile_big">
-          <Image src={imgUrl} alt="profile img" priority />
+          <Image
+            src={imgUrl}
+            alt="profile img"
+            priority
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </ImgWrapper>
         <FooterMenu>
           <h1>Choco Ham</h1>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import imgUrl from "public/banner_svg.svg";
 import { useIcons } from "util/hooks";
 import { CardLayout, ImgWrapper, OverlapDiv } from "styles/globals";
@@ -9,7 +9,14 @@ import { Card } from "src/components/molecules";
 export default function Home({ posts }: any) {
   return <>
     <ImgWrapper type="banner">
-      <Image src={imgUrl} alt="card Img" width={"980"} />
+      <Image
+        src={imgUrl}
+        alt="card Img"
+        width={"980"}
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
       <OverlapDiv>
         <Link href="https://github.com/banma1234" legacyBehavior>
           <Button

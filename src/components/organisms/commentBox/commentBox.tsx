@@ -13,12 +13,12 @@ import {
 import { CommentBoxType } from "./commentBoxType";
 import { UserComment, DropDown } from "src/components/molecules";
 import { ImgWrapper } from "styles/globals";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import user_root from "public/testImg.jpg";
 import user_default from "public/default_profile.png";
 import { useState, useEffect } from "react";
 import { useIcons } from "util/hooks";
-import { StaticImageData } from "next/legacy/image";
+import { StaticImageData } from "next/image";
 
 const CommentBoxComponent: React.FC<CommentBoxType> = (
   props: CommentBoxType,
@@ -55,7 +55,10 @@ const CommentBoxComponent: React.FC<CommentBoxType> = (
                       src={profileHandler(item.user_type)}
                       alt="comment profile"
                       priority
-                    />
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                   </ImgWrapper>
                 </Temp>
                 <Content>
